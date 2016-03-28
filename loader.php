@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+include_once 'errors_handlers.php';
+
 define('PROJECT_PATH', dirname(__FILE__));
 
 define('PROJECT_VIEWS_PATH', PROJECT_PATH . DIRECTORY_SEPARATOR . 'views');

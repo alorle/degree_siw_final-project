@@ -51,12 +51,12 @@ abstract class AbstractView implements ViewInterface
     /**
      * Renders the page
      * @return string
+     * @throws \Exception
      */
     public function render()
     {
         if (!file_exists($this->getFileTemplate())) {
-            // TODO: return 500 error (Internal server error)
-            exit("Error HTTP 500 Internal server error");
+            throw new \Exception("Internal server error", 500);
         }
 
         $template = file_get_contents($this->getFileTemplate());
@@ -103,8 +103,7 @@ abstract class AbstractView implements ViewInterface
     public function setFileTemplate($file)
     {
         if (!file_exists($file)) {
-            // TODO: return 500 error (Internal server error)
-            exit("Error HTTP 500 Internal server error");
+            throw new \Exception("Internal server error", 500);
         }
         $this->file_template = $file;
     }
@@ -117,8 +116,7 @@ abstract class AbstractView implements ViewInterface
     public function setFileHeader($file)
     {
         if (!file_exists($file)) {
-            // TODO: return 500 error (Internal server error)
-            exit("Error HTTP 500 Internal server error");
+            throw new \Exception("Internal server error", 500);
         }
         $this->file_header = $file;
     }
@@ -131,8 +129,7 @@ abstract class AbstractView implements ViewInterface
     public function setFileFooter($file)
     {
         if (!file_exists($file)) {
-            // TODO: return 500 error (Internal server error)
-            exit("Error HTTP 500 Internal server error");
+            throw new \Exception("Internal server error", 500);
         }
         $this->file_footer = $file;
     }

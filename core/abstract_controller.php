@@ -34,8 +34,7 @@ abstract class AbstractController
         if (isset($this->view)) {
             $this->view->render();
         } else {
-            // TODO: return 500 error (Internal server error)
-            exit("Error HTTP 500 Internal server error");
+            throw new \Exception("Internal server error", 500);
         }
     }
 
@@ -49,8 +48,7 @@ abstract class AbstractController
         if ($view instanceof AbstractView) {
             $this->view = $view;
         } else {
-            // TODO: return 500 error (Internal server error)
-            exit("Error HTTP 500 Internal server error");
+            throw new \Exception("Internal server error", 500);
         }
     }
 }
