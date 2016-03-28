@@ -20,6 +20,7 @@ namespace Views;
 
 use Core\AbstractView;
 use Interfaces\BlogInterface;
+use Models\Article;
 
 class BlogView extends AbstractView implements BlogInterface
 {
@@ -52,9 +53,13 @@ class BlogView extends AbstractView implements BlogInterface
         echo $template_parts[0] . $template_articles . $template_parts[2];
     }
 
-    private static function replaceArticleData($template, $article)
+    private static function replaceArticleData($template, Article $article)
     {
-        // TODO: replace template's tags with article data
-        return "";
+        $template = str_replace(self::KEY_ARTICLE_ID, $article->getId(), $template);
+        $template = str_replace(self::KEY_ARTICLE_TITLE, $article->getTitle(), $template);
+        $template = str_replace(self::KEY_ARTICLE_BODY, $article->getBody(), $template);
+        $template = str_replace(self::KEY_ARTICLE_AUTHOR, $article->getAuthorName(), $template);
+        $template = str_replace(self::KEY_ARTICLE_TIME, $article->getTime(), $template);
+        return $template;
     }
 }

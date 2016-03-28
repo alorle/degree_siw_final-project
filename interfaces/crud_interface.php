@@ -16,27 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Controllers;
-
-use Core\AbstractController;
-use Models\Article;
-use Models\BlogModel;
-use Views\BlogView;
+namespace Interfaces;
 
 
-class BlogController extends AbstractController
+interface CrudInterface
 {
-    /**
-     * BlogController constructor.
-     */
-    public function __construct()
-    {
-        if (!isset($_GET['article'])) {
-            // It has not been specifically requested any article, so we show everyone.
-            $this->setView(new BlogView(Article::getAll()));
-        } else {
-            // It has been specifically requested an article, so we show only that.
-            throw new \Exception('Not implemented yet', 501);
-        }
-    }
+    public static function getAll();
+
+    public static function getById($id);
+
+    public static function insert($data);
+
+    public static function update($data);
+
+    public static function delete($id);
+
 }
