@@ -96,7 +96,15 @@ class Article implements CrudInterface
 
     public static function getById($id)
     {
-        // TODO: Implement getById() method.
+        $db_helper = DbHelper::instance();
+        $sql = "SELECT * FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_ID . " = " . $id;
+
+        $results_array = $db_helper->query($sql);
+        if (count($results_array) == 1) {
+            return new Article($results_array[0]);
+        }
+
+        return null;
     }
 
     public static function insert($data)

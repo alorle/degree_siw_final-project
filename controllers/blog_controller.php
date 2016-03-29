@@ -20,7 +20,7 @@ namespace Controllers;
 
 use Core\AbstractController;
 use Models\Article;
-use Models\BlogModel;
+use Views\ArticleView;
 use Views\BlogView;
 
 
@@ -36,7 +36,7 @@ class BlogController extends AbstractController
             $this->setView(new BlogView(Article::getAll()));
         } else {
             // It has been specifically requested an article, so we show only that.
-            throw new \Exception('Not implemented yet', 501);
+            $this->setView(new ArticleView(Article::getById($_GET['article'])));
         }
     }
 }
