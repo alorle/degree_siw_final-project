@@ -36,13 +36,14 @@ class ArticleView extends AbstractView implements BlogInterface
         parent::__construct();
 
         $this->setFileTemplate(PROJECT_TEMPLATES_PATH . DIRECTORY_SEPARATOR . 'article.html');
-        $this->setTitle('Blog | ' . PROJECT_NAME);
 
         if (is_null($article)) {
             throw new \Exception("Not found", 404);
         } else {
             $this->article = $article;
         }
+
+        $this->setTitle($article->getTitle() . ' | ' . PROJECT_NAME);
     }
 
     public function render()
