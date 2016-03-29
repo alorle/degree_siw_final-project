@@ -16,6 +16,14 @@
  */
 
 /* General */
+* {
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -38,12 +46,45 @@ h2 {
     font-size: 1.8em;
 }
 
+/* Header menu */
+#header-menu {
+    background-color: #222222;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+#header-menu ul {
+    list-style-type: none;
+    width: 90%;
+    max-width: 800px;
+    padding: 0;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+#header-menu li {
+    float: left;
+}
+
+#header-menu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#header-menu li a:hover {
+    background-color: #111;
+}
+
 /* Content */
 #content {
     width: 90%;
     max-width: 800px;
-    padding: auto;
-    margin: auto;
+    min-height: 100%;
+    margin: 58px auto 0 auto;
 }
 
 /* Post */
@@ -101,4 +142,20 @@ h2 {
     text-decoration: none;
     float: right;
     text-transform: uppercase;
+}
+
+/* Footer */
+#footer {
+    background-color: #222222;
+    width: 100%;
+    margin-top: 8px;
+}
+
+#footer p {
+    color: #FFFFFF;
+    width: 90%;
+    text-align: right;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 16px 0;
 }
