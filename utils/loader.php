@@ -16,9 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once 'errors_handlers.php';
+include_once 'utils' . DIRECTORY_SEPARATOR . 'errors_handlers.php';
 
-define('PROJECT_PATH', dirname(__FILE__));
+define('PROJECT_PATH', dirname(__DIR__));
 
 define('PROJECT_VIEWS_PATH', PROJECT_PATH . DIRECTORY_SEPARATOR . 'views');
 define('PROJECT_TEMPLATES_PATH', PROJECT_PATH . DIRECTORY_SEPARATOR . 'templates');
