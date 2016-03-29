@@ -51,19 +51,23 @@ h2 {
 }
 
 /* ------------------------*/ /* ---------->>> HEADER <<<-----------*/ /* -----------------------*/
-#header {
+body header {
     background-color: #222222;
     position: fixed;
     top: 0;
     width: 100%;
 }
 
-#header-menu {
-    list-style-type: none;
+#header {
     margin: 0 auto;
     max-width: 800px;
-    overflow: hidden;
     width: 90%;
+}
+
+#header-menu {
+    float: left;
+    list-style-type: none;
+    overflow: hidden;
 }
 
 #header-menu li {
@@ -79,6 +83,20 @@ h2 {
 }
 
 #header-menu li a:hover {
+    background-color: #111111;
+}
+
+#header-access-button {
+    color: white;
+    display: block;
+    float: right;
+    overflow: hidden;
+    padding: 16px;
+    text-align: center;
+    text-decoration: none;
+}
+
+#header-access-button:hover {
     background-color: #111111;
 }
 
