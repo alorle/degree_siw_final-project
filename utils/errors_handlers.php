@@ -16,22 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// http_response_code for PHP <= 5.4.0
-if (!function_exists('http_response_code')) {
-    function http_response_code($new_code = NULL)
-    {
-        static $code = 200;
-
-        if ($new_code !== NULL) {
-            header('X-PHP-Response-Code: ' . $new_code, true, $new_code);
-            if (!headers_sent()) {
-                $code = $new_code;
-            }
-        }
-
-        return $code;
-    }
-}
+use Views\ErrorView;
 
 /**
  * Error handler function
@@ -40,12 +25,8 @@ if (!function_exists('http_response_code')) {
  */
 function error_handler($code, $message)
 {
-    ob_clean();
-    http_response_code($code);
-    $template = file_get_contents(PROJECT_TEMPLATES_PATH . DIRECTORY_SEPARATOR . 'error.html');
-    $template = str_replace("##ERROR_CODE##", $code, $template);
-    $template = str_replace("##ERROR_MSG##", $message, $template);
-    echo $template;
+    $error = new ErrorView($code, $message);
+    $error->render();
 }
 
 /**
