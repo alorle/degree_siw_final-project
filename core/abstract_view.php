@@ -28,6 +28,11 @@ abstract class AbstractView implements ViewInterface
     private $title;
 
     /**
+     * @var string Name of the file containing the page head
+     */
+    private $file_head;
+
+    /**
      * @var string Name of the file containing the page header
      */
     private $file_header;
@@ -44,6 +49,7 @@ abstract class AbstractView implements ViewInterface
 
     public function __construct()
     {
+        $this->setFileHead(PROJECT_TEMPLATES_PARTS_PATH . DIRECTORY_SEPARATOR . 'part_head.html');
         $this->setFileHeader(PROJECT_TEMPLATES_PARTS_PATH . DIRECTORY_SEPARATOR . 'part_header.html');
         $this->setFileFooter(PROJECT_TEMPLATES_PARTS_PATH . DIRECTORY_SEPARATOR . 'part_footer.html');
     }
@@ -61,10 +67,20 @@ abstract class AbstractView implements ViewInterface
 
         $template = file_get_contents($this->getFileTemplate());
         $template = str_replace(self::KEY_TITLE, $this->getTitle(), $template);
+        $template = str_replace(self::KEY_HEAD, $this->readHead(), $template);
         $template = str_replace(self::KEY_HEADER, $this->readHeader(), $template);
         $template = str_replace(self::KEY_FOOTER, $this->readFooter(), $template);
 
         return $template;
+    }
+
+    /**
+     * Read head part file and returns it's content
+     * @return string
+     */
+    private function readHead()
+    {
+        return file_get_contents($this->getFileHead());
     }
 
     /**
@@ -132,5 +148,18 @@ abstract class AbstractView implements ViewInterface
             throw new \Exception("Internal server error", 500);
         }
         $this->file_footer = $file;
+    }
+
+    public function getFileHead()
+    {
+        return $this->file_head;
+    }
+
+    private function setFileHead($file)
+    {
+        if (!file_exists($file)) {
+            throw new \Exception("Internal server error", 500);
+        }
+        $this->file_head = $file;
     }
 }

@@ -21,6 +21,7 @@ namespace Interfaces;
 interface ViewInterface
 {
     const KEY_TITLE = "##TITLE##";
+    const KEY_HEAD = "##HEAD##";
     const KEY_HEADER = "##HEADER##";
     const KEY_FOOTER = "##FOOTER##";
 }

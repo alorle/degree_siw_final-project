@@ -20,6 +20,7 @@
 <head>
     <meta charset="UTF-8">
     <title>##TITLE##</title>
+    ##HEAD##
 </head>
 <body>
 
@@ -27,14 +28,24 @@
     ##HEADER##
 </header>
 
-##ARTICLES_LIST##
-<article>
-    <h2><a href="blog.php?article=##ARTICLE_ID##">##ARTICLE_TITLE##</a></h2>
-    <p>##ARTICLE_BODY##</p>
-    <p>##ARTICLE_AUTHOR##</p>
-    <p>##ARTICLE_TIME##</p>
-</article>
-##ARTICLES_LIST##
+<div id="content">
+    ##ARTICLES_LIST##
+    <article class="post">
+        <h2 class="title">
+            <a href="blog.php?article=##ARTICLE_ID##">##ARTICLE_TITLE##</a>
+        </h2>
+        <p class="meta">
+            <span class="date">##ARTICLE_TIME##</span>
+            <!-- TODO: add author's page link -->
+            <span class="posted">Publicado por <a href="#">##ARTICLE_AUTHOR##</a></span>
+        </p>
+        <p class="entry">##ARTICLE_BODY##</p>
+        <div class="links">
+            <a href="blog.php?article=##ARTICLE_ID##" class="more">Leer más</a>
+        </div>
+    </article>
+    ##ARTICLES_LIST##
+</div>
 
 <footer>
     ##FOOTER##
