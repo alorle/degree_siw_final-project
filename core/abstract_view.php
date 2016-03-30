@@ -19,6 +19,7 @@
 namespace Core;
 
 use Interfaces\ViewInterface;
+use utils\Session;
 
 abstract class AbstractView implements ViewInterface
 {
@@ -47,11 +48,25 @@ abstract class AbstractView implements ViewInterface
      */
     private $file_template;
 
+    private $username;
+    private $user_action;
+    private $user_action_anchor;
+
     public function __construct()
     {
         $this->setFileHead(PROJECT_TEMPLATES_PARTS_PATH . DIRECTORY_SEPARATOR . 'part_head.html');
         $this->setFileHeader(PROJECT_TEMPLATES_PARTS_PATH . DIRECTORY_SEPARATOR . 'part_header.html');
         $this->setFileFooter(PROJECT_TEMPLATES_PARTS_PATH . DIRECTORY_SEPARATOR . 'part_footer.html');
+
+        if (Session::checkUserSession()) {
+            $this->username = Session::getUserName();
+            $this->user_action = self::ACTION_LOGOUT;
+            $this->user_action_anchor = self::ACTION_PATH_LOGOUT;
+        } else {
+            $this->username = '';
+            $this->user_action = self::ACTION_LOGIN;
+            $this->user_action_anchor = self::ACTION_PATH_LOGIN;
+        }
     }
 
     /**
@@ -70,6 +85,17 @@ abstract class AbstractView implements ViewInterface
         $template = str_replace(self::KEY_HEAD, $this->readHead(), $template);
         $template = str_replace(self::KEY_HEADER, $this->readHeader(), $template);
         $template = str_replace(self::KEY_FOOTER, $this->readFooter(), $template);
+
+        if (!empty($this->username)) {
+            $template = str_replace(self::KEY_EXPLODE_USERNAME, '', $template);
+            $template = str_replace(self::KEY_USERNAME, $this->username, $template);
+        } else {
+            $template_parts = explode(self::KEY_EXPLODE_USERNAME, $template);
+            $template = $template_parts[0] . $template_parts[2];
+        }
+
+        $template = str_replace(self::KEY_USER_ACTION, $this->user_action, $template);
+        $template = str_replace(self::KEY_USER_ACTION_ANCHOR, $this->user_action_anchor, $template);
 
         return $template;
     }

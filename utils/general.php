@@ -16,22 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Interfaces;
-
-interface ViewInterface
+function redirectHome()
 {
-    const KEY_TITLE = "##TITLE##";
-    const KEY_HEAD = "##HEAD##";
-    const KEY_HEADER = "##HEADER##";
-    const KEY_FOOTER = "##FOOTER##";
-
-    const KEY_EXPLODE_USERNAME = "##USERNAME_SECTION##";
-    const KEY_USERNAME = "##USERNAME##";
-    const KEY_USER_ACTION = "##USER_ACTION##";
-    const KEY_USER_ACTION_ANCHOR = "##USER_ACTION_ANCHOR##";
-
-    const ACTION_LOGIN = "Iniciar sesión";
-    const ACTION_PATH_LOGIN = "login.php";
-    const ACTION_LOGOUT = "Cerrar sesión";
-    const ACTION_PATH_LOGOUT = "logout.php";
+    header('Location: .');
+    die();
 }

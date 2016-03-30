@@ -22,16 +22,23 @@ use Core\AbstractView;
 
 class LoginView extends AbstractView
 {
+    const KEY_MESSAGE = '##MESSAGE##';
+
+    private $message;
 
     /**
      * LoginView constructor.
+     * @param string $msg
+     * @throws \Exception
      */
-    public function __construct()
+    public function __construct($msg = '')
     {
         parent::__construct();
 
         $this->setFileTemplate(PROJECT_TEMPLATES_PATH . DIRECTORY_SEPARATOR . 'login.html');
         $this->setTitle('Login | ' . PROJECT_NAME);
+
+        $this->message = $msg;
     }
 
     public function render()
@@ -43,6 +50,7 @@ class LoginView extends AbstractView
         $template = file_get_contents($this->getFileTemplate());
         $template = str_replace(self::KEY_TITLE, $this->getTitle(), $template);
         $template = str_replace(self::KEY_HEAD, $this->readHead(), $template);
+        $template = str_replace(self::KEY_MESSAGE, $this->message, $template);
 
         echo $template;
     }

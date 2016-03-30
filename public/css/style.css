@@ -81,18 +81,26 @@ h2 {
     text-decoration: none;
 }
 
-#header-access-button {
+#header-user {
+    float: right;
+    list-style-type: none;
+    overflow: hidden;
+}
+
+#header-user li {
+    float: left;
+}
+
+#header-user li:hover {
+    background-color: #111111;
+}
+
+#header-user li a {
     color: white;
     display: block;
-    float: right;
-    overflow: hidden;
     padding: 16px;
     text-align: center;
     text-decoration: none;
-}
-
-#header-access-button:hover {
-    background-color: #111111;
 }
 
 /* -----------------------*/ /* ---------->>> CONTENT <<<-----------*/ /* -----------------------*/
@@ -176,7 +184,7 @@ h2 {
 
 /* -----------------------*/ /* ---------->>> LOGIN <<<-----------*/ /* -------------------------*/
 .login {
-    margin: 80px auto;
+    margin: 16px auto;
     max-width: 300px;
 }
 
@@ -189,20 +197,10 @@ h2 {
     margin: 20px 0 0 0;
 }
 
-.login p.remember_me {
+.login p.message {
+    color: red;
     float: left;
     line-height: 31px;
-}
-
-.login p.remember_me label {
-    color: #777777;
-    cursor: pointer;
-    font-size: 12px;
-}
-
-.login p.remember_me input {
-    bottom: 1px;
-    margin-right: 4px;
     position: relative;
     vertical-align: middle;
 }
@@ -213,6 +211,7 @@ h2 {
 }
 
 .login-help {
+    clear: both;
     font-size: 11px;
     margin: 20px 0;
     text-align: center;
@@ -251,7 +250,10 @@ h2 {
 }
 
 .login input[type=submit]:hover {
-    background: #555555;
+    background: #000000;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
 .login input[type=text], .login input[type=password] {

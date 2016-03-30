@@ -17,6 +17,7 @@
  */
 
 include_once 'utils' . DIRECTORY_SEPARATOR . 'errors_handlers.php';
+include_once 'utils' . DIRECTORY_SEPARATOR . 'general.php';
 
 define('PROJECT_PATH', dirname(__DIR__));
 

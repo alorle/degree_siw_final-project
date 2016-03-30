@@ -19,16 +19,45 @@
 namespace Controllers;
 
 use Core\AbstractController;
+use utils\Session;
 use Views\LoginView;
 
 class LoginController extends AbstractController
 {
+    const KEY_POST_FORM = 'login';
+    const KEY_POST_USERNAME = 'username';
+    const KEY_POST_PASSWORD = 'password';
+
+    const STR_INVALID = 'Usuario o contraseña invalidos';
 
     /**
      * LoginController constructor.
      */
     public function __construct()
     {
-        $this->setView(new LoginView());
+        if (Session::checkUserSession()) {
+            // User is logged
+            redirectHome();
+        } else {
+            if (isset($_POST[self::KEY_POST_FORM])) {
+                // Login button have been pressed, so check login fields
+                $username = filter_var($_POST[self::KEY_POST_USERNAME], FILTER_SANITIZE_STRING);
+                $password = filter_var($_POST[self::KEY_POST_PASSWORD], FILTER_SANITIZE_STRING);
+
+                if (empty($username) || empty($password)) {
+                    // Login fields are empty (after sanitize),
+                    // so display login view with error message
+                    $this->setView(new LoginView(self::STR_INVALID));
+                } else {
+                    // Check user authentication
+                    // TODO: check user info with database data
+                    Session::setUserSession($username, md5($password));
+                    redirectHome();
+                }
+            } else {
+                // Login button have not been pressed, so display login view
+                $this->setView(new LoginView());
+            }
+        }
     }
 }

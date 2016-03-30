@@ -21,31 +21,28 @@
     <meta charset="UTF-8">
     <title>##TITLE##</title>
     ##HEAD##
+    <script src="public/js/login.js"></script>
 </head>
 <body>
+
 <header>
-    <div id="header">
-        <ul id="header-menu" class="uppercase">
-            <li><a href="blog.php">Inicio</a></li>
-        </ul>
+    <div id="header-container">
+        <div id="header-content">
+            <ul id="header-menu" class="uppercase">
+                <li><a href="blog.php">Inicio</a></li>
+            </ul>
+        </div>
     </div>
 </header>
 
 <div id="content">
     <div class="login">
         <h1 class="uppercase">Iniciar sesión</h1>
-        <!-- TODO: add form action -->
-        <form method="post" action="?">
+        <form name="login_form" method="post" action="login.php" onsubmit="return(validate());">
             <p><input type="text" name="username" value="" placeholder="Nombre de usuario"></p>
             <p><input type="password" name="password" value="" placeholder="Contraseña"></p>
-            <p class="remember_me">
-                <label>
-                    <input type="checkbox" name="remember_me" id="remember_me">
-                    Recordar en este dispositivo
-                </label>
-            </p>
-            <!-- TODO: add submit action -->
-            <p class="submit"><input type="submit" name="commit" value="Acceder"></p>
+            <p class="message">##MESSAGE##</p>
+            <p class="submit"><input type="submit" name="login" value="Acceder"></p>
         </form>
     </div>
 

@@ -1,5 +1,4 @@
-<?php
-/**
+/*
  * Copyright (C) 2016 Álvaro Orduna León
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,22 +15,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Interfaces;
+function validate() {
+    const originalColor = "#EFF4F7";
+    const errorColor = "#FF433D";
 
-interface ViewInterface
-{
-    const KEY_TITLE = "##TITLE##";
-    const KEY_HEAD = "##HEAD##";
-    const KEY_HEADER = "##HEADER##";
-    const KEY_FOOTER = "##FOOTER##";
+    var usernameValid = true;
+    var passwordValid = true;
 
-    const KEY_EXPLODE_USERNAME = "##USERNAME_SECTION##";
-    const KEY_USERNAME = "##USERNAME##";
-    const KEY_USER_ACTION = "##USER_ACTION##";
-    const KEY_USER_ACTION_ANCHOR = "##USER_ACTION_ANCHOR##";
+    var username = document.login_form.username;
+    var password = document.login_form.password;
 
-    const ACTION_LOGIN = "Iniciar sesión";
-    const ACTION_PATH_LOGIN = "login.php";
-    const ACTION_LOGOUT = "Cerrar sesión";
-    const ACTION_PATH_LOGOUT = "logout.php";
+    if (username.value == '') {
+        username.style.outlineColor = errorColor;
+        usernameValid = false;
+    } else {
+        username.style.outlineColor = originalColor;
+    }
+
+    if (password.value == '') {
+        password.style.outlineColor = errorColor;
+        passwordValid = false;
+    } else {
+        password.style.outlineColor = originalColor;
+    }
+
+    return usernameValid && passwordValid;
 }
