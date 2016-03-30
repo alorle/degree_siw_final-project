@@ -91,4 +91,15 @@ class DbHelper
 
         return $results_array;
     }
+
+    /**
+     * Escapes special characters in a string for use in an SQL statement,
+     * taking into account the current charset of the connection.
+     * @param string $str The string to be escaped.
+     * @return string an escaped string.
+     */
+    public function real_escape_string($str)
+    {
+        return $this->connection->real_escape_string($str);
+    }
 }

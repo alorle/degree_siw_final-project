@@ -81,12 +81,22 @@ class Article implements CrudInterface
         return "Aristóteles";
     }
 
+    /**
+     * Get all articles from database
+     * @return array Array containing all the articles
+     * @throws \Exception
+     */
     public static function getAll()
     {
         $db_helper = DbHelper::instance();
+
+        // Build sql query string
         $sql = "SELECT * FROM " . self::TABLE_NAME;
 
+        // Initialize array of articles.
         $results_array = array();
+
+        // For each query result we include a new article in the array.
         foreach ($db_helper->query($sql) as $index => $row) {
             $results_array[$index] = new Article($row);
         }
@@ -94,12 +104,29 @@ class Article implements CrudInterface
         return $results_array;
     }
 
+    /**
+     * Get an article with the given id
+     * @param int $id Id of the article
+     * @return Article|null The requested article if exists. If not, return null
+     * @throws \Exception
+     */
     public static function getById($id)
     {
         $db_helper = DbHelper::instance();
+
+        // Sanitize $id and filter it as an int
+        $id = $db_helper->real_escape_string($id);
+        if (!$id = filter_var($id, FILTER_VALIDATE_INT)) {
+            return null;
+        }
+
+        // Build sql query string
         $sql = "SELECT * FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_ID . " = " . $id;
 
+        // Execute query
         $results_array = $db_helper->query($sql);
+
+        // We return an article only if the result is unique
         if (count($results_array) == 1) {
             return new Article($results_array[0]);
         }
