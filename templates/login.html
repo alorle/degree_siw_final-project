@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (C) 2016 Álvaro Orduna León
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>##TITLE##</title>
+    ##HEAD##
+</head>
+<body>
+<header>
+    <div id="header">
+        <ul id="header-menu" class="uppercase">
+            <li><a href="blog.php">Inicio</a></li>
+        </ul>
+    </div>
+</header>
+
+<div id="content">
+    <div class="login">
+        <h1 class="uppercase">Iniciar sesión</h1>
+        <!-- TODO: add form action -->
+        <form method="post" action="?">
+            <p><input type="text" name="username" value="" placeholder="Nombre de usuario"></p>
+            <p><input type="password" name="password" value="" placeholder="Contraseña"></p>
+            <p class="remember_me">
+                <label>
+                    <input type="checkbox" name="remember_me" id="remember_me">
+                    Recordar en este dispositivo
+                </label>
+            </p>
+            <!-- TODO: add submit action -->
+            <p class="submit"><input type="submit" name="commit" value="Acceder"></p>
+        </form>
+    </div>
+
+    <div class="login-help">
+        <!-- TODO: add remember password and register hrefs -->
+        <p><a href="?">No recuerdo la contraseña</a> | <a href="?">Registrar</a></p>
+    </div>
+</div>
+
+</body>
+</html>

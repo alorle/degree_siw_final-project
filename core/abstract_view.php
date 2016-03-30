@@ -78,7 +78,7 @@ abstract class AbstractView implements ViewInterface
      * Read head part file and returns it's content
      * @return string
      */
-    private function readHead()
+    public function readHead()
     {
         return file_get_contents($this->getFileHead());
     }

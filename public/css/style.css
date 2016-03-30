@@ -178,3 +178,87 @@ body header {
     text-align: right;
     width: 90%;
 }
+
+/* -----------------------*/ /* ---------->>> LOGIN <<<-----------*/ /* -------------------------*/
+.login {
+    margin: 80px auto;
+    max-width: 300px;
+}
+
+.login h1 {
+    color: #555555;
+    text-align: center;
+}
+
+.login p {
+    margin: 20px 0 0 0;
+}
+
+.login p.remember_me {
+    float: left;
+    line-height: 31px;
+}
+
+.login p.remember_me label {
+    color: #777777;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.login p.remember_me input {
+    bottom: 1px;
+    margin-right: 4px;
+    position: relative;
+    vertical-align: middle;
+}
+
+.login p.submit {
+    margin-right: 12px;
+    text-align: right;
+}
+
+.login-help {
+    font-size: 11px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.login-help a {
+    color: #5B5B5B;
+    text-decoration: underline;
+}
+
+.login-help a:hover {
+    color: #000000;
+}
+
+.login input[type=text], .login input[type=password] {
+    border: 0;
+    color: #404040;
+    min-height: 34px;
+    outline: 5px solid #EFF4F7;
+    padding: 0 8px;
+    width: 90%;
+}
+
+.login input[type=text]:focus, input[type=password]:focus {
+    outline-color: #A4FFB2;
+    outline-offset: 0;
+}
+
+.login input[type=submit] {
+    background: #222222;
+    border: 0;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 8px;
+}
+
+.login input[type=submit]:hover {
+    background: #555555;
+}
+
+.login input[type=text], .login input[type=password] {
+    line-height: 34px;
+}

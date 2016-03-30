@@ -16,7 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once 'utils' . DIRECTORY_SEPARATOR . 'loader.php';
+namespace Controllers;
 
-$blog = new Controllers\LoginController();
-$blog->render();
+use Core\AbstractController;
+use Views\LoginView;
+
+class LoginController extends AbstractController
+{
+
+    /**
+     * LoginController constructor.
+     */
+    public function __construct()
+    {
+        $this->setView(new LoginView());
+    }
+}
