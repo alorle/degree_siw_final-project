@@ -1,2 +1,6 @@
 # Provide Specific Index Page
 DirectoryIndex blog.php
+<Files ~ "config\.ini$">
+  Order allow,deny
+  Deny from all
+</Files>

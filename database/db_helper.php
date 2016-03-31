@@ -44,7 +44,7 @@ class DbHelper
     public function __construct()
     {
         // Load Db config
-        $config = parse_ini_file(PROJECT_PATH . DIRECTORY_SEPARATOR . 'db_config.ini');
+        $config = parse_ini_file(PROJECT_CONFIG_PATH . DIRECTORY_SEPARATOR . 'db_config.ini');
 
         // Set fields
         $this->host = $config["host"];
