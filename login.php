@@ -18,5 +18,5 @@
 
 include_once 'utils' . DIRECTORY_SEPARATOR . 'loader.php';
 
-$blog = new Controllers\LoginController();
-$blog->render();
+$login = new Controllers\LoginController();
+$login->render();

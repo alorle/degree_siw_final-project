@@ -66,7 +66,7 @@ abstract class AbstractView implements ViewInterface
             $this->user_action_anchor = self::ACTION_PATH_LOGOUT;
         } else {
             $this->username = 'Registrar';
-            $this->username_anchor = 'signup.php';
+            $this->username_anchor = 'sign_up.php';
             $this->user_action = self::ACTION_LOGIN;
             $this->user_action_anchor = self::ACTION_PATH_LOGIN;
         }

@@ -182,22 +182,22 @@ h2 {
     width: 90%;
 }
 
-/* -----------------------*/ /* ---------->>> LOGIN <<<-----------*/ /* -------------------------*/
-.login {
+/* -----------------------*/ /* ---------->>> ACCESS <<<-----------*/ /* ------------------------*/
+.access {
     margin: 16px auto;
     max-width: 300px;
 }
 
-.login h1 {
+.access h1 {
     color: #555555;
     text-align: center;
 }
 
-.login p {
+.access p {
     margin: 20px 0 0 0;
 }
 
-.login p.message {
+.access p.message {
     color: red;
     float: left;
     line-height: 31px;
@@ -205,28 +205,28 @@ h2 {
     vertical-align: middle;
 }
 
-.login p.submit {
+.access p.submit {
     margin-right: 12px;
     text-align: right;
 }
 
-.login-help {
+.access-help {
     clear: both;
     font-size: 11px;
     margin: 20px 0;
     text-align: center;
 }
 
-.login-help a {
+.access-help a {
     color: #5B5B5B;
     text-decoration: underline;
 }
 
-.login-help a:hover {
+.access-help a:hover {
     color: #000000;
 }
 
-.login input[type=text], .login input[type=password] {
+.access input[type=text], .access input[type=email], .access input[type=password] {
     border: 0;
     color: #404040;
     min-height: 34px;
@@ -235,12 +235,12 @@ h2 {
     width: 90%;
 }
 
-.login input[type=text]:focus, input[type=password]:focus {
+.access input[type=text]:focus, .access input[type=email]:focus, input[type=password]:focus {
     outline-color: #A4FFB2;
     outline-offset: 0;
 }
 
-.login input[type=submit] {
+.access input[type=submit] {
     background: #222222;
     border: 0;
     color: #FFFFFF;
@@ -249,13 +249,13 @@ h2 {
     padding: 8px;
 }
 
-.login input[type=submit]:hover {
+.access input[type=submit]:hover {
     background: #000000;
     box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
     -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
-.login input[type=text], .login input[type=password] {
+.access input[type=text], .access input[type=email], .access input[type=password] {
     line-height: 34px;
 }

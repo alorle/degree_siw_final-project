@@ -18,4 +18,5 @@
 
 include_once 'utils' . DIRECTORY_SEPARATOR . 'loader.php';
 
-throw new \Exception("Not implemented yet", 501);
+$sign_up = new Controllers\SignUpController();
+$sign_up->render();

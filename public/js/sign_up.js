@@ -20,10 +20,13 @@ function validate() {
     const errorColor = "#FF433D";
 
     var usernameValid = true;
+    var emailValid = true;
     var passwordValid = true;
 
     var username = document.access_form.username;
+    var email = document.access_form.email;
     var password = document.access_form.password;
+    var passwordCheck = document.access_form.password_check;
 
     if (username.value == '') {
         username.style.outlineColor = errorColor;
@@ -32,12 +35,21 @@ function validate() {
         username.style.outlineColor = originalColor;
     }
 
-    if (password.value == '') {
+    if (email.value == '') {
+        email.style.outlineColor = errorColor;
+        emailValid = false;
+    } else {
+        email.style.outlineColor = originalColor;
+    }
+
+    if (password.value == '' || passwordCheck.value == '' || password.value != passwordCheck.value) {
         password.style.outlineColor = errorColor;
+        passwordCheck.style.outlineColor = errorColor;
         passwordValid = false;
     } else {
         password.style.outlineColor = originalColor;
+        passwordCheck.style.outlineColor = originalColor;
     }
 
-    return usernameValid && passwordValid;
+    return usernameValid && emailValid && passwordValid;
 }
