@@ -15,41 +15,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function validate() {
-    const originalColor = "#EFF4F7";
-    const errorColor = "#FF433D";
+var outlineColor = '#EFF4F7';
+var outlineColorError = '#FF433D';
 
-    var usernameValid = true;
-    var emailValid = true;
-    var passwordValid = true;
-
-    var username = document.access_form.username;
-    var email = document.access_form.email;
+function validateForm() {
     var password = document.access_form.password;
-    var passwordCheck = document.access_form.password_check;
+    var password_check = document.access_form.password_check;
 
-    if (username.value == '') {
-        username.style.outlineColor = errorColor;
-        usernameValid = false;
+    if (password.value != password_check.value) {
+        alert('Las contraseñas no coinciden');
+        return false;
     } else {
-        username.style.outlineColor = originalColor;
+        return true;
     }
+}
 
-    if (email.value == '') {
-        email.style.outlineColor = errorColor;
-        emailValid = false;
+function checkPasswordMatch() {
+    var password = document.access_form.password;
+    var password_check = document.access_form.password_check;
+
+    if (password.value != password_check.value) {
+        password_check.style.outlineColor = outlineColorError;
+        return false;
     } else {
-        email.style.outlineColor = originalColor;
+        password_check.style.outlineColor = outlineColor;
+        return true;
     }
-
-    if (password.value == '' || passwordCheck.value == '' || password.value != passwordCheck.value) {
-        password.style.outlineColor = errorColor;
-        passwordCheck.style.outlineColor = errorColor;
-        passwordValid = false;
-    } else {
-        password.style.outlineColor = originalColor;
-        passwordCheck.style.outlineColor = originalColor;
-    }
-
-    return usernameValid && emailValid && passwordValid;
 }

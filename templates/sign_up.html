@@ -41,11 +41,12 @@
 <div id="content">
     <div class="access">
         <h1 class="uppercase">Registrar</h1>
-        <form name="access_form" method="post" action="#" onsubmit="return(validate());">
-            <p><input type="text" name="username" value="" placeholder="Nombre de usuario"></p>
-            <p><input type="email" name="email" value="" placeholder="Correo electrónico"></p>
-            <p><input type="password" name="password" value="" placeholder="Contraseña"></p>
-            <p><input type="password" name="password_check" value="" placeholder="Repetir contraseña"></p>
+        <form name="access_form" method="post" action="sign_up.php" onsubmit="return(validateForm());">
+            <p><input type="text" name="username" value="" placeholder="Nombre de usuario" required></p>
+            <p><input type="email" name="email" value="" placeholder="Correo electrónico" required></p>
+            <p><input type="password" id="password" name="password" value="" placeholder="Contraseña" required></p>
+            <p><input type="password" id="password_check" name="password_check" value=""
+                      placeholder="Repetir contraseña" onChange="checkPasswordMatch();" required></p>
             <p class="message">##MESSAGE##</p>
             <p class="submit"><input type="submit" name="sign_up" value="Registrar"></p>
         </form>
