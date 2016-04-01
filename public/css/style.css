@@ -259,3 +259,8 @@ h2 {
 .access input[type=text], .access input[type=email], .access input[type=password] {
     line-height: 34px;
 }
+
+/* -----------------------*/ /* ---------->>> ERRORS <<<-----------*/ /* ------------------------*/
+.error h1, .error p {
+    margin: 16px 0;
+}
