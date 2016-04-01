@@ -19,6 +19,8 @@
 namespace Views;
 
 use Core\AbstractView;
+use views\parts\FooterPartialView;
+use views\parts\HeaderPartialView;
 
 class LoginView extends AbstractView
 {
@@ -33,9 +35,9 @@ class LoginView extends AbstractView
      */
     public function __construct($msg = '')
     {
-        parent::__construct();
+        parent::__construct(new HeaderPartialView(true, true, false), new FooterPartialView());
 
-        $this->setFileTemplate(PROJECT_TEMPLATES_PATH . DIRECTORY_SEPARATOR . 'login.html');
+        $this->setTemplateFile(PROJECT_TEMPLATES_PATH . DIRECTORY_SEPARATOR . 'login.html');
         $this->setTitle('Login | ' . PROJECT_NAME);
 
         $this->message = $msg;
@@ -43,15 +45,8 @@ class LoginView extends AbstractView
 
     public function render()
     {
-        if (!file_exists($this->getFileTemplate())) {
-            throw new \Exception("Internal server error", 500);
-        }
-
-        $template = file_get_contents($this->getFileTemplate());
-        $template = str_replace(self::KEY_TITLE, $this->getTitle(), $template);
-        $template = str_replace(self::KEY_HEAD, $this->readHead(), $template);
+        $template = parent::render();
         $template = str_replace(self::KEY_MESSAGE, $this->message, $template);
-
         echo $template;
     }
 }

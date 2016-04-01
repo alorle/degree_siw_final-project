@@ -21,6 +21,8 @@ namespace Views;
 use Core\AbstractView;
 use Interfaces\BlogInterface;
 use Models\Article;
+use views\parts\FooterPartialView;
+use views\parts\HeaderPartialView;
 
 class BlogView extends AbstractView implements BlogInterface
 {
@@ -32,9 +34,9 @@ class BlogView extends AbstractView implements BlogInterface
      */
     public function __construct($articles)
     {
-        parent::__construct();
+        parent::__construct(new HeaderPartialView(true), new FooterPartialView());
 
-        $this->setFileTemplate(PROJECT_TEMPLATES_PATH . DIRECTORY_SEPARATOR . 'blog.html');
+        $this->setTemplateFile(PROJECT_TEMPLATES_PATH . DIRECTORY_SEPARATOR . 'blog.html');
         $this->setTitle('Blog | ' . PROJECT_NAME);
 
         $this->articles = $articles;

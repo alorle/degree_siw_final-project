@@ -16,38 +16,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace views;
+namespace views\parts;
 
+use core\AbstractPartialView;
 
-use Core\AbstractView;
-use views\parts\FooterPartialView;
-use views\parts\HeaderPartialView;
-
-class SignUpView extends AbstractView
+class FooterPartialView extends AbstractPartialView
 {
-    const KEY_MESSAGE = '##MESSAGE##';
-
-    private $message;
-
     /**
-     * SignUpView constructor.
-     * @param string $msg
-     * @throws \Exception
+     * @var string Name of the file containing the footer template
      */
-    public function __construct($msg = '')
+    private $file_template;
+
+    public function __construct()
     {
-        parent::__construct(new HeaderPartialView(true, false, true), new FooterPartialView());
-
-        $this->setTemplateFile(PROJECT_TEMPLATES_PATH . DIRECTORY_SEPARATOR . 'sign_up.html');
-        $this->setTitle('SignUp | ' . PROJECT_NAME);
-
-        $this->message = $msg;
+        $this->file_template = PROJECT_TEMPLATES_PARTS_PATH . DIRECTORY_SEPARATOR . 'part_footer.html';
     }
 
     public function render()
     {
-        $template = parent::render();
-        $template = str_replace(self::KEY_MESSAGE, $this->message, $template);
-        echo $template;
+        // Check that the template file exists
+        if (!file_exists($this->file_template)) {
+            throw new \Exception("Internal server error", 500);
+        }
+
+        // Get footer template
+        $template = file_get_contents($this->file_template);
+
+        return $template;
     }
 }

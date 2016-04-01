@@ -21,6 +21,8 @@ namespace Views;
 use Core\AbstractView;
 use Interfaces\BlogInterface;
 use Models\Article;
+use views\parts\FooterPartialView;
+use views\parts\HeaderPartialView;
 
 class ArticleView extends AbstractView implements BlogInterface
 {
@@ -33,9 +35,9 @@ class ArticleView extends AbstractView implements BlogInterface
      */
     public function __construct($article)
     {
-        parent::__construct();
+        parent::__construct(new HeaderPartialView(true), new FooterPartialView());
 
-        $this->setFileTemplate(PROJECT_TEMPLATES_PATH . DIRECTORY_SEPARATOR . 'article.html');
+        $this->setTemplateFile(PROJECT_TEMPLATES_PATH . DIRECTORY_SEPARATOR . 'article.html');
 
         if (is_null($article)) {
             throw new \Exception("Not found", 404);

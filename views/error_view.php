@@ -18,7 +18,11 @@
 
 namespace Views;
 
-class ErrorView
+use Core\AbstractView;
+use views\parts\FooterPartialView;
+use views\parts\HeaderPartialView;
+
+class ErrorView extends AbstractView
 {
     const KEY_TITLE = '##TITLE##';
     const KEY_ERROR_CODE = '##ERROR_CODE##';
@@ -36,30 +40,24 @@ class ErrorView
      */
     public function __construct($code = 500, $message = 'Internal server error')
     {
+        parent::__construct(new HeaderPartialView(false), new FooterPartialView());
+
         $this->code = $code;
         $this->message = $message;
 
-        $this->file_template = PROJECT_TEMPLATES_PATH . DIRECTORY_SEPARATOR . 'error.html';
+        $this->setTemplateFile(PROJECT_TEMPLATES_PATH . DIRECTORY_SEPARATOR . 'error.html');
         $this->title = $code . ' ' . $message . ' | ' . PROJECT_NAME;
     }
 
     public function render()
     {
-        if (!file_exists($this->file_template)) {
-            echo 'We\'ve screwed up. We can not report errors.<br/>';
-            echo 'If it worked for Microsoft, it will also work for us: <p style="font-size: 2em;">:(</p>';
-            return;
-        }
-
         ob_clean();
 
         $this->http_response_code($this->code);
 
-        $template = file_get_contents($this->file_template);
-        $template = str_replace(self::KEY_TITLE, $this->title, $template);
+        $template = parent::render();
         $template = str_replace(self::KEY_ERROR_CODE, $this->code, $template);
         $template = str_replace(self::KEY_ERROR_MESSAGE, $this->message, $template);
-
         echo $template;
     }
 

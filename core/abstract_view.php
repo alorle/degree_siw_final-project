@@ -19,7 +19,6 @@
 namespace Core;
 
 use Interfaces\ViewInterface;
-use utils\Session;
 
 abstract class AbstractView implements ViewInterface
 {
@@ -34,42 +33,31 @@ abstract class AbstractView implements ViewInterface
     private $file_head;
 
     /**
-     * @var string Name of the file containing the page header
-     */
-    private $file_header;
-
-    /**
-     * @var string Name of the file containing the page footer
-     */
-    private $file_footer;
-
-    /**
      * @var string Name of the file containing the page template
      */
     private $file_template;
 
-    private $username;
-    private $username_anchor;
-    private $user_action;
-    private $user_action_anchor;
+    /**
+     * @var AbstractPartialView Partial view for header
+     */
+    private $headerView;
 
-    public function __construct()
+    /**
+     * @var AbstractPartialView Partial view for footer
+     */
+    private $footerView;
+
+    /**
+     * AbstractView constructor.
+     * @param $headerView AbstractPartialView
+     * @param $footerView AbstractPartialView
+     */
+    public function __construct($headerView = null, $footerView = null)
     {
-        $this->setFileHead(PROJECT_TEMPLATES_PARTS_PATH . DIRECTORY_SEPARATOR . 'part_head.html');
-        $this->setFileHeader(PROJECT_TEMPLATES_PARTS_PATH . DIRECTORY_SEPARATOR . 'part_header.html');
-        $this->setFileFooter(PROJECT_TEMPLATES_PARTS_PATH . DIRECTORY_SEPARATOR . 'part_footer.html');
-
-        if (Session::checkUserSession()) {
-            $this->username = Session::getUserName();
-            $this->username_anchor = '#';
-            $this->user_action = self::ACTION_LOGOUT;
-            $this->user_action_anchor = self::ACTION_PATH_LOGOUT;
-        } else {
-            $this->username = 'Registrar';
-            $this->username_anchor = 'sign_up.php';
-            $this->user_action = self::ACTION_LOGIN;
-            $this->user_action_anchor = self::ACTION_PATH_LOGIN;
-        }
+        $this->title = PROJECT_NAME;
+        $this->file_head = PROJECT_TEMPLATES_PARTS_PATH . DIRECTORY_SEPARATOR . 'part_head.html';
+        $this->headerView = $headerView;
+        $this->footerView = $footerView;
     }
 
     /**
@@ -79,55 +67,63 @@ abstract class AbstractView implements ViewInterface
      */
     public function render()
     {
-        if (!file_exists($this->getFileTemplate())) {
+        // Check that the template file exists
+        if (!file_exists($this->file_template)) {
             throw new \Exception("Internal server error", 500);
         }
 
-        $template = file_get_contents($this->getFileTemplate());
-        $template = str_replace(self::KEY_TITLE, $this->getTitle(), $template);
-        $template = str_replace(self::KEY_HEAD, $this->readHead(), $template);
-        $template = str_replace(self::KEY_HEADER, $this->readHeader(), $template);
-        $template = str_replace(self::KEY_FOOTER, $this->readFooter(), $template);
+        // Get page template
+        $template = file_get_contents($this->file_template);
 
-        $template = str_replace(self::KEY_USERNAME, $this->username, $template);
-        $template = str_replace(self::KEY_USERNAME_ANCHOR, $this->username_anchor, $template);
+        // Replace HEAD, HEADER and FOOTER
+        $template = str_replace(self::KEY_HEAD, $this->readHeadFile(), $template);
+        $template = str_replace(self::KEY_HEADER, $this->renderHeader(), $template);
+        $template = str_replace(self::KEY_FOOTER, $this->renderFooter(), $template);
 
-        $template = str_replace(self::KEY_USER_ACTION, $this->user_action, $template);
-        $template = str_replace(self::KEY_USER_ACTION_ANCHOR, $this->user_action_anchor, $template);
+        // Set page title
+        $template = str_replace(self::KEY_TITLE, $this->title, $template);
 
+        // Return rendered page, as this class does not display anything
         return $template;
     }
 
     /**
-     * Read head part file and returns it's content
-     * @return string
+     * Read head file
+     * @return string Head file content or empty string if head file is not defined
      */
-    public function readHead()
+    private function readHeadFile()
     {
-        return file_get_contents($this->getFileHead());
+        if (isset($this->file_head) && file_exists($this->file_head)) {
+            return file_get_contents($this->file_head);
+        }
+
+        return '';
     }
 
     /**
-     * Read header part file and returns it's content
-     * @return string
+     * Render header view
+     * @return string Page header string or empty string if headerView is not defined
      */
-    private function readHeader()
+    private function renderHeader()
     {
-        return file_get_contents($this->getFileHeader());
+        if (isset($this->headerView)) {
+            return $this->headerView->render();
+        }
+
+        return '';
     }
 
     /**
-     * Read footer part file and returns it's content
-     * @return string
+     * Render footer view
+     * @return string Page footer string or empty string if headerView is not defined
      */
-    private function readFooter()
+    private function renderFooter()
     {
-        return file_get_contents($this->getFileFooter());
-    }
+        if (isset($this->footerView)) {
+            return $this->footerView->render();
+        }
 
-    public function getTitle()
-    {
-        return $this->title;
+        return '';
     }
 
     public function setTitle($title)
@@ -135,55 +131,13 @@ abstract class AbstractView implements ViewInterface
         $this->title = $title;
     }
 
-    public function getFileTemplate()
+    public function setHeadFile($file)
     {
-        return $this->file_template;
-    }
-
-    public function setFileTemplate($file)
-    {
-        if (!file_exists($file)) {
-            throw new \Exception("Internal server error", 500);
-        }
-        $this->file_template = $file;
-    }
-
-    public function getFileHeader()
-    {
-        return $this->file_header;
-    }
-
-    public function setFileHeader($file)
-    {
-        if (!file_exists($file)) {
-            throw new \Exception("Internal server error", 500);
-        }
-        $this->file_header = $file;
-    }
-
-    public function getFileFooter()
-    {
-        return $this->file_footer;
-    }
-
-    public function setFileFooter($file)
-    {
-        if (!file_exists($file)) {
-            throw new \Exception("Internal server error", 500);
-        }
-        $this->file_footer = $file;
-    }
-
-    public function getFileHead()
-    {
-        return $this->file_head;
-    }
-
-    private function setFileHead($file)
-    {
-        if (!file_exists($file)) {
-            throw new \Exception("Internal server error", 500);
-        }
         $this->file_head = $file;
+    }
+
+    public function setTemplateFile($file)
+    {
+        $this->file_template = $file;
     }
 }
