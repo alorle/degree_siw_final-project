@@ -106,7 +106,7 @@ h2 {
 /* -----------------------*/ /* ---------->>> CONTENT <<<-----------*/ /* -----------------------*/
 #content {
     clear: both;
-    margin: 0 auto;
+    margin: 0 auto 55px auto;
     max-width: 800px;
     width: 90%;
 }
@@ -170,6 +170,8 @@ h2 {
 /* -----------------------*/ /* ---------->>> FOOTER <<<-----------*/ /* ------------------------*/
 #footer-container {
     background-color: #222222;
+    bottom: 0;
+    position: fixed;
     width: 100%;
 }
 
