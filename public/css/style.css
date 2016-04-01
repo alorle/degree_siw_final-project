@@ -24,7 +24,7 @@
 body {
     color: #5B5B5B;
     font-family: 'Lato', sans-serif;
-    font-size: 14px;
+    font-size: 1em;
 }
 
 /* --------------------*/ /* ---------->>> USEFUL CLASSES <<<-----------*/ /* -------------------*/
@@ -49,7 +49,7 @@ h2 {
 /* ------------------------*/ /* ---------->>> HEADER <<<-----------*/ /* -----------------------*/
 #header-container {
     background-color: #222222;
-    height: 49px;
+    height: 51px;
     width: 100%;
 }
 
@@ -214,7 +214,6 @@ h2 {
 
 .access-help {
     clear: both;
-    font-size: 11px;
     margin: 20px 0;
     text-align: center;
 }
@@ -246,7 +245,6 @@ h2 {
     background: #222222;
     border: 0;
     color: #FFFFFF;
-    font-size: 12px;
     font-weight: bold;
     padding: 8px;
 }
