@@ -27,12 +27,16 @@ use views\parts\HeaderPartialView;
 class BlogView extends AbstractView implements BlogInterface
 {
     private $articles;
+    private $total_pages;
+    private $current_page;
 
     /**
      * BlogView constructor.
      * @param $articles array
+     * @param $total_pages
+     * @param $current_page
      */
-    public function __construct($articles)
+    public function __construct($articles, $total_pages = null, $current_page = null)
     {
         parent::__construct(new HeaderPartialView(true), new FooterPartialView());
 
@@ -40,6 +44,8 @@ class BlogView extends AbstractView implements BlogInterface
         $this->setTitle('Blog | ' . PROJECT_NAME);
 
         $this->articles = $articles;
+        $this->total_pages = $total_pages;
+        $this->current_page = $current_page;
     }
 
     public function render()
@@ -52,7 +58,50 @@ class BlogView extends AbstractView implements BlogInterface
             $template_articles .= $this->replaceArticleData($template_parts[1], $article);
         }
 
-        echo $template_parts[0] . $template_articles . $template_parts[2];
+        $template = $template_parts[0] . $template_articles . $template_parts[2];
+
+        $template_parts = explode(self::KEY_PAGINATION, $template);
+        if (isset($this->current_page) && isset($this->total_pages)) {
+            $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+
+            $template_parts = explode(self::KEY_PAGINATION_FIRST, $template);
+            if ($this->current_page <= 2) {
+                $template = $template_parts[0] . $template_parts[2];
+            } else {
+                $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+                $template = str_replace(self::KEY_PAGINATION_FIRST_ID, 1, $template);
+            }
+
+            $template_parts = explode(self::KEY_PAGINATION_PREV, $template);
+            if ($this->current_page <= 1) {
+                $template = $template_parts[0] . $template_parts[2];
+            } else {
+                $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+                $template = str_replace(self::KEY_PAGINATION_PREV_ID, $this->current_page - 1, $template);
+            }
+
+            $template_parts = explode(self::KEY_PAGINATION_NEXT, $template);
+            if ($this->current_page > $this->total_pages - 1) {
+                $template = $template_parts[0] . $template_parts[2];
+            } else {
+                $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+                $template = str_replace(self::KEY_PAGINATION_NEXT_ID, $this->current_page + 1, $template);
+            }
+
+            $template_parts = explode(self::KEY_PAGINATION_LAST, $template);
+            if ($this->current_page > $this->total_pages - 2) {
+                $template = $template_parts[0] . $template_parts[2];
+            } else {
+                $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+                $template = str_replace(self::KEY_PAGINATION_LAST_ID, $this->total_pages, $template);
+            }
+
+            $template = str_replace(self::KEY_PAGINATION_CURRENT_ID, $this->current_page, $template);
+        } else {
+            $template = $template_parts[0] . $template_parts[2];
+        }
+
+        echo $template;
     }
 
     private static function replaceArticleData($template, Article $article)

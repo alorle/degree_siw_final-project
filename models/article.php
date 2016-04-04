@@ -82,6 +82,16 @@ class Article implements CrudInterface
     }
 
     /**
+     * Get count of articles from database
+     * @return int Number of articles
+     * @throws \Exception
+     */
+    public static function count()
+    {
+        return count(self::getAll());
+    }
+
+    /**
      * Get all articles from database
      * @return array Array containing all the articles
      * @throws \Exception
@@ -92,6 +102,29 @@ class Article implements CrudInterface
 
         // Build sql query string
         $sql = "SELECT * FROM " . self::TABLE_NAME;
+
+        // Initialize array of articles.
+        $results_array = array();
+
+        // For each query result we include a new article in the array.
+        foreach ($db_helper->query($sql) as $index => $row) {
+            $results_array[$index] = new Article($row);
+        }
+
+        return $results_array;
+    }
+
+    /**
+     * Get a set of consecutive articles
+     * @return array Array of consecutive articles
+     * @throws \Exception
+     */
+    public static function getRangeById($first_id, $last_id)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Build sql query string
+        $sql = "SELECT * FROM " . self::TABLE_NAME . " WHERE id >= " . $first_id . " AND id < " . $last_id;
 
         // Initialize array of articles.
         $results_array = array();
