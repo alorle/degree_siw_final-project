@@ -19,6 +19,7 @@
 namespace Controllers;
 
 use Core\AbstractController;
+use Models\User;
 use utils\Session;
 use views\SignUpView;
 
@@ -51,10 +52,38 @@ class SignUpController extends AbstractController
                     // so display sign up view with error message
                     $this->setView(new SignUpView(self::STR_INVALID));
                 } else {
-                    // SignUp data is OK. Store it in database and open a new session
-                    // TODO: store new user in database
-                    Session::setUserSession($username, md5($password));
-                    redirectHome();
+                    // SignUp data is OK
+
+                    // Check if name is unique
+                    if (!is_null(User::getByName($username))) {
+                        $this->setView(new SignUpView('Nombre no válido'));
+                        return;
+                    }
+
+                    // Check if email is unique
+                    if (!is_null(User::getByEmail($email))) {
+                        $this->setView(new SignUpView('Email no válido'));
+                        return;
+                    }
+
+                    // Create user session key
+                    $session = md5($username . $email . time());
+
+                    // Insert the new user in the database
+                    $inserted = User::insert(array(array(
+                        User::COLUMN_NAME => $username,
+                        User::COLUMN_EMAIL => $email,
+                        User::COLUMN_PASSWORD => md5($password),
+                        User::COLUMN_SESSION => $session)));
+
+                    // If the insertion was successful, store session.
+                    // In other case, show an error.
+                    if ($inserted) {
+                        Session::setUserSession($session);
+                        redirectHome();
+                    } else {
+                        throw new \Exception('Internal server error', 500);
+                    }
                 }
             } else {
                 // SignUp button have not been pressed, so display sign up view

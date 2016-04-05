@@ -19,6 +19,7 @@
 namespace Controllers;
 
 use Core\AbstractController;
+use Models\User;
 use utils\Session;
 use Views\LoginView;
 
@@ -49,10 +50,24 @@ class LoginController extends AbstractController
                     // so display login view with error message
                     $this->setView(new LoginView(self::STR_INVALID));
                 } else {
-                    // Check user authentication
-                    // TODO: check user info with database data
-                    Session::setUserSession($username, md5($password));
-                    redirectHome();
+                    // Get user with given name and password
+                    $user = User::getUserByNameAndPassword($username, md5($password));
+
+                    // Login info will be correct if $user is set
+                    if (isset($user)) {
+                        // Create the new session key
+                        $session = md5($user->getName() . $user->getEmail() . time());
+
+                        // Update and store new session key
+                        User::updateSession($user->getId(), $session);
+                        Session::setUserSession($session);
+
+                        redirectHome();
+                    } else {
+                        // Display login view with error message,
+                        // as name or password is invalid
+                        $this->setView(new LoginView(self::STR_INVALID));
+                    }
                 }
             } else {
                 // Login button have not been pressed, so display login view

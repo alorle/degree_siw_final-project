@@ -31,7 +31,7 @@ class DbHelper
     /**
      * @var $connection mysqli
      */
-    private $connection;
+    public $connection;
 
     /**
      * @var $_connection DbHelper

@@ -19,10 +19,11 @@
 namespace utils;
 
 
+use Models\User;
+
 class Session
 {
-    const KEY_USERNAME = 'user_username';
-    const KEY_PASSWORD = 'user_password';
+    const KEY_SESSION = 'user_session';
     const KEY_VALID_TIME = 'user_valid_time';
 
     private static function getSessionInstance()
@@ -33,29 +34,23 @@ class Session
     public static function checkUserSession()
     {
         self::getSessionInstance();
-        if (isset($_SESSION[self::KEY_USERNAME]) && isset($_SESSION[self::KEY_PASSWORD]) && isset($_SESSION[self::KEY_VALID_TIME])) {
+        if (isset($_SESSION[self::KEY_SESSION]) && isset($_SESSION[self::KEY_VALID_TIME])) {
             // All user session variables are available
-            $valid = $_SESSION[self::KEY_VALID_TIME];
+            $session = filter_var($_SESSION[self::KEY_SESSION], FILTER_SANITIZE_STRING);
+            $valid_time = $_SESSION[self::KEY_VALID_TIME];
 
-            if ($valid >= time()) {
-                $username = filter_var($_SESSION[self::KEY_USERNAME], FILTER_SANITIZE_STRING);
-                $password = filter_var($_SESSION[self::KEY_PASSWORD], FILTER_SANITIZE_STRING);
-
-                if (!empty($username) && !empty($password)) {
-                    // TODO: check user info with database data
-                    return true;
-                }
-            }
+            // Return true if $valid_time is greater than the current time and
+            // if user with given session exists in database
+            return $valid_time >= time() && !is_null(User::getBySession($session));
         }
 
         return false;
     }
 
-    public static function setUserSession($username, $password_hash)
+    public static function setUserSession($session)
     {
         self::getSessionInstance();
-        $_SESSION[self::KEY_USERNAME] = $username;
-        $_SESSION[self::KEY_PASSWORD] = $password_hash;
+        $_SESSION[self::KEY_SESSION] = $session;
         $_SESSION[self::KEY_VALID_TIME] = time() + 24 * 60 * 60;
     }
 
@@ -68,6 +63,17 @@ class Session
     public static function getUserName()
     {
         self::getSessionInstance();
-        return $_SESSION[self::KEY_USERNAME];
+
+        // Get user session key
+        $session = filter_var($_SESSION[self::KEY_SESSION], FILTER_SANITIZE_STRING);
+
+        // Get user with given session key
+        $user = User::getBySession($session);
+
+        if (isset($user)) {
+            return $user->getName();
+        }
+
+        return null;
     }
 }
