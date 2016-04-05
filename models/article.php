@@ -22,7 +22,7 @@ namespace Models;
 use Database\DbHelper;
 use Interfaces\CrudInterface;
 
-class Article implements CrudInterface
+class Article
 {
     const TABLE_NAME = 'articles';
 
@@ -165,20 +165,5 @@ class Article implements CrudInterface
         }
 
         return null;
-    }
-
-    public static function insert($data)
-    {
-        // TODO: Implement insert() method.
-    }
-
-    public static function update($data)
-    {
-        // TODO: Implement update() method.
-    }
-
-    public static function delete($id)
-    {
-        // TODO: Implement delete() method.
     }
 }
