@@ -100,6 +100,17 @@ class Session
         return User::getBySession($session);
     }
 
+    public static function getUserId()
+    {
+        $user = self::getUser();
+
+        if (isset($user)) {
+            return $user->getId();
+        }
+
+        return null;
+    }
+
     public static function getUserName()
     {
         $user = self::getUser();

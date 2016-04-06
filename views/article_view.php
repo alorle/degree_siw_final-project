@@ -67,17 +67,17 @@ class ArticleView extends AbstractView implements BlogInterface
             $template = str_replace(self::KEY_ARTICLE_AUTHOR, $this->article->getAuthorName(), $template);
         }
 
-        $template = $this->renderActions($template);
+        $template = $this->renderActionEdit($template, $this->article->getAuthorId());
 
         echo $template;
     }
 
-    private function renderActions($template)
+    private function renderActionEdit($template, $author_id)
     {
-        if (Session::checkUserPermission(Session::PERM_WRITER)) {
-            $template = str_replace(self::KEY_WRITER, '', $template);
+        if (Session::checkUserPermission(Session::PERM_WRITER) && Session::getUserId() == $author_id) {
+            $template = str_replace(self::KEY_ACTION_EDIT, '', $template);
         } else {
-            $template_parts = explode(self::KEY_WRITER, $template);
+            $template_parts = explode(self::KEY_ACTION_EDIT, $template);
             $template = $template_parts[0] . $template_parts[2];
         }
 

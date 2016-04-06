@@ -53,7 +53,7 @@ class BlogView extends AbstractView implements BlogInterface
     {
         $template = parent::render();
 
-        $template = $this->renderActions($template);
+        $template = $this->renderActionNew($template);
 
         $template_parts = explode(self::KEY_ARTICLE_EXPLODE, $template);
         $template_articles = '';
@@ -67,7 +67,7 @@ class BlogView extends AbstractView implements BlogInterface
         echo $template;
     }
 
-    private static function replaceArticleData($template, Article $article)
+    private function replaceArticleData($template, Article $article)
     {
         $template = str_replace(self::KEY_ARTICLE_ID, $article->getId(), $template);
         $template = str_replace(self::KEY_ARTICLE_TITLE, $article->getTitle(), $template);
@@ -83,16 +83,30 @@ class BlogView extends AbstractView implements BlogInterface
             $template = str_replace(self::KEY_ARTICLE_AUTHOR, $article->getAuthorName(), $template);
         }
 
+        $template = $this->renderActionEdit($template, $article->getAuthorId());
+
         return $template;
     }
 
-    private function renderActions($template)
+    private function renderActionNew($template)
     {
         if (Session::checkUserPermission(Session::PERM_WRITER)) {
-            $template = str_replace(self::KEY_WRITER, '', $template);
+            $template = str_replace(self::KEY_ACTION_NEW, '', $template);
         } else {
-            $template_parts = explode(self::KEY_WRITER, $template);
-            $template = $template_parts[0] . $template_parts[2] . $template_parts[4];
+            $template_parts = explode(self::KEY_ACTION_NEW, $template);
+            $template = $template_parts[0] . $template_parts[2];
+        }
+
+        return $template;
+    }
+
+    private function renderActionEdit($template, $author_id)
+    {
+        if (Session::checkUserPermission(Session::PERM_WRITER) && Session::getUserId() == $author_id) {
+            $template = str_replace(self::KEY_ACTION_EDIT, '', $template);
+        } else {
+            $template_parts = explode(self::KEY_ACTION_EDIT, $template);
+            $template = $template_parts[0] . $template_parts[2];
         }
 
         return $template;
