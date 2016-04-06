@@ -52,12 +52,20 @@ class ArticleView extends AbstractView implements BlogInterface
     public function render()
     {
         $template = parent::render();
-        
+
         $template = str_replace(self::KEY_ARTICLE_ID, $this->article->getId(), $template);
         $template = str_replace(self::KEY_ARTICLE_TITLE, $this->article->getTitle(), $template);
         $template = str_replace(self::KEY_ARTICLE_BODY, $this->article->getBody(), $template);
-        $template = str_replace(self::KEY_ARTICLE_AUTHOR, $this->article->getAuthorName(), $template);
         $template = str_replace(self::KEY_ARTICLE_TIME, $this->article->getTime(), $template);
+
+        if (is_null($this->article->getAuthorName())) {
+            $template = str_replace(self::KEY_ARTICLE_AUTHOR_LINK, '', $template);
+            $template = str_replace(self::KEY_ARTICLE_AUTHOR, 'Desconocido', $template);
+        } else {
+            $link = 'href="profile.php?user=' . $this->article->getAuthorId() . '"';
+            $template = str_replace(self::KEY_ARTICLE_AUTHOR_LINK, $link, $template);
+            $template = str_replace(self::KEY_ARTICLE_AUTHOR, $this->article->getAuthorName(), $template);
+        }
 
         $template = $this->renderActions($template);
 

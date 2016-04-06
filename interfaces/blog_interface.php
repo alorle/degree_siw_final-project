@@ -24,6 +24,7 @@ interface BlogInterface
     const KEY_ARTICLE_ID = "##ARTICLE_ID##";
     const KEY_ARTICLE_TITLE = "##ARTICLE_TITLE##";
     const KEY_ARTICLE_BODY = "##ARTICLE_BODY##";
+    const KEY_ARTICLE_AUTHOR_LINK = "##ARTICLE_AUTHOR_LINK##";
     const KEY_ARTICLE_AUTHOR = "##ARTICLE_AUTHOR##";
     const KEY_ARTICLE_TIME = "##ARTICLE_TIME##";
 

@@ -72,8 +72,17 @@ class BlogView extends AbstractView implements BlogInterface
         $template = str_replace(self::KEY_ARTICLE_ID, $article->getId(), $template);
         $template = str_replace(self::KEY_ARTICLE_TITLE, $article->getTitle(), $template);
         $template = str_replace(self::KEY_ARTICLE_BODY, $article->getBody(), $template);
-        $template = str_replace(self::KEY_ARTICLE_AUTHOR, $article->getAuthorName(), $template);
         $template = str_replace(self::KEY_ARTICLE_TIME, $article->getTime(), $template);
+
+        if (is_null($article->getAuthorName())) {
+            $template = str_replace(self::KEY_ARTICLE_AUTHOR_LINK, '', $template);
+            $template = str_replace(self::KEY_ARTICLE_AUTHOR, 'Desconocido', $template);
+        } else {
+            $link = 'href="profile.php?user=' . $article->getAuthorId() . '"';
+            $template = str_replace(self::KEY_ARTICLE_AUTHOR_LINK, $link, $template);
+            $template = str_replace(self::KEY_ARTICLE_AUTHOR, $article->getAuthorName(), $template);
+        }
+
         return $template;
     }
 

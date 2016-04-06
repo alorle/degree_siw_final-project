@@ -77,8 +77,13 @@ class Article
      */
     public function getAuthorName()
     {
-        // TODO: Return the real name of the author based on $author_id
-        return "Aristóteles";
+        $user = User::getById($this->getAuthorId());
+
+        if (isset($user)) {
+            return $user->getName();
+        }
+
+        return null;
     }
 
     /**
