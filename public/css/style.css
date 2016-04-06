@@ -19,6 +19,8 @@
 @import "footer.css";
 @import "access.css";
 @import "pagination.css";
+@import "actions.css";
+@import "tooltip.css";
 
 /* ------------------------*/ /* ---------->>> GLOBAL <<<-----------*/ /* -----------------------*/
 * {

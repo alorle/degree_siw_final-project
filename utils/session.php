@@ -76,4 +76,15 @@ class Session
 
         return null;
     }
+
+    public static function getUser()
+    {
+        self::getSessionInstance();
+
+        // Get user session key
+        $session = filter_var($_SESSION[self::KEY_SESSION], FILTER_SANITIZE_STRING);
+
+        // Get user with given session key
+        return User::getBySession($session);
+    }
 }

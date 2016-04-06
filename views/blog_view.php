@@ -21,6 +21,7 @@ namespace Views;
 use Core\AbstractView;
 use Interfaces\BlogInterface;
 use Models\Article;
+use utils\Session;
 use views\parts\FooterPartialView;
 use views\parts\HeaderPartialView;
 
@@ -51,6 +52,22 @@ class BlogView extends AbstractView implements BlogInterface
     public function render()
     {
         $template = parent::render();
+
+        if (Session::checkUserSession()) {
+            $template = str_replace(self::KEY_ACTIONS, '', $template);
+
+            $user = Session::getUser();
+
+            if ($user->isWriter()) {
+                $template = str_replace(self::KEY_ACTIONS_WRITER, '', $template);
+            } else {
+                $template_parts = explode(self::KEY_ACTIONS_WRITER, $template);
+                $template = $template_parts[0] . $template_parts[2];
+            }
+        } else {
+            $template_parts = explode(self::KEY_ACTIONS, $template);
+            $template = $template_parts[0] . $template_parts[2] . $template_parts[4];
+        }
 
         $template_parts = explode(self::KEY_ARTICLE_EXPLODE, $template);
         $template_articles = '';

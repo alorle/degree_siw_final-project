@@ -21,6 +21,7 @@ namespace Views;
 use Core\AbstractView;
 use Interfaces\BlogInterface;
 use Models\Article;
+use utils\Session;
 use views\parts\FooterPartialView;
 use views\parts\HeaderPartialView;
 
@@ -56,6 +57,23 @@ class ArticleView extends AbstractView implements BlogInterface
         $template = str_replace(self::KEY_ARTICLE_BODY, $this->article->getBody(), $template);
         $template = str_replace(self::KEY_ARTICLE_AUTHOR, $this->article->getAuthorName(), $template);
         $template = str_replace(self::KEY_ARTICLE_TIME, $this->article->getTime(), $template);
+
+        $template_parts = explode(self::KEY_ACTIONS, $template);
+        if (Session::checkUserSession()) {
+            $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+
+            $user = Session::getUser();
+
+            $template_parts = explode(self::KEY_ACTIONS_WRITER, $template);
+            if ($user->isWriter()) {
+                $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+            } else {
+                $template = $template_parts[0] . $template_parts[2];
+            }
+        } else {
+            $template = $template_parts[0] . $template_parts[2];
+        }
+
         echo $template;
     }
 }

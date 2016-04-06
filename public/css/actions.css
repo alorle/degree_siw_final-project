@@ -14,58 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-.article {
-    border-bottom: 1px solid #B9B9B9;
-    margin: 16px 0;
-}
 
-.article .title {
+#actions {
+    bottom: 16px;
     color: #222222;
-    padding: 16px 0;
+    position: fixed;
+    right: 16px;
 }
 
-.article .title a {
-    border: none;
+#actions a {
     color: #222222;
     text-decoration: none;
 }
 
-.article .meta {
-    font-size: 0.9em;
-    padding: 16px 0;
+#actions a.visible {
+    opacity: 1;
+    transition: opacity 0.5s linear;
+    visibility: visible;
 }
 
-.article .meta .date {
-    float: left;
-}
-
-.article .meta .author {
-    float: right;
-}
-
-.article .meta a {
-    border: none;
-    color: #222222;
-    text-decoration: none;
-}
-
-.article .body {
-    line-height: 150%;
-    padding: 16px 0;
-    text-align: justify;
-}
-
-.article .links {
-    overflow: hidden;
-    padding: 16px 0;
-}
-
-.article .links .more {
-    background: #222222;
-    color: #FFFFFF;
-    float: right;
-    margin-left: 6px;
-    padding: 8px;
-    text-align: center;
-    text-decoration: none;
+#actions a.hidden {
+    opacity: 0;
+    transition: visibility 0.5s, opacity 0.5s linear;
+    visibility: hidden;
 }

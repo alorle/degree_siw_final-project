@@ -19,6 +19,7 @@
 <html lang="es">
 <head>
     ##HEAD##
+    <script src="public/js/blog.js"></script>
 </head>
 <body>
 
@@ -42,6 +43,11 @@
         <p class="body">##ARTICLE_BODY##</p>
         <div class="links">
             <a href="blog.php?article=##ARTICLE_ID##" class="more uppercase">Leer más</a>
+            ##ACTIONS##
+            ##ACTIONS_WRITER##
+            <a href="blog.php?edit&article=##ARTICLE_ID##" class="more uppercase">Editar</a>
+            ##ACTIONS_WRITER##
+            ##ACTIONS##
         </div>
     </article>
     ##ARTICLES_LIST##
@@ -63,6 +69,16 @@
         ##PAGINATION_LAST##
     </ul>
     ##PAGINATION##
+
+    ##ACTIONS##
+    <div id="actions">
+        ##ACTIONS_WRITER##
+        <a href="blog.php?new" data-tooltip="Añadir nuevo artículo" data-tooltip-position="left">
+            <i class="fa fa-plus-circle fa-3x"></i>
+        </a>
+        ##ACTIONS_WRITER##
+    </div>
+    ##ACTIONS##
 </main>
 
 <footer>
