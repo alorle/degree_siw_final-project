@@ -53,6 +53,32 @@ class BlogView extends AbstractView implements BlogInterface
     {
         $template = parent::render();
 
+        $template = $this->renderActions($template);
+
+        $template_parts = explode(self::KEY_ARTICLE_EXPLODE, $template);
+        $template_articles = '';
+        foreach ($this->articles as $article) {
+            $template_articles .= $this->replaceArticleData($template_parts[1], $article);
+        }
+        $template = $template_parts[0] . $template_articles . $template_parts[2];
+
+        $template = $this->renderPagination($template);
+
+        echo $template;
+    }
+
+    private static function replaceArticleData($template, Article $article)
+    {
+        $template = str_replace(self::KEY_ARTICLE_ID, $article->getId(), $template);
+        $template = str_replace(self::KEY_ARTICLE_TITLE, $article->getTitle(), $template);
+        $template = str_replace(self::KEY_ARTICLE_BODY, $article->getBody(), $template);
+        $template = str_replace(self::KEY_ARTICLE_AUTHOR, $article->getAuthorName(), $template);
+        $template = str_replace(self::KEY_ARTICLE_TIME, $article->getTime(), $template);
+        return $template;
+    }
+
+    private function renderActions($template)
+    {
         if (Session::checkUserSession()) {
             $template = str_replace(self::KEY_ACTIONS, '', $template);
 
@@ -69,14 +95,11 @@ class BlogView extends AbstractView implements BlogInterface
             $template = $template_parts[0] . $template_parts[2] . $template_parts[4];
         }
 
-        $template_parts = explode(self::KEY_ARTICLE_EXPLODE, $template);
-        $template_articles = '';
-        foreach ($this->articles as $article) {
-            $template_articles .= $this->replaceArticleData($template_parts[1], $article);
-        }
+        return $template;
+    }
 
-        $template = $template_parts[0] . $template_articles . $template_parts[2];
-
+    private function renderPagination($template)
+    {
         $template_parts = explode(self::KEY_PAGINATION, $template);
         if (isset($this->current_page) && isset($this->total_pages)) {
             $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
@@ -118,16 +141,6 @@ class BlogView extends AbstractView implements BlogInterface
             $template = $template_parts[0] . $template_parts[2];
         }
 
-        echo $template;
-    }
-
-    private static function replaceArticleData($template, Article $article)
-    {
-        $template = str_replace(self::KEY_ARTICLE_ID, $article->getId(), $template);
-        $template = str_replace(self::KEY_ARTICLE_TITLE, $article->getTitle(), $template);
-        $template = str_replace(self::KEY_ARTICLE_BODY, $article->getBody(), $template);
-        $template = str_replace(self::KEY_ARTICLE_AUTHOR, $article->getAuthorName(), $template);
-        $template = str_replace(self::KEY_ARTICLE_TIME, $article->getTime(), $template);
         return $template;
     }
 }

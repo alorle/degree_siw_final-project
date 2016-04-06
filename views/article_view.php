@@ -52,28 +52,36 @@ class ArticleView extends AbstractView implements BlogInterface
     public function render()
     {
         $template = parent::render();
+        
         $template = str_replace(self::KEY_ARTICLE_ID, $this->article->getId(), $template);
         $template = str_replace(self::KEY_ARTICLE_TITLE, $this->article->getTitle(), $template);
         $template = str_replace(self::KEY_ARTICLE_BODY, $this->article->getBody(), $template);
         $template = str_replace(self::KEY_ARTICLE_AUTHOR, $this->article->getAuthorName(), $template);
         $template = str_replace(self::KEY_ARTICLE_TIME, $this->article->getTime(), $template);
 
-        $template_parts = explode(self::KEY_ACTIONS, $template);
+        $template = $this->renderActions($template);
+
+        echo $template;
+    }
+
+    private function renderActions($template)
+    {
         if (Session::checkUserSession()) {
-            $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+            $template = str_replace(self::KEY_ACTIONS, '', $template);
 
             $user = Session::getUser();
 
-            $template_parts = explode(self::KEY_ACTIONS_WRITER, $template);
             if ($user->isWriter()) {
-                $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+                $template = str_replace(self::KEY_ACTIONS_WRITER, '', $template);
             } else {
+                $template_parts = explode(self::KEY_ACTIONS_WRITER, $template);
                 $template = $template_parts[0] . $template_parts[2];
             }
         } else {
-            $template = $template_parts[0] . $template_parts[2];
+            $template_parts = explode(self::KEY_ACTIONS, $template);
+            $template = $template_parts[0] . $template_parts[2] . $template_parts[4];
         }
 
-        echo $template;
+        return $template;
     }
 }
