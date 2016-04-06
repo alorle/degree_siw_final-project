@@ -33,34 +33,76 @@ class BlogController extends AbstractController
      */
     public function __construct()
     {
-        if (!isset($_GET['article'])) {
-            // It has not been specifically requested any article, so we show show all that fit the page.
-            $total_articles = Article::count();
-
-            if ($total_articles <= self::ARTICLES_PER_PAGE) {
-                // Show all articles available, as they are less than the articles that fit on one page.
-                $this->setView(new BlogView(Article::getAll()));
+        if (isset($_GET['article'])) {
+            if (isset($_GET['edit'])) {
+                $this->editArticle();
             } else {
-                // Calculate the number of pages needed
-                $total_pages = ceil($total_articles / self::ARTICLES_PER_PAGE);
-
-                // Get the requested page
-                $current_page = min($total_pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT,
-                    array('options' => array('default' => 1, 'min_range' => 1,))));
-
-                // Calculate the first and last article to query
-                $first_article = 1 + ($current_page - 1) * self::ARTICLES_PER_PAGE;
-                $last_article = min(($first_article + self::ARTICLES_PER_PAGE), $total_articles + 1);
-
-                // Get articles to show
-                $articles = Article::getRangeById($first_article, $last_article);
-
-                // Set the view that will be rendered
-                $this->setView(new BlogView($articles, $total_pages, $current_page));
+                $this->showArticle();
             }
         } else {
-            // It has been specifically requested an article, so we show only that.
-            $this->setView(new ArticleView(Article::getById($_GET['article'])));
+            if (isset($_GET['new'])) {
+                $this->newArticle();
+            } else {
+                $this->showAllArticles();
+            }
         }
+    }
+
+    /**
+     * Show a list with all available articles
+     * @throws \Exception
+     */
+    private function showAllArticles()
+    {
+        $total_articles = Article::count();
+
+        if ($total_articles <= self::ARTICLES_PER_PAGE) {
+            // Show all articles available, as they are less than the articles that fit on one page.
+            $this->setView(new BlogView(Article::getAll()));
+        } else {
+            // Calculate the number of pages needed
+            $total_pages = ceil($total_articles / self::ARTICLES_PER_PAGE);
+
+            // Get the requested page
+            $current_page = min($total_pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT,
+                array('options' => array('default' => 1, 'min_range' => 1,))));
+
+            // Calculate the first and last article to query
+            $first_article = 1 + ($current_page - 1) * self::ARTICLES_PER_PAGE;
+            $last_article = min(($first_article + self::ARTICLES_PER_PAGE), $total_articles + 1);
+
+            // Get articles to show
+            $articles = Article::getRangeById($first_article, $last_article);
+
+            // Set the view that will be rendered
+            $this->setView(new BlogView($articles, $total_pages, $current_page));
+        }
+    }
+
+    /**
+     * Show the requested article
+     * @throws \Exception
+     */
+    private function showArticle()
+    {
+        $this->setView(new ArticleView(Article::getById($_GET['article'])));
+    }
+
+    /**
+     * Show a form to add an article
+     * @throws \Exception
+     */
+    private function newArticle()
+    {
+        throw new \Exception('Add new article not implemented yet', 501);
+    }
+
+    /**
+     * Show a form to edit an article
+     * @throws \Exception
+     */
+    private function editArticle()
+    {
+        throw new \Exception('Edit article not implemented yet', 501);
     }
 }
