@@ -39,6 +39,5 @@ interface BlogInterface
     const KEY_PAGINATION_NEXT_ID = "##PAGINATION_NEXT_ID##";
     const KEY_PAGINATION_LAST_ID = "##PAGINATION_LAST_ID##";
 
-    const KEY_ACTIONS = "##ACTIONS##";
-    const KEY_ACTIONS_WRITER = "##ACTIONS_WRITER##";
+    const KEY_WRITER = "##WRITER##";
 }

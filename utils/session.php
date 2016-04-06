@@ -26,6 +26,10 @@ class Session
     const KEY_SESSION = 'user_session';
     const KEY_VALID_TIME = 'user_valid_time';
 
+    const PERM_WRITER = 1;
+    const PERM_MODERATOR = 2;
+    const PERM_ADMIN = 3;
+
     private static function getSessionInstance()
     {
         return isset($_SESSION) || session_start();
@@ -47,6 +51,26 @@ class Session
         return false;
     }
 
+    public static function checkUserPermission($permission)
+    {
+        $user = self::getUser();
+
+        if (!isset($user)) {
+            return false;
+        }
+
+        switch ($permission) {
+            case self::PERM_WRITER:
+                return $user->isWriter();
+            case self::PERM_MODERATOR:
+                return $user->isModerator();
+            case self::PERM_ADMIN:
+                return $user->isAdmin();
+        }
+
+        return false;
+    }
+
     public static function setUserSession($session)
     {
         self::getSessionInstance();
@@ -57,34 +81,33 @@ class Session
     public static function unsetUserSession()
     {
         self::getSessionInstance();
-        $_SESSION[self::KEY_VALID_TIME] = 0;
-    }
-
-    public static function getUserName()
-    {
-        self::getSessionInstance();
-
-        // Get user session key
-        $session = filter_var($_SESSION[self::KEY_SESSION], FILTER_SANITIZE_STRING);
-
-        // Get user with given session key
-        $user = User::getBySession($session);
-
-        if (isset($user)) {
-            return $user->getName();
-        }
-
-        return null;
+        unset($_SESSION[self::KEY_SESSION]);
+        unset($_SESSION[self::KEY_VALID_TIME]);
     }
 
     public static function getUser()
     {
         self::getSessionInstance();
 
+        if (!self::checkUserSession()) {
+            return null;
+        }
+
         // Get user session key
         $session = filter_var($_SESSION[self::KEY_SESSION], FILTER_SANITIZE_STRING);
 
         // Get user with given session key
         return User::getBySession($session);
+    }
+
+    public static function getUserName()
+    {
+        $user = self::getUser();
+
+        if (isset($user)) {
+            return $user->getName();
+        }
+
+        return null;
     }
 }

@@ -88,19 +88,10 @@ class BlogView extends AbstractView implements BlogInterface
 
     private function renderActions($template)
     {
-        if (Session::checkUserSession()) {
-            $template = str_replace(self::KEY_ACTIONS, '', $template);
-
-            $user = Session::getUser();
-
-            if ($user->isWriter()) {
-                $template = str_replace(self::KEY_ACTIONS_WRITER, '', $template);
-            } else {
-                $template_parts = explode(self::KEY_ACTIONS_WRITER, $template);
-                $template = $template_parts[0] . $template_parts[2];
-            }
+        if (Session::checkUserPermission(Session::PERM_WRITER)) {
+            $template = str_replace(self::KEY_WRITER, '', $template);
         } else {
-            $template_parts = explode(self::KEY_ACTIONS, $template);
+            $template_parts = explode(self::KEY_WRITER, $template);
             $template = $template_parts[0] . $template_parts[2] . $template_parts[4];
         }
 
