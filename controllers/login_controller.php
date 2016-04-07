@@ -59,7 +59,7 @@ class LoginController extends AbstractController
                         $session = md5($user->getName() . $user->getEmail() . time());
 
                         // Update and store new session key
-                        User::updateSession($user->getId(), $session);
+                        User::updateSession($user->getName(), $session);
                         Session::setUserSession($session);
 
                         redirectHome();

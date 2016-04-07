@@ -45,6 +45,7 @@ class Session
 
             // Return true if $valid_time is greater than the current time and
             // if user with given session exists in database
+
             return $valid_time >= time() && !is_null(User::getBySession($session));
         }
 
@@ -98,17 +99,6 @@ class Session
 
         // Get user with given session key
         return User::getBySession($session);
-    }
-
-    public static function getUserId()
-    {
-        $user = self::getUser();
-
-        if (isset($user)) {
-            return $user->getId();
-        }
-
-        return null;
     }
 
     public static function getUserName()

@@ -28,7 +28,6 @@ class HeaderPartialView extends AbstractPartialView
     const KEY_SECTION_SIGN_IN = '##SIGN_UP_SECTION##';
     const KEY_SECTION_LOGIN = '##LOGIN_SECTION##';
 
-    const KEY_USER_ID = '##USER_ID##';
     const KEY_USER_NAME = '##USER_NAME##';
 
     /**

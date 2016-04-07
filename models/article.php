@@ -29,13 +29,13 @@ class Article
     const COLUMN_ID = 'id';
     const COLUMN_TITLE = 'title';
     const COLUMN_BODY = 'body';
-    const COLUMN_AUTHOR_ID = 'author_id';
+    const COLUMN_AUTHOR = 'author';
     const COLUMN_TIME = 'time';
 
     private $id;
     private $title;
     private $body;
-    private $author_id;
+    private $author;
     private $time;
 
     public function __construct($row)
@@ -43,7 +43,7 @@ class Article
         $this->id = $row[self::COLUMN_ID];
         $this->title = $row[self::COLUMN_TITLE];
         $this->body = $row[self::COLUMN_BODY];
-        $this->author_id = $row[self::COLUMN_AUTHOR_ID];
+        $this->author = $row[self::COLUMN_AUTHOR];
         $this->time = $row[self::COLUMN_TIME];
     }
 
@@ -62,28 +62,14 @@ class Article
         return $this->body;
     }
 
-    public function getAuthorId()
+    public function getAuthor()
     {
-        return $this->author_id;
+        return $this->author;
     }
 
     public function getTime()
     {
         return $this->time;
-    }
-
-    /**
-     * @return string Name of the author of this article
-     */
-    public function getAuthorName()
-    {
-        $user = User::getById($this->getAuthorId());
-
-        if (isset($user)) {
-            return $user->getName();
-        }
-
-        return null;
     }
 
     /**

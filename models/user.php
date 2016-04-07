@@ -26,7 +26,6 @@ class User
 {
     const TABLE_NAME = 'users';
 
-    const COLUMN_ID = 'id';
     const COLUMN_NAME = 'name';
     const COLUMN_EMAIL = 'email';
     const COLUMN_PASSWORD = 'password';
@@ -36,7 +35,6 @@ class User
     const COLUMN_MODERATOR = 'moderator';
     const COLUMN_ADMIN = 'admin';
 
-    private $id;
     private $name;
     private $email;
     private $password;
@@ -48,7 +46,6 @@ class User
 
     public function __construct($row)
     {
-        $this->id = $row[self::COLUMN_ID];
         $this->name = $row[self::COLUMN_NAME];
         $this->email = $row[self::COLUMN_EMAIL];
         $this->password = $row[self::COLUMN_PASSWORD];
@@ -57,11 +54,6 @@ class User
         $this->is_writer = $row[self::COLUMN_WRITER];
         $this->is_moderator = $row[self::COLUMN_MODERATOR];
         $this->is_admin = $row[self::COLUMN_ADMIN];
-    }
-
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function getName()
@@ -149,27 +141,6 @@ class User
         $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE " .
             self::COLUMN_NAME . " = '" . $name . "' AND " .
             self::COLUMN_PASSWORD . " = '" . $password . "'";
-
-        return self::getUserFromDb($db_helper, $query);
-    }
-
-    /**
-     * Get a user with the given id
-     * @param int $id Id of the user
-     * @return User|null The requested user if exists. If not, return null
-     */
-    public static function getById($id)
-    {
-        $db_helper = DbHelper::instance();
-
-        // Sanitize $id and filter it as an int
-        $id = $db_helper->real_escape_string($id);
-        if (!$id = filter_var($id, FILTER_VALIDATE_INT)) {
-            return null;
-        }
-
-        // Build sql query string
-        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_ID . " = " . $id;
 
         return self::getUserFromDb($db_helper, $query);
     }
@@ -270,18 +241,18 @@ class User
 
     /**
      * Updates user session key
-     * @param int $id User id
+     * @param string $name User name
      * @param string $session User session key
      * @return bool Whether the update was successful
      */
-    public static function updateSession($id, $session)
+    public static function updateSession($name, $session)
     {
         $db_helper = DbHelper::instance();
 
         // Build sql query string
         $query = "UPDATE " . self::TABLE_NAME .
             " SET " . self::COLUMN_SESSION . " = '" . $session . "'" .
-            " WHERE " . self::COLUMN_ID . " = " . $id;
+            " WHERE " . self::COLUMN_NAME . " = '" . $name . "'";
 
         // Execute query
         if ($db_helper->connection->query($query) !== TRUE) {

@@ -21,6 +21,7 @@ namespace Views;
 use Core\AbstractView;
 use Interfaces\BlogInterface;
 use Models\Article;
+use Models\User;
 use utils\Session;
 use views\parts\FooterPartialView;
 use views\parts\HeaderPartialView;
@@ -72,18 +73,17 @@ class BlogView extends AbstractView implements BlogInterface
         $template = str_replace(self::KEY_ARTICLE_ID, $article->getId(), $template);
         $template = str_replace(self::KEY_ARTICLE_TITLE, $article->getTitle(), $template);
         $template = str_replace(self::KEY_ARTICLE_BODY, $article->getBody(), $template);
+        $template = str_replace(self::KEY_ARTICLE_AUTHOR, $article->getAuthor(), $template);
         $template = str_replace(self::KEY_ARTICLE_TIME, $article->getTime(), $template);
 
-        if (is_null($article->getAuthorName())) {
+        if (is_null(User::getByName($article->getAuthor()))) {
             $template = str_replace(self::KEY_ARTICLE_AUTHOR_LINK, '', $template);
-            $template = str_replace(self::KEY_ARTICLE_AUTHOR, 'Desconocido', $template);
         } else {
-            $link = 'href="profile.php?user=' . $article->getAuthorId() . '"';
+            $link = 'href="profile.php?user=' . $article->getAuthor() . '"';
             $template = str_replace(self::KEY_ARTICLE_AUTHOR_LINK, $link, $template);
-            $template = str_replace(self::KEY_ARTICLE_AUTHOR, $article->getAuthorName(), $template);
         }
 
-        $template = $this->renderActionEdit($template, $article->getAuthorId());
+        $template = $this->renderActionEdit($template, $article->getAuthor());
 
         return $template;
     }
@@ -100,9 +100,9 @@ class BlogView extends AbstractView implements BlogInterface
         return $template;
     }
 
-    private function renderActionEdit($template, $author_id)
+    private function renderActionEdit($template, $author)
     {
-        if (Session::checkUserPermission(Session::PERM_WRITER) && Session::getUserId() == $author_id) {
+        if (Session::checkUserPermission(Session::PERM_WRITER) && Session::getUserName() == $author) {
             $template = str_replace(self::KEY_ACTION_EDIT, '', $template);
         } else {
             $template_parts = explode(self::KEY_ACTION_EDIT, $template);
