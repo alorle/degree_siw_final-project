@@ -84,38 +84,25 @@ class Article
 
     /**
      * Get all articles from database
+     * @param int $limit Number of articles
+     * @param int $offset First article you want
      * @return array Array containing all the articles
      * @throws \Exception
      */
-    public static function getAll()
+    public static function getAll($limit = 0, $offset = 0)
     {
         $db_helper = DbHelper::instance();
 
         // Build sql query string
-        $sql = "SELECT * FROM " . self::TABLE_NAME;
+        $sql = "SELECT * FROM " . self::TABLE_NAME . " ORDER BY " . self::COLUMN_TIME . " DESC";
 
-        // Initialize array of articles.
-        $results_array = array();
+        if (isset($limit) && $limit != 0) {
+            $sql .= " LIMIT " . $limit;
 
-        // For each query result we include a new article in the array.
-        foreach ($db_helper->query($sql) as $index => $row) {
-            $results_array[$index] = new Article($row);
+            if (isset($offset) && $offset != 0) {
+                $sql .= " OFFSET " . $offset;
+            }
         }
-
-        return $results_array;
-    }
-
-    /**
-     * Get a set of consecutive articles
-     * @return array Array of consecutive articles
-     * @throws \Exception
-     */
-    public static function getRangeById($first_id, $last_id)
-    {
-        $db_helper = DbHelper::instance();
-
-        // Build sql query string
-        $sql = "SELECT * FROM " . self::TABLE_NAME . " WHERE id >= " . $first_id . " AND id < " . $last_id;
 
         // Initialize array of articles.
         $results_array = array();

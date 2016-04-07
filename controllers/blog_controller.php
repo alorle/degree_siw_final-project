@@ -67,12 +67,8 @@ class BlogController extends AbstractController
             $current_page = min($total_pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT,
                 array('options' => array('default' => 1, 'min_range' => 1,))));
 
-            // Calculate the first and last article to query
-            $first_article = 1 + ($current_page - 1) * self::ARTICLES_PER_PAGE;
-            $last_article = min(($first_article + self::ARTICLES_PER_PAGE), $total_articles + 1);
-
             // Get articles to show
-            $articles = Article::getRangeById($first_article, $last_article);
+            $articles = Article::getAll(self::ARTICLES_PER_PAGE, ($current_page - 1) * self::ARTICLES_PER_PAGE);
 
             // Set the view that will be rendered
             $this->setView(new BlogView($articles, $total_pages, $current_page));
