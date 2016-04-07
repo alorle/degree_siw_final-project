@@ -81,7 +81,7 @@ class DbHelper
     {
         $result = $this->connection->query($query);
         if ($this->connection->errno) {
-            throw new \Exception('Internal server error', 500);
+            throw new \Exception('Internal server error: ' . $this->connection->error . '<br/>Query: ' . $query, 500);
         }
 
         $results_array = array();
