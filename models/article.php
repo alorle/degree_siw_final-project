@@ -93,6 +93,14 @@ class Article
     {
         $db_helper = DbHelper::instance();
 
+        if ($limit < 0) {
+            $limit = 0;
+        }
+
+        if ($offset < 0) {
+            $offset = 0;
+        }
+
         // Build sql query string
         $sql = "SELECT * FROM " . self::TABLE_NAME . " ORDER BY " . self::COLUMN_TIME . " DESC";
 
