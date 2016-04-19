@@ -1,0 +1,20 @@
+<IfModule mod_rewrite.c>
+    # Enable rewrite engine
+    RewriteEngine On
+
+    # Set site URL base
+    RewriteBase /~siw29/trabajofinal/
+
+    # Hide unwanted files
+    RewriteRule ^(.gitignore|README.md)$ error/404 [L,R=301]
+
+    # Hide unwanted folders
+    RewriteRule ^(.git|config) error/404 [L,R=301]
+
+    # Do not rewrite urls for files or folders
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Rewrite all others requests
+    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+</IfModule>
