@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2016 Álvaro Orduna León
  *
@@ -16,15 +17,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once 'util' . DIRECTORY_SEPARATOR . 'utils.php';
-
-$url = array_map('strtolower', explode('/', get_param('GET', 'url')));
-
-$path = $url[0];
-$params = array_slice($url, 1);
-
-switch ($path) {
-    default:
-        echo 'Error ' . implode($url, '/');
-        break;
+/**
+ * Given the namespace of a class, it finds the file name and includes it.
+ * @param $class_name string Namespace of the class to include
+ */
+function autoload_classes($class_name)
+{
+    $namespace_parts = explode('\\', $class_name);
+    $file_name = PROJECT_PATH;
+    foreach ($namespace_parts as $namespace_part) {
+        $file_name .= DIRECTORY_SEPARATOR . from_camel_to_snake($namespace_part);
+    }
+    $file_name .= '.php';
+    if (is_file($file_name)) {
+        include_once $file_name;
+    }
 }
+
+// Register 'autoload_classes' function as __autoload() implementation
+spl_autoload_register('autoload_classes');

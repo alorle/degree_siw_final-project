@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2016 Álvaro Orduna León
  *
@@ -16,15 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once 'util' . DIRECTORY_SEPARATOR . 'utils.php';
+// Define PROJECT constants
+define('PROJECT_PATH', dirname(__DIR__));
+define('PROJECT_NAME', 'Filosofía Joven');
 
-$url = array_map('strtolower', explode('/', get_param('GET', 'url')));
+// Define PROJECT folders
+define('FOLDER_UTIL', PROJECT_PATH . DIRECTORY_SEPARATOR . 'util');
 
-$path = $url[0];
-$params = array_slice($url, 1);
-
-switch ($path) {
-    default:
-        echo 'Error ' . implode($url, '/');
-        break;
-}
+// Include util files
+include_once FOLDER_UTIL . DIRECTORY_SEPARATOR . 'functions.php';
+include_once FOLDER_UTIL . DIRECTORY_SEPARATOR . 'loader.php';

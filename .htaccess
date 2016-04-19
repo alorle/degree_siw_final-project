@@ -9,7 +9,7 @@
     RewriteRule ^(.gitignore|README.md)$ error/404 [L,R=301]
 
     # Hide unwanted folders
-    RewriteRule ^(.git|config) error/404 [L,R=301]
+    RewriteRule ^(.git|config|util) error/404 [L,R=301]
 
     # Do not rewrite urls for files or folders
     RewriteCond %{REQUEST_FILENAME} !-f
