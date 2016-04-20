@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (C) 2016 Álvaro Orduna León
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<html lang="es">
+<head>
+    ##HEAD##
+</head>
+<body>
+
+##HEADER##
+
+<main id="content">
+    ##ARTICLES_LIST##
+    <article class="article">
+        <header>
+            <h2 class="title">
+                <a href="##BASE_URL##/article/##ARTICLE_TITLE##">##ARTICLE_TITLE##</a>
+            </h2>
+        </header>
+        <p class="meta">
+            <span class="date">##ARTICLE_TIME##</span>
+            <span class="author">Publicado por <a ##ARTICLE_AUTHOR_LINK##>##ARTICLE_AUTHOR##</a></span>
+        </p>
+        <p class="summary">##ARTICLE_SUMMARY##</p>
+        <div class="links">
+            <a href="##BASE_URL##/article/##ARTICLE_TITLE##">Leer más</a>
+        </div>
+    </article>
+    ##ARTICLES_LIST##
+
+    ##PAGINATION##
+    <ul class="pagination center">
+        ##PAGINATION_FIRST##
+        <li><a href="##BASE_URL##/blog/##PAGINATION_FIRST_ID##"><<</a></li>
+        ##PAGINATION_FIRST##
+        ##PAGINATION_PREV##
+        <li><a href="##BASE_URL##/blog/##PAGINATION_PREV_ID##">##PAGINATION_PREV_ID##</a></li>
+        ##PAGINATION_PREV##
+        <li><a class="active" href="##BASE_URL##/blog/##PAGINATION_CURRENT_ID##">##PAGINATION_CURRENT_ID##</a></li>
+        ##PAGINATION_NEXT##
+        <li><a href="##BASE_URL##/blog/##PAGINATION_NEXT_ID##">##PAGINATION_NEXT_ID##</a></li>
+        ##PAGINATION_NEXT##
+        ##PAGINATION_LAST##
+        <li><a href="##BASE_URL##/blog/##PAGINATION_LAST_ID##">>></a></li>
+        ##PAGINATION_LAST##
+    </ul>
+    ##PAGINATION##
+</main>
+
+##FOOTER##
+
+</body>
+</html>

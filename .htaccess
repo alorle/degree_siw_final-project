@@ -18,3 +18,5 @@
     # Rewrite all others requests
     RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
 </IfModule>
+
+RedirectMatch "^/~siw29/trabajofinal/$" "/~siw29/trabajofinal/blog/"

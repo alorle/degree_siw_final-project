@@ -24,6 +24,9 @@ $path = $url[0];
 $params = array_slice($url, 1);
 
 switch ($path) {
+    case 'blog':
+        $controller = new App\Controllers\BlogController($params);
+        break;
     case 'session':
         $controller = new App\Controllers\SessionController($params);
         break;

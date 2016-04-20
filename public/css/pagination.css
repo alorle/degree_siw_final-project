@@ -14,36 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-@import "header.css";
-@import "footer.css";
-@import "session.css";
-@import "article.css";
-@import "pagination.css";
 
-* {
-    margin: 0;
+ul.pagination {
+    display: inline-block;
+    margin: 0 0 16px 0;
     padding: 0;
+    text-align: center;
 }
 
-html {
-    min-height: 100%;
-    position: relative;
+ul.pagination li {
+    display: inline;
 }
 
-body {
-    font-size: 1em;
-    margin: 0 0 50px 0;
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
 }
 
-h1 {
-    font-size: 2em;
-    font-weight: bold;
+ul.pagination li a.active {
+    background-color: #222222;
+    color: white;
 }
 
-#content {
-    color: #232323;
-    margin: 16px auto;
-    max-width: 800px;
-    padding: 16px auto;
-    width: 95%;
+ul.pagination li a:hover:not(.active) {
+    background-color: #222222;
+    color: white;
 }
