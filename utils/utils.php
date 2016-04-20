@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$request = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+$request = "http://" . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . $_SERVER['REQUEST_URI'];
 $base_url = substr($request, 0, strrpos($request, 'trabajofinal')) . 'trabajofinal';
 
 // Define PROJECT constants
