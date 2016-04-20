@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (C) 2016 Álvaro Orduna León
  *
@@ -16,37 +15,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+namespace Views;
 
-namespace Views\Session;
+use Core\AbstractPartial;
 
-
-use Core\AbstractView;
-use Views\FooterPartial;
-use Views\HeaderPartial;
-
-class LoginView extends AbstractView
+class FooterPartial extends AbstractPartial
 {
-    const KEY_MESSAGE = '##MESSAGE##';
-
-    private $message;
-
     /**
-     * LoginView constructor.
-     * @param string $msg
-     * @throws \Exception
+     * @var string Name of the file containing the footer template
      */
-    public function __construct($msg = '')
+    private $file_template;
+
+    public function __construct()
     {
-        parent::__construct(new HeaderPartial(), new FooterPartial());
-        $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'session' . DIRECTORY_SEPARATOR . 'login.html');
-        $this->setTitle('Login | ' . PROJECT_NAME);
-        $this->message = $msg;
+        $this->file_template = FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'part_footer.html';
     }
 
     public function render()
     {
-        $template = parent::render();
-        $template = str_replace(self::KEY_MESSAGE, $this->message, $template);
-        echo $template;
+        // Check that the template file exists
+        if (!file_exists($this->file_template)) {
+            throw new \Exception('Template does not exist', 500);
+        }
+
+        // Get footer template
+        $template = file_get_contents($this->file_template);
+        return $template;
     }
 }

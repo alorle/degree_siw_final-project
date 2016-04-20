@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2016 Álvaro Orduna León
  *
@@ -15,14 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+namespace Core;
 
-namespace Interfaces;
 
+use Interfaces\ViewInterface;
 
-interface ViewInterface
+abstract class AbstractPartial implements ViewInterface
 {
-    const KEY_HEAD = "##HEAD##";
-    const KEY_TITLE = "##TITLE##";
-    const KEY_HEADER = "##HEADER##";
-    const KEY_FOOTER = "##FOOTER##";
+    public abstract function render();
 }

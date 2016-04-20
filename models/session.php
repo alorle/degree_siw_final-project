@@ -63,11 +63,25 @@ class Session
             // All user session variables are available. Get and filter them
             $session = filter_var($_SESSION[self::KEY_SESSION_KEY], FILTER_SANITIZE_STRING);
             $valid_time = $_SESSION[self::KEY_VALID_TIME];
-            
+
             // Return true if $valid_time is greater than the current time and
             // if user with given session exists in database
             return $valid_time >= time() && !is_null(User::getBySession($session));
         }
         return false;
+    }
+
+    /**
+     * Get current user
+     * @return User|null
+     */
+    public static function getCurrentUser()
+    {
+        self::getSessionInstance();
+        if (self::isUserSessionValid()) {
+            $session = filter_var($_SESSION[self::KEY_SESSION_KEY], FILTER_SANITIZE_STRING);
+            return User::getBySession($session);
+        }
+        return null;
     }
 }

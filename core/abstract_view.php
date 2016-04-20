@@ -33,17 +33,31 @@ abstract class AbstractView implements ViewInterface
     private $file_head;
 
     /**
+     * @var AbstractPartial Partial for page header
+     */
+    private $header;
+
+    /**
+     * @var AbstractPartial Partial for page footer
+     */
+    private $footer;
+
+    /**
      * @var string Name of the file containing the page template
      */
     private $file_template;
 
     /**
      * AbstractView constructor.
+     * @param AbstractPartial|null $header
+     * @param AbstractPartial|null $footer
      */
-    public function __construct()
+    public function __construct($header = null, $footer = null)
     {
         $this->title = PROJECT_NAME;
         $this->file_head = FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'part_head.html';
+        $this->header = $header;
+        $this->footer = $footer;
     }
 
     /**
@@ -61,8 +75,10 @@ abstract class AbstractView implements ViewInterface
         // Get page template
         $template = file_get_contents($this->file_template);
 
-        // Replace HEAD
+        // Replace HEAD, HEADER and FOOTER
         $template = str_replace(self::KEY_HEAD, $this->readHeadFile(), $template);
+        $template = str_replace(self::KEY_HEADER, $this->renderHeader(), $template);
+        $template = str_replace(self::KEY_FOOTER, $this->renderFooter(), $template);
 
         // Set page title
         $template = str_replace(self::KEY_TITLE, $this->title, $template);
@@ -79,6 +95,30 @@ abstract class AbstractView implements ViewInterface
     {
         if (isset($this->file_head) && file_exists($this->file_head)) {
             return file_get_contents($this->file_head);
+        }
+        return '';
+    }
+
+    /**
+     * Render page header
+     * @return string Page header string or empty string if partial is not defined
+     */
+    private function renderHeader()
+    {
+        if (isset($this->header)) {
+            return $this->header->render();
+        }
+        return '';
+    }
+
+    /**
+     * Render page footer
+     * @return string Page footer string or empty string if partial is not defined
+     */
+    private function renderFooter()
+    {
+        if (isset($this->footer)) {
+            return $this->footer->render();
         }
         return '';
     }
