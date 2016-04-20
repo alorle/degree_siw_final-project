@@ -22,8 +22,8 @@ namespace Controllers;
 use Core\AbstractController;
 use Models\Session;
 use Models\User;
-use Views\LoginView;
-use Views\SignUpView;
+use Views\Session\LoginView;
+use Views\Session\SignUpView;
 
 class SessionController extends AbstractController
 {

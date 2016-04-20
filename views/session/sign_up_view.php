@@ -17,27 +17,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Views;
+namespace Views\Session;
 
 
 use Core\AbstractView;
 
-class LoginView extends AbstractView
+class SignUpView extends AbstractView
 {
     const KEY_MESSAGE = '##MESSAGE##';
 
     private $message;
 
     /**
-     * LoginView constructor.
+     * SignUpView constructor.
      * @param string $msg
      * @throws \Exception
      */
     public function __construct($msg = '')
     {
         parent::__construct();
-        $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'session' . DIRECTORY_SEPARATOR . 'login.html');
-        $this->setTitle('Login | ' . PROJECT_NAME);
+        $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'session' . DIRECTORY_SEPARATOR . 'sign_up.html');
+        $this->setTitle('Sign Up | ' . PROJECT_NAME);
         $this->message = $msg;
     }
 
