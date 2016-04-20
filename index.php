@@ -25,6 +25,8 @@ $params = array_slice($url, 1);
 
 switch ($path) {
     default:
-        echo 'Error ' . implode($url, '/');
+        $controller = new Controllers\ErrorController(404);
         break;
 }
+
+$controller->render();

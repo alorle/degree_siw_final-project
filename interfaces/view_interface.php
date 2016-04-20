@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (C) 2016 Álvaro Orduna León
  *
@@ -17,15 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Define PROJECT constants
-define('PROJECT_PATH', dirname(__DIR__));
-define('PROJECT_NAME', 'Filosofía Joven');
+namespace Interfaces;
 
-// Define PROJECT folders
-define('FOLDER_UTIL', PROJECT_PATH . DIRECTORY_SEPARATOR . 'util');
-define('FOLDER_TEMPLATES', PROJECT_PATH . DIRECTORY_SEPARATOR . 'templates');
 
-// Include util files
-include_once FOLDER_UTIL . DIRECTORY_SEPARATOR . 'functions.php';
-include_once FOLDER_UTIL . DIRECTORY_SEPARATOR . 'loader.php';
-include_once FOLDER_UTIL . DIRECTORY_SEPARATOR . 'error_handler.php';
+interface ViewInterface
+{
+    const KEY_HEAD = "##HEAD##";
+    const KEY_TITLE = "##TITLE##";
+}
