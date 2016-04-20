@@ -23,12 +23,19 @@ use Core\AbstractController;
 use Models\Session;
 use Models\User;
 use Views\LoginView;
+use Views\SignUpView;
 
 class SessionController extends AbstractController
 {
     const KEY_POST_LOGIN_FORM = 'login';
     const KEY_POST_LOGIN_FORM_USERNAME = 'username';
     const KEY_POST_LOGIN_FORM_PASSWORD = 'password';
+
+    const KEY_POST_SIGN_UP_FORM = 'sign_up';
+    const KEY_POST_SIGN_UP_FORM_USERNAME = 'username';
+    const KEY_POST_SIGN_UP_FORM_EMAIL = 'email';
+    const KEY_POST_SIGN_UP_FORM_PASSWORD = 'password';
+    const KEY_POST_SIGN_UP_FORM_PASSWORD_VALIDATION = 'password_validation';
 
     const STR_INVALID_FORM = 'Datos invalidos';
 
@@ -105,5 +112,61 @@ class SessionController extends AbstractController
 
     private function sign_up()
     {
+        if (Session::isUserSessionValid()) {
+            redirect();
+        } else {
+            if (isset($_POST[self::KEY_POST_SIGN_UP_FORM])) {
+                // We have received the sign_up form, so check fields
+                $username = filter_var($_POST[self::KEY_POST_SIGN_UP_FORM_USERNAME], FILTER_SANITIZE_STRING);
+                $email = filter_var($_POST[self::KEY_POST_SIGN_UP_FORM_EMAIL], FILTER_SANITIZE_EMAIL);
+                $password = filter_var($_POST[self::KEY_POST_SIGN_UP_FORM_PASSWORD], FILTER_SANITIZE_STRING);
+                $password_validation = filter_var($_POST[self::KEY_POST_SIGN_UP_FORM_PASSWORD_VALIDATION], FILTER_SANITIZE_STRING);
+
+                if (empty($username) || empty($email) || empty($password) || empty($password_validation)) {
+                    // Sign_up fields are empty (after sanitize),
+                    // so display sign up view with error message
+                    $this->setView(new SignUpView(self::STR_INVALID_FORM));
+                } else {
+                    // Check if name is unique
+                    if (User::existsUserName($username)) {
+                        $this->setView(new SignUpView('Nombre no válido'));
+                        return;
+                    }
+
+                    // Check if email is unique
+                    if (User::existsUserEmail($email)) {
+                        $this->setView(new SignUpView('Email no válido'));
+                        return;
+                    }
+
+                    // Check if password is valid
+                    if ($password != $password_validation) {
+                        $this->setView(new SignUpView('Las contraseñas no coinciden'));
+                        return;
+                    }
+
+                    // Create user session key
+                    $session_key = md5($username . $email . time());
+
+                    // Insert the new user in the database
+                    $inserted = User::insert(array(
+                        User::COLUMN_NAME => $username,
+                        User::COLUMN_EMAIL => $email,
+                        User::COLUMN_PASSWORD => md5($password),
+                        User::COLUMN_SESSION => $session_key));
+
+                    // If the insertion was successful, store session.
+                    // In other case, show an error.
+                    if ($inserted) {
+                        Session::setUserSession($session_key);
+                        redirect();
+                    } else {
+                        throw new \Exception('Data could not be stored', 500);
+                    }
+                }
+            } else {
+                $this->setView(new SignUpView());
+            }
+        }
     }
 }

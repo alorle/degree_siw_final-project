@@ -152,6 +152,35 @@ class User
     }
 
     /**
+     * Insert a new user in the database
+     * @param array $user New user data to insert in database
+     * @return bool Whether the insertion was successful
+     */
+    public static function insert($user)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Build sql query string
+        $query = "INSERT INTO " . self::TABLE_NAME . " (" .
+            self::COLUMN_NAME . ", " .
+            self::COLUMN_EMAIL . ", " .
+            self::COLUMN_PASSWORD . ", " .
+            self::COLUMN_SESSION .
+            ") VALUES (" .
+            "'" . $user[self::COLUMN_NAME] . "', " .
+            "'" . $user[self::COLUMN_EMAIL] . "', " .
+            "'" . $user[self::COLUMN_PASSWORD] . "', " .
+            "'" . $user[self::COLUMN_SESSION] . "')";
+
+        // Execute query
+        if ($db_helper->connection->query($query) !== TRUE) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Updates user session key
      * @param string $name User name
      * @param string $session_key User session key
@@ -176,5 +205,41 @@ class User
         }
 
         return true;
+    }
+
+    /**
+     * Check if exists a user with the given name
+     * @param $name
+     * @return bool
+     */
+    public static function existsUserName($name)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from username
+        $name = $db_helper->connection->real_escape_string($name);
+
+        // Build sql query string
+        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_NAME . " = '" . $name . "'";
+
+        return !is_null(self::getUserFromDb($db_helper, $query));
+    }
+
+    /**
+     * Check if exists a user with the given email
+     * @param $email
+     * @return bool
+     */
+    public static function existsUserEmail($email)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from email
+        $email = $db_helper->connection->real_escape_string($email);
+
+        // Build sql query string
+        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_EMAIL . " = '" . $email . "'";
+
+        return !is_null(self::getUserFromDb($db_helper, $query));
     }
 }
