@@ -17,9 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+$request = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+$base_url = substr($request, 0, strrpos($request, 'trabajofinal')) . 'trabajofinal';
+
 // Define PROJECT constants
 define('PROJECT_PATH', dirname(__DIR__));
 define('PROJECT_NAME', 'Filosofía Joven');
+define('PROJECT_BASE_URL', $base_url);
 
 // Define PROJECT folders
 define('FOLDER_UTIL', PROJECT_PATH . DIRECTORY_SEPARATOR . 'util');

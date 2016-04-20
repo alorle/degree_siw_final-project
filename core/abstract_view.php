@@ -83,6 +83,9 @@ abstract class AbstractView implements ViewInterface
         // Set page title
         $template = str_replace(self::KEY_TITLE, $this->title, $template);
 
+        // Set base url
+        $template = str_replace(self::KEY_BASE_URL, PROJECT_BASE_URL, $template);
+
         // Return rendered page, as this class does not display anything
         return $template;
     }

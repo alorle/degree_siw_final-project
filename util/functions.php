@@ -60,7 +60,7 @@ function get_param($method, $name)
  * Redirects the user to the given location.
  * @param $location
  */
-function redirect($location = '..')
+function redirect($location = PROJECT_BASE_URL)
 {
     header('Location: ' . $location);
     die();

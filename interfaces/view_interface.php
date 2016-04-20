@@ -25,4 +25,5 @@ interface ViewInterface
     const KEY_TITLE = "##TITLE##";
     const KEY_HEADER = "##HEADER##";
     const KEY_FOOTER = "##FOOTER##";
+    const KEY_BASE_URL = '##BASE_URL##';
 }
