@@ -15,31 +15,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Views;
 
-use Core\AbstractPartial;
+namespace App\Interfaces;
 
-class FooterPartial extends AbstractPartial
+
+interface ViewInterface
 {
-    /**
-     * @var string Name of the file containing the footer template
-     */
-    private $file_template;
-
-    public function __construct()
-    {
-        $this->file_template = FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'part_footer.html';
-    }
-
-    public function render()
-    {
-        // Check that the template file exists
-        if (!file_exists($this->file_template)) {
-            throw new \Exception('Template does not exist', 500);
-        }
-
-        // Get footer template
-        $template = file_get_contents($this->file_template);
-        return $template;
-    }
+    const KEY_HEAD = "##HEAD##";
+    const KEY_TITLE = "##TITLE##";
+    const KEY_HEADER = "##HEADER##";
+    const KEY_FOOTER = "##FOOTER##";
+    const KEY_BASE_URL = '##BASE_URL##';
 }

@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Views;
+namespace App\Views;
 
 
-use Core\AbstractView;
+use App\Core\AbstractView;
 
 class ErrorView extends AbstractView
 {

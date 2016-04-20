@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Controllers\ErrorController;
+use App\Controllers\ErrorController;
 
 /**
  * Error handler function

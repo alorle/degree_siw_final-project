@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Controllers;
+namespace App\Controllers;
 
 
-use Core\AbstractController;
-use Views\ErrorView;
+use App\Core\AbstractController;
+use App\Views\ErrorView;
 
 class ErrorController extends AbstractController
 {

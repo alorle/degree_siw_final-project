@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once 'util' . DIRECTORY_SEPARATOR . 'utils.php';
+include_once 'utils' . DIRECTORY_SEPARATOR . 'utils.php';
 
 $url = array_map('strtolower', explode('/', get_param('GET', 'url')));
 
@@ -25,10 +25,10 @@ $params = array_slice($url, 1);
 
 switch ($path) {
     case 'session':
-        $controller = new Controllers\SessionController($params);
+        $controller = new App\Controllers\SessionController($params);
         break;
     default:
-        $controller = new Controllers\ErrorController(404);
+        $controller = new App\Controllers\ErrorController(404);
         break;
 }
 

@@ -16,14 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Controllers;
+namespace App\Controllers;
 
 
-use Core\AbstractController;
-use Models\Session;
-use Models\User;
-use Views\Session\LoginView;
-use Views\Session\SignUpView;
+use App\Core\AbstractController;
+use App\Models\Session;
+use App\Models\User;
+use App\Views\Session\LoginView;
+use App\Views\Session\SignUpView;
 
 class SessionController extends AbstractController
 {

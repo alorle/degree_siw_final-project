@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Views;
+namespace App\Views;
 
-use Core\AbstractPartial;
-use Models\Session;
+use App\Core\AbstractPartial;
+use App\Models\Session;
 
 class HeaderPartial extends AbstractPartial
 {

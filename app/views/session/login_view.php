@@ -17,29 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Views\Session;
+namespace App\Views\Session;
 
 
-use Core\AbstractView;
-use Views\FooterPartial;
-use Views\HeaderPartial;
+use App\Core\AbstractView;
+use App\Views\FooterPartial;
+use App\Views\HeaderPartial;
 
-class SignUpView extends AbstractView
+class LoginView extends AbstractView
 {
     const KEY_MESSAGE = '##MESSAGE##';
 
     private $message;
 
     /**
-     * SignUpView constructor.
+     * LoginView constructor.
      * @param string $msg
      * @throws \Exception
      */
     public function __construct($msg = '')
     {
         parent::__construct(new HeaderPartial(), new FooterPartial());
-        $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'session' . DIRECTORY_SEPARATOR . 'sign_up.html');
-        $this->setTitle('Sign Up | ' . PROJECT_NAME);
+        $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'session' . DIRECTORY_SEPARATOR . 'login.html');
+        $this->setTitle('Login | ' . PROJECT_NAME);
         $this->message = $msg;
     }
 

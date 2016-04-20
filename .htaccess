@@ -6,10 +6,10 @@
     RewriteBase /~siw29/trabajofinal/
 
     # Hide unwanted files
-    RewriteRule ^(.gitignore|README.md)$ error/404 [L,R=301]
+    RewriteRule ^(.gitignore|README.md)$ . [L,R=301]
 
     # Hide unwanted folders
-    RewriteRule ^(.git|config|util) error/404 [L,R=301]
+    RewriteRule ^(.git|app|config|util) . [L,R=301]
 
     # Do not rewrite urls for files or folders
     RewriteCond %{REQUEST_FILENAME} !-f
