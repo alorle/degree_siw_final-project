@@ -24,6 +24,9 @@ $path = $url[0];
 $params = array_slice($url, 1);
 
 switch ($path) {
+    case 'session':
+        $controller = new Controllers\SessionController($params);
+        break;
     default:
         $controller = new Controllers\ErrorController(404);
         break;

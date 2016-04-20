@@ -55,3 +55,13 @@ function get_param($method, $name)
 
     return null;
 }
+
+/**
+ * Redirects the user to the given location.
+ * @param $location
+ */
+function redirect($location = '..')
+{
+    header('Location: ' . $location);
+    die();
+}

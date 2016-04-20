@@ -24,6 +24,7 @@ define('PROJECT_NAME', 'Filosofía Joven');
 // Define PROJECT folders
 define('FOLDER_UTIL', PROJECT_PATH . DIRECTORY_SEPARATOR . 'util');
 define('FOLDER_TEMPLATES', PROJECT_PATH . DIRECTORY_SEPARATOR . 'templates');
+define('FOLDER_CONFIG', PROJECT_PATH . DIRECTORY_SEPARATOR . 'config');
 
 // Include util files
 include_once FOLDER_UTIL . DIRECTORY_SEPARATOR . 'functions.php';
