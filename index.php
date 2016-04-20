@@ -30,6 +30,9 @@ switch ($path) {
     case 'session':
         $controller = new App\Controllers\SessionController($params);
         break;
+    case 'error':
+        $controller = new App\Controllers\SessionController($params[0]);
+        break;
     default:
         $controller = new App\Controllers\ErrorController(404);
         break;

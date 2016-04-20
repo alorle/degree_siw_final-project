@@ -5,18 +5,15 @@
     # Set site URL base
     RewriteBase /~siw29/trabajofinal/
 
-    # Hide unwanted files
-    RewriteRule ^(.gitignore|README.md)$ . [L,R=301]
+    # Do not rewrite public files requests
+    RewriteRule ^(public) - [L]
 
-    # Hide unwanted folders
-    RewriteRule ^(.git|app|config|util) . [L,R=301]
-
-    # Do not rewrite urls for files or folders
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
+    # Do not serve folders that exist on the server
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^(.*) error/404 [L]
 
     # Rewrite all others requests
-    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+    RewriteRule ^(.*) index.php?url=$1 [QSA,L]
 </IfModule>
 
 RedirectMatch "^/~siw29/trabajofinal/$" "/~siw29/trabajofinal/blog/"
