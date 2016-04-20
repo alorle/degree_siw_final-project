@@ -1,12 +1,16 @@
-<header>
-    <ul>
-        <li><a href="##BASE_URL##">Inicio</a></li>
-        ##SECTION_SESSION##
-        <li><a href="##BASE_URL##/user/##USERNAME##">##USERNAME##</a></li>
-        <li><a href="##BASE_URL##/session/logout">Cerrar sesión</a></li>
-        ##SECTION_SESSION##
-        <li><a href="##BASE_URL##/session/sign_up">Registrar</a></li>
-        <li><a href="##BASE_URL##/session/login">Iniciar sesión</a></li>
-        ##SECTION_SESSION##
-    </ul>
+<header id="header-container">
+    <nav id="header-content">
+        <ul id="header-menu">
+            <li><a href="##BASE_URL##">Inicio</a></li>
+        </ul>
+        <ul id="header-session">
+            ##SECTION_SESSION##
+            <li><a href="##BASE_URL##/user/##USERNAME##">##USERNAME##</a></li>
+            <li><a href="##BASE_URL##/session/logout">Cerrar sesión</a></li>
+            ##SECTION_SESSION##
+            <li><a href="##BASE_URL##/session/sign_up">Registrar</a></li>
+            <li><a href="##BASE_URL##/session/login">Iniciar sesión</a></li>
+            ##SECTION_SESSION##
+        </ul>
+    </nav>
 </header>

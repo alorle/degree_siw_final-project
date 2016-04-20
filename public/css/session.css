@@ -1,0 +1,76 @@
+/*
+ * Copyright (C) 2016 Álvaro Orduna León
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.session {
+    margin: 16px auto;
+    max-width: 300px;
+}
+
+.session h1 {
+    color: #232323;
+    text-align: center;
+}
+
+.session p {
+    margin: 20px 0 0 0;
+}
+
+.session p.message {
+    color: red;
+    float: left;
+    line-height: 31px;
+    position: relative;
+    vertical-align: middle;
+}
+
+.session p.submit {
+    margin-right: 12px;
+    text-align: right;
+}
+
+.session input[type=text], .session input[type=email], .session input[type=password] {
+    border: 0;
+    color: #232323;
+    min-height: 34px;
+    outline: 5px solid #EFF4F7;
+    padding: 0 8px;
+    width: 90%;
+}
+
+.session input[type=text]:focus, .session input[type=email]:focus, input[type=password]:focus {
+    outline-color: #A4FFB2;
+    outline-offset: 0;
+}
+
+.session input[type=submit] {
+    background: #232323;
+    border: 0;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 8px;
+}
+
+.session input[type=submit]:hover {
+    background: black;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.session input[type=text], .session input[type=email], .session input[type=password] {
+    line-height: 34px;
+}

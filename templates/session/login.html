@@ -24,13 +24,17 @@
 
 ##HEADER##
 
-<h1>Iniciar sesión</h1>
-<form method="post" action="##BASE_URL##/session/login">
-    <p><input type="text" name="username" value="" placeholder="Nombre de usuario" required></p>
-    <p><input type="password" name="password" value="" placeholder="Contraseña" required></p>
-    <p>##MESSAGE##</p>
-    <p><input type="submit" name="login" value="Acceder"></p>
-</form>
+<main id="content">
+    <div class="session">
+        <h1>Iniciar sesión</h1>
+        <form method="post" action="##BASE_URL##/session/login">
+            <p><input type="text" name="username" value="" placeholder="Nombre de usuario" required></p>
+            <p><input type="password" name="password" value="" placeholder="Contraseña" required></p>
+            <p class="message">##MESSAGE##</p>
+            <p class="submit"><input type="submit" name="login" value="Acceder"></p>
+        </form>
+    </div>
+</main>
 
 ##FOOTER##
 
