@@ -22,6 +22,7 @@ namespace App\Interfaces;
 interface BlogInterface
 {
     const KEY_ARTICLE_EXPLODE = "##ARTICLES_LIST##";
+    const KEY_ARTICLE_ID = "##ARTICLE_ID##";
     const KEY_ARTICLE_TITLE = "##ARTICLE_TITLE##";
     const KEY_ARTICLE_SUMMARY = "##ARTICLE_SUMMARY##";
     const KEY_ARTICLE_BODY = "##ARTICLE_BODY##";

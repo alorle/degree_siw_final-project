@@ -68,6 +68,7 @@ class BlogView extends AbstractView implements BlogInterface
 
     private function replaceArticle($template, Article $article)
     {
+        $template = str_replace(self::KEY_ARTICLE_ID, $article->getId(), $template);
         $template = str_replace(self::KEY_ARTICLE_TITLE, $article->getTitle(), $template);
         $template = str_replace(self::KEY_ARTICLE_SUMMARY, $article->getSummary(), $template);
         $template = str_replace(self::KEY_ARTICLE_TIME, $article->getTime(), $template);
