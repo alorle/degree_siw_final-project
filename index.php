@@ -27,11 +27,17 @@ switch ($path) {
     case 'blog':
         $controller = new App\Controllers\BlogController($params);
         break;
+    case 'article':
+        $controller = new App\Controllers\ErrorController(501);
+        break;
+    case 'user':
+        $controller = new App\Controllers\ErrorController(501);
+        break;
     case 'session':
         $controller = new App\Controllers\SessionController($params);
         break;
     case 'error':
-        $controller = new App\Controllers\SessionController($params[0]);
+        $controller = new App\Controllers\ErrorController($params[0]);
         break;
     default:
         $controller = new App\Controllers\ErrorController(404);
