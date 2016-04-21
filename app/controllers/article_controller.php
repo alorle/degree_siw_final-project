@@ -21,7 +21,7 @@ namespace app\controllers;
 
 use App\Core\AbstractController;
 use App\Models\Article;
-use App\Views\Blog\BlogView;
+use App\Views\Article\ShowArticleView;
 use App\Views\ErrorView;
 
 class ArticleController extends AbstractController
@@ -72,7 +72,7 @@ class ArticleController extends AbstractController
         if (is_null($article = Article::getById($id))) {
             $this->setView(new ErrorView(404, 'Not found', 'El articulo "' . $id . '" no existe.'));
         } else {
-            throw new \Exception('Page to show an article has not been implemented yet', 501);
+            $this->setView(new ShowArticleView($article));
         }
     }
 }
