@@ -134,4 +134,31 @@ class Article
 
         return $results_array;
     }
+
+    /**
+     * Get article with given id from database
+     * @param string $id Article id
+     * @return Article|null The requested article if exists. If not, return null
+     */
+    public static function getById($id)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from article_id
+        $id = $db_helper->connection->real_escape_string($id);
+
+        // Build sql query string
+        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE " .
+            self::COLUMN_ID . " = '" . $id . "'";
+
+        // Execute query
+        $result = $db_helper->query($query);
+
+        // We return an article only if the result is unique
+        if (count($result) == 1) {
+            return new Article($result[0]);
+        }
+
+        return null;
+    }
 }

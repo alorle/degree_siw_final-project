@@ -28,7 +28,7 @@ switch ($path) {
         $controller = new App\Controllers\BlogController($params);
         break;
     case 'article':
-        $controller = new App\Controllers\ErrorController(501);
+        $controller = new App\Controllers\ArticleController($params);
         break;
     case 'user':
         $controller = new App\Controllers\ErrorController(501);
