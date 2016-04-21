@@ -19,6 +19,7 @@
 <html lang="es">
 <head>
     ##HEAD##
+    <script src="##BASE_URL##/public/js/sign_up.js"></script>
 </head>
 <body>
 
@@ -27,12 +28,15 @@
 <main id="content">
     <div class="session">
         <h1>Registrar</h1>
-        <form method="post" action="##BASE_URL##/session/sign_up">
-            <p><input type="text" name="username" value="" placeholder="Nombre de usuario" required></p>
+        <form method="post" action="##BASE_URL##/session/sign_up" onsubmit="return(validateForm());">
+            <p><input type="text" id="name" name="name" value="" placeholder="Nombre"
+                      oninput="updateName();" required></p>
+            <p><input type="text" id="username" name="username" value="" placeholder="Usuario" required></p>
             <p><input type="email" name="email" value="" placeholder="Correo electrónico" required></p>
-            <p><input type="password" name="password" value="" placeholder="Contraseña" required></p>
-            <p><input type="password" name="password_validation" value="" placeholder="Repetir contraseña" required></p>
-            <p class="message">##MESSAGE##</p>
+            <p><input type="password" id="password" name="password" value="" placeholder="Contraseña" required></p>
+            <p><input type="password" id="password_validation" name="password_validation" value=""
+                      placeholder="Repetir contraseña" required></p>
+            <p id="message" class="message">##MESSAGE##</p>
             <p class="submit"><input type="submit" name="sign_up" value="Registrar"></p>
         </form>
     </div>

@@ -23,6 +23,7 @@ use App\Database\DbHelper;
 class User
 {
     const TABLE_NAME = 'users';
+    const COLUMN_USERNAME = 'username';
     const COLUMN_NAME = 'name';
     const COLUMN_EMAIL = 'email';
     const COLUMN_PASSWORD = 'password';
@@ -32,6 +33,7 @@ class User
     const COLUMN_MODERATOR = 'moderator';
     const COLUMN_ADMIN = 'admin';
 
+    private $username;
     private $name;
     private $email;
     private $password;
@@ -43,6 +45,7 @@ class User
 
     public function __construct($row)
     {
+        $this->username = $row[self::COLUMN_USERNAME];
         $this->name = $row[self::COLUMN_NAME];
         $this->email = $row[self::COLUMN_EMAIL];
         $this->password = $row[self::COLUMN_PASSWORD];
@@ -51,6 +54,11 @@ class User
         $this->is_writer = $row[self::COLUMN_WRITER];
         $this->is_moderator = $row[self::COLUMN_MODERATOR];
         $this->is_admin = $row[self::COLUMN_ADMIN];
+    }
+
+    public function getUsername()
+    {
+        return $this->username;
     }
 
     public function getName()
@@ -112,23 +120,43 @@ class User
         return null;
     }
 
+
     /**
-     * Get a user with the given name and password
-     * @param string $name Name of the user
-     * @param string $password MD5 sum of the user password
+     * Get a user with the given username
+     * @param string $username
      * @return User|null The requested user if exists. If not, return null
      */
-    public static function getByNameAndPassword($name, $password)
+    public static function getByUsername($username)
     {
         $db_helper = DbHelper::instance();
 
-        // Escape special characters from name and password
-        $name = $db_helper->connection->real_escape_string($name);
+        // Escape special characters from username
+        $username = $db_helper->connection->real_escape_string($username);
+
+        // Build sql query string
+        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE " .
+            self::COLUMN_USERNAME . " = '" . $username . "'";
+
+        return self::getUserFromDb($db_helper, $query);
+    }
+
+    /**
+     * Get a user with the given username and password
+     * @param string $username
+     * @param string $password MD5 sum of the user password
+     * @return User|null The requested user if exists. If not, return null
+     */
+    public static function getByUsernameAndPassword($username, $password)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from username and password
+        $username = $db_helper->connection->real_escape_string($username);
         $password = $db_helper->connection->real_escape_string($password);
 
         // Build sql query string
         $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE " .
-            self::COLUMN_NAME . " = '" . $name . "' AND " .
+            self::COLUMN_USERNAME . " = '" . $username . "' AND " .
             self::COLUMN_PASSWORD . " = '" . $password . "'";
 
         return self::getUserFromDb($db_helper, $query);
@@ -162,11 +190,13 @@ class User
 
         // Build sql query string
         $query = "INSERT INTO " . self::TABLE_NAME . " (" .
+            self::COLUMN_USERNAME . ", " .
             self::COLUMN_NAME . ", " .
             self::COLUMN_EMAIL . ", " .
             self::COLUMN_PASSWORD . ", " .
             self::COLUMN_SESSION .
             ") VALUES (" .
+            "'" . $user[self::COLUMN_USERNAME] . "', " .
             "'" . $user[self::COLUMN_NAME] . "', " .
             "'" . $user[self::COLUMN_EMAIL] . "', " .
             "'" . $user[self::COLUMN_PASSWORD] . "', " .
@@ -182,22 +212,22 @@ class User
 
     /**
      * Updates user session key
-     * @param string $name User name
+     * @param string $username User name
      * @param string $session_key User session key
      * @return bool Whether the update was successful
      */
-    public static function updateSession($name, $session_key)
+    public static function updateSession($username, $session_key)
     {
         $db_helper = DbHelper::instance();
 
         // Escape special characters from name and session_key
-        $name = $db_helper->connection->real_escape_string($name);
+        $username = $db_helper->connection->real_escape_string($username);
         $session_key = $db_helper->connection->real_escape_string($session_key);
 
         // Build sql query string
         $query = "UPDATE " . self::TABLE_NAME .
             " SET " . self::COLUMN_SESSION . " = '" . $session_key . "'" .
-            " WHERE " . self::COLUMN_NAME . " = '" . $name . "'";
+            " WHERE " . self::COLUMN_USERNAME . " = '" . $username . "'";
 
         // Execute query
         if ($db_helper->connection->query($query) !== TRUE) {
@@ -208,19 +238,19 @@ class User
     }
 
     /**
-     * Check if exists a user with the given name
-     * @param $name
+     * Check if exists a user with the given username
+     * @param $username
      * @return bool
      */
-    public static function existsUserName($name)
+    public static function existsUsername($username)
     {
         $db_helper = DbHelper::instance();
 
         // Escape special characters from username
-        $name = $db_helper->connection->real_escape_string($name);
+        $username = $db_helper->connection->real_escape_string($username);
 
         // Build sql query string
-        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_NAME . " = '" . $name . "'";
+        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_USERNAME . " = '" . $username . "'";
 
         return !is_null(self::getUserFromDb($db_helper, $query));
     }
@@ -230,7 +260,7 @@ class User
      * @param $email
      * @return bool
      */
-    public static function existsUserEmail($email)
+    public static function existsEmail($email)
     {
         $db_helper = DbHelper::instance();
 

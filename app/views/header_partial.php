@@ -25,6 +25,7 @@ class HeaderPartial extends AbstractPartial
 {
     const KEY_SECTION_SESSION = "##SECTION_SESSION##";
 
+    const KEY_NAME = "##NAME##";
     const KEY_USERNAME = "##USERNAME##";
 
     /**
@@ -50,7 +51,8 @@ class HeaderPartial extends AbstractPartial
         $template_parts = explode(self::KEY_SECTION_SESSION, $template);
         if (!is_null($user = Session::getCurrentUser())) {
             $template = $template_parts[0] . $template_parts[1] . $template_parts[3];
-            $template = str_replace(self::KEY_USERNAME, $user->getName(), $template);
+            $template = str_replace(self::KEY_USERNAME, $user->getUsername(), $template);
+            $template = str_replace(self::KEY_NAME, $user->getName(), $template);
         } else {
             $template = $template_parts[0] . $template_parts[2] . $template_parts[3];
         }
