@@ -22,6 +22,7 @@ namespace app\controllers;
 use App\Core\AbstractController;
 use App\Models\Article;
 use App\Models\Session;
+use App\Views\Article\EditArticleView;
 use App\Views\Article\NewArticleView;
 use App\Views\Article\ShowArticleView;
 use App\Views\ErrorView;
@@ -32,6 +33,10 @@ class ArticleController extends AbstractController
     const KEY_POST_NEW_TITLE = 'title';
     const KEY_POST_NEW_ID = 'id';
     const KEY_POST_NEW_BODY = 'body';
+
+    const KEY_POST_EDIT = 'edit';
+    const KEY_POST_EDIT_TITLE = 'title';
+    const KEY_POST_EDIT_BODY = 'body';
 
     const STR_INVALID_FORM = 'Formulario invalido';
 
@@ -120,7 +125,30 @@ class ArticleController extends AbstractController
                 redirect(PROJECT_BASE_URL . '/session/login');
             } elseif ($user->getUsername() == $article->getAuthorUsername()) {
                 // Logged user can modify the article
-                throw new \Exception('Page to modify an article has not been implemented yet', 501);
+                if (isset($_POST[self::KEY_POST_EDIT])) {
+                    // Form has been completed and submitted
+                    $title = filter_var($_POST[self::KEY_POST_EDIT_TITLE], FILTER_SANITIZE_STRING);
+                    $body = filter_var($_POST[self::KEY_POST_EDIT_BODY], FILTER_SANITIZE_STRING);
+
+                    if (empty($title) || empty($body)) {
+                        // Fields are empty (after sanitize),
+                        // so display same view with error message
+                        $this->setView(new EditArticleView($article, self::STR_INVALID_FORM));
+                    } else {
+                        // Update the article
+                        $updated = Article::updateTitleAndBody($id, $title, $body);
+
+                        // If the update was successful, return to blog.
+                        // In other case, show an error.
+                        if ($updated) {
+                            redirect(PROJECT_BASE_URL . '/blog');
+                        } else {
+                            throw new \Exception('Data could not be updated', 500);
+                        }
+                    }
+                } else {
+                    $this->setView(new EditArticleView($article));
+                }
             } else {
                 // Logged user can not modify the article
                 $this->setView(new ErrorView(403, 'Forbidden', 'No está autorizado a modificar este artículo.'));

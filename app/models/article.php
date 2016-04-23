@@ -193,6 +193,38 @@ class Article
         return true;
     }
 
+    /**
+     * Insert a new article in the database
+     * @param string $id Article ID
+     * @param string $title New article's title
+     * @param string $body New article's body
+     * @return bool Whether the update was successful
+     */
+    public static function updateTitleAndBody($id, $title, $body)
+    {
+        echo $title;
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from article_id
+        $id = $db_helper->connection->real_escape_string($id);
+        $title = $db_helper->connection->real_escape_string($title);
+        $body = $db_helper->connection->real_escape_string($body);
+
+        // Build sql query string
+        $query = "UPDATE " . self::TABLE_NAME .
+            " SET " .
+            self::COLUMN_TITLE . " = '" . $title . "', " .
+            self::COLUMN_BODY . " = '" . $body . "'" .
+            " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
+
+        // Execute query
+        if ($db_helper->connection->query($query) !== TRUE) {
+            return false;
+        }
+
+        return true;
+    }
+
     public static function existsId($id)
     {
         return !is_null(self::getById($id));
