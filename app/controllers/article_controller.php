@@ -21,6 +21,7 @@ namespace app\controllers;
 
 use App\Core\AbstractController;
 use App\Models\Article;
+use App\Models\Session;
 use App\Views\Article\ShowArticleView;
 use App\Views\ErrorView;
 
@@ -53,7 +54,16 @@ class ArticleController extends AbstractController
 
     private function newArticle()
     {
-        throw new \Exception('Page to add an article has not been implemented yet', 501);
+        if (is_null($user = Session::getCurrentUser())) {
+            // User is not identified
+            redirect(PROJECT_BASE_URL . '/session/login');
+        } elseif ($user->isWriter()) {
+            // Logged user can write a new article
+            throw new \Exception('Page to add an article has not been implemented yet', 501);
+        } else {
+            // Logged user can not write a new article
+            $this->setView(new ErrorView(403, 'Forbidden', 'No está autorizado a escribir nuevos artículos.'));
+        }
     }
 
     private function editArticle($id)
@@ -62,7 +72,16 @@ class ArticleController extends AbstractController
         if (is_null($article = Article::getById($id))) {
             $this->setView(new ErrorView(404, 'Not found', 'El articulo "' . $id . '" no existe.'));
         } else {
-            throw new \Exception('Page to modify an article has not been implemented yet', 501);
+            if (is_null($user = Session::getCurrentUser())) {
+                // User is not identified
+                redirect(PROJECT_BASE_URL . '/session/login');
+            } elseif ($user->getUsername() == $article->getAuthorUsername()) {
+                // Logged user can modify the article
+                throw new \Exception('Page to modify an article has not been implemented yet', 501);
+            } else {
+                // Logged user can not modify the article
+                $this->setView(new ErrorView(403, 'Forbidden', 'No está autorizado a modificar este artículo.'));
+            }
         }
     }
 
