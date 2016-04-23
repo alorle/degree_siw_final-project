@@ -28,6 +28,7 @@ use App\Views\HeaderPartial;
 class EditArticleView extends AbstractView implements ArticleInterface
 {
     const KEY_MESSAGE = '##MESSAGE##';
+    const KEY_CONFIRM_DELETE = '##CONFIRM_DELETE##';
 
     private $article;
     private $message;
@@ -52,8 +53,12 @@ class EditArticleView extends AbstractView implements ArticleInterface
         $template = str_replace(self::KEY_ARTICLE_ID, $this->article->getId(), $template);
         $template = str_replace(self::KEY_ARTICLE_TITLE, $this->article->getTitle(), $template);
         $template = str_replace(self::KEY_ARTICLE_BODY, $this->article->getBody(), $template);
-        
+
         $template = str_replace(self::KEY_MESSAGE, $this->message, $template);
+
+        $confirm_delete_question = '¿Quieres eliminar el artículo ' . $this->article->getId() . '?';
+        $template = str_replace(self::KEY_CONFIRM_DELETE, $confirm_delete_question, $template);
+
         echo $template;
     }
 }

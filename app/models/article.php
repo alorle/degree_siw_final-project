@@ -194,7 +194,7 @@ class Article
     }
 
     /**
-     * Insert a new article in the database
+     * Update an article in the database
      * @param string $id Article ID
      * @param string $title New article's title
      * @param string $body New article's body
@@ -202,7 +202,6 @@ class Article
      */
     public static function updateTitleAndBody($id, $title, $body)
     {
-        echo $title;
         $db_helper = DbHelper::instance();
 
         // Escape special characters from article_id
@@ -216,6 +215,29 @@ class Article
             self::COLUMN_TITLE . " = '" . $title . "', " .
             self::COLUMN_BODY . " = '" . $body . "'" .
             " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
+
+        // Execute query
+        if ($db_helper->connection->query($query) !== TRUE) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Delete an article in the database
+     * @param string $id Article ID
+     * @return bool Whether the insertion was successful
+     */
+    public static function delete($id)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from article_id
+        $id = $db_helper->connection->real_escape_string($id);
+
+        // Build sql query string
+        $query = "DELETE FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
 
         // Execute query
         if ($db_helper->connection->query($query) !== TRUE) {

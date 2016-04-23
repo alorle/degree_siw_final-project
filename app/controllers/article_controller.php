@@ -38,6 +38,8 @@ class ArticleController extends AbstractController
     const KEY_POST_EDIT_TITLE = 'title';
     const KEY_POST_EDIT_BODY = 'body';
 
+    const KEY_POST_DELETE = 'delete';
+
     const STR_INVALID_FORM = 'Formulario invalido';
 
     /**
@@ -125,7 +127,17 @@ class ArticleController extends AbstractController
                 redirect(PROJECT_BASE_URL . '/session/login');
             } elseif ($user->getUsername() == $article->getAuthorUsername()) {
                 // Logged user can modify the article
-                if (isset($_POST[self::KEY_POST_EDIT])) {
+                if (isset($_POST[self::KEY_POST_DELETE])) {
+                    $deleted = Article::delete($id);
+
+                    // If the update was successful, return to blog.
+                    // In other case, show an error.
+                    if ($deleted) {
+                        redirect(PROJECT_BASE_URL . '/blog');
+                    } else {
+                        throw new \Exception('Data could not be updated', 500);
+                    }
+                } elseif (isset($_POST[self::KEY_POST_EDIT])) {
                     // Form has been completed and submitted
                     $title = filter_var($_POST[self::KEY_POST_EDIT_TITLE], FILTER_SANITIZE_STRING);
                     $body = filter_var($_POST[self::KEY_POST_EDIT_BODY], FILTER_SANITIZE_STRING);

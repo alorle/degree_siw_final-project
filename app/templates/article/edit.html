@@ -34,7 +34,10 @@
             <p><label for="body">Cuerpo</label></p>
             <p><textarea name="body" id="body" rows="10" placeholder="Cuerpo" required>##ARTICLE_BODY##</textarea></p>
             <p class="message">##MESSAGE##</p>
-            <p class="submit"><input type="submit" name="edit" value="Finalizar"></p>
+            <p class="submit">
+                <input type="submit" name="delete" onclick="return(confirm('##CONFIRM_DELETE##'))" value="Eliminar">
+                <input type="submit" name="edit" value="Finalizar">
+            </p>
         </form>
     </div>
 </main>
