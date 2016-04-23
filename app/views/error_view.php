@@ -40,7 +40,7 @@ class ErrorView extends AbstractView
     public function __construct($code, $msg, $extra_msg = null)
     {
         ob_clean();
-        parent::__construct();
+        parent::__construct(new HeaderPartial(), new FooterPartial());
         $this->code = $code;
         $this->msg = $msg;
         $this->extra_msg = $extra_msg;
