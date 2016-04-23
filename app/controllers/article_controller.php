@@ -22,11 +22,19 @@ namespace app\controllers;
 use App\Core\AbstractController;
 use App\Models\Article;
 use App\Models\Session;
+use App\Views\Article\NewArticleView;
 use App\Views\Article\ShowArticleView;
 use App\Views\ErrorView;
 
 class ArticleController extends AbstractController
 {
+    const KEY_POST_NEW = 'new';
+    const KEY_POST_NEW_TITLE = 'title';
+    const KEY_POST_NEW_ID = 'id';
+    const KEY_POST_NEW_BODY = 'body';
+
+    const STR_INVALID_FORM = 'Formulario invalido';
+
     /**
      * ArticleController constructor.
      * @param $params
@@ -59,7 +67,42 @@ class ArticleController extends AbstractController
             redirect(PROJECT_BASE_URL . '/session/login');
         } elseif ($user->isWriter()) {
             // Logged user can write a new article
-            throw new \Exception('Page to add an article has not been implemented yet', 501);
+            if (isset($_POST[self::KEY_POST_NEW])) {
+                // Form has been completed and submitted
+                $title = filter_var($_POST[self::KEY_POST_NEW_TITLE], FILTER_SANITIZE_STRING);
+                $id = filter_var($_POST[self::KEY_POST_NEW_ID], FILTER_SANITIZE_STRING);
+                $body = filter_var($_POST[self::KEY_POST_NEW_BODY], FILTER_SANITIZE_STRING);
+
+                if (empty($title) || empty($id) || empty($body)) {
+                    // Fields are empty (after sanitize),
+                    // so display same view with error message
+                    $this->setView(new NewArticleView(self::STR_INVALID_FORM));
+                } else {
+                    // Check if id is unique
+                    if (Article::existsId($id)) {
+                        $this->setView(new NewArticleView('Id existente. Prueba con otro.'));
+                        return;
+                    }
+
+                    // Insert the new article in the database
+                    $inserted = Article::insert(array(
+                        Article::COLUMN_ID => $id,
+                        Article::COLUMN_TITLE => $title,
+                        Article::COLUMN_BODY => $body,
+                        Article::COLUMN_AUTHOR_NAME => $user->getName(),
+                        Article::COLUMN_AUTHOR_USERNAME => $user->getUsername()));
+
+                    // If the insertion was successful, return to blog.
+                    // In other case, show an error.
+                    if ($inserted) {
+                        redirect(PROJECT_BASE_URL . '/blog');
+                    } else {
+                        throw new \Exception('Data could not be stored', 500);
+                    }
+                }
+            } else {
+                $this->setView(new NewArticleView());
+            }
         } else {
             // Logged user can not write a new article
             $this->setView(new ErrorView(403, 'Forbidden', 'No está autorizado a escribir nuevos artículos.'));

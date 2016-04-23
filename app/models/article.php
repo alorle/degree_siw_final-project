@@ -161,4 +161,41 @@ class Article
 
         return null;
     }
+
+    /**
+     * Insert a new article in the database
+     * @param array $article New article data to insert in database
+     * @return bool Whether the insertion was successful
+     */
+    public static function insert($article)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Build sql query string
+        $query = "INSERT INTO " . self::TABLE_NAME . " (" .
+            self::COLUMN_ID . ", " .
+            self::COLUMN_TITLE . ", " .
+            self::COLUMN_BODY . ", " .
+            self::COLUMN_AUTHOR_NAME . ", " .
+            self::COLUMN_AUTHOR_USERNAME .
+            ") VALUES (" .
+            "'" . $article[self::COLUMN_ID] . "', " .
+            "'" . $article[self::COLUMN_TITLE] . "', " .
+            "'" . $article[self::COLUMN_BODY] . "', " .
+            "'" . $article[self::COLUMN_AUTHOR_NAME] . "', " .
+            "'" . $article[self::COLUMN_AUTHOR_USERNAME] . "')";
+
+        // Execute query
+        if ($db_helper->connection->query($query) !== TRUE) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function existsId($id)
+    {
+        return !is_null(self::getById($id));
+    }
+
 }

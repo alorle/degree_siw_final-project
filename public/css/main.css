@@ -19,6 +19,7 @@
 @import "session.css";
 @import "article.css";
 @import "pagination.css";
+@import "article_new.css";
 
 * {
     margin: 0;
