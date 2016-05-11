@@ -155,11 +155,7 @@ class Article
         $result = $db_helper->query($query);
 
         // We return an article only if the result is unique
-        if (count($result) == 1) {
-            return new Article($result[0]);
-        }
-
-        return null;
+        return (count($result) == 1) ? new Article($result[0]) : null;
     }
 
     /**
@@ -186,11 +182,7 @@ class Article
             "'" . $article[self::COLUMN_AUTHOR_USERNAME] . "')";
 
         // Execute query
-        if ($db_helper->connection->query($query) !== TRUE) {
-            return false;
-        }
-
-        return true;
+        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
     }
 
     /**
@@ -217,11 +209,7 @@ class Article
             " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
 
         // Execute query
-        if ($db_helper->connection->query($query) !== TRUE) {
-            return false;
-        }
-
-        return true;
+        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
     }
 
     /**
@@ -240,11 +228,7 @@ class Article
         $query = "DELETE FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
 
         // Execute query
-        if ($db_helper->connection->query($query) !== TRUE) {
-            return false;
-        }
-
-        return true;
+        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
     }
 
     public static function existsId($id)

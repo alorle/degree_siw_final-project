@@ -113,11 +113,7 @@ class User
         $result = $db_helper->query($query);
 
         // We return a user only if the result is unique
-        if (count($result) == 1) {
-            return new User($result[0]);
-        }
-
-        return null;
+        return (count($result) == 1) ? new User($result[0]) : null;
     }
 
 
@@ -203,11 +199,7 @@ class User
             "'" . $user[self::COLUMN_SESSION] . "')";
 
         // Execute query
-        if ($db_helper->connection->query($query) !== TRUE) {
-            return false;
-        }
-
-        return true;
+        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
     }
 
     /**
@@ -230,11 +222,7 @@ class User
             " WHERE " . self::COLUMN_USERNAME . " = '" . $username . "'";
 
         // Execute query
-        if ($db_helper->connection->query($query) !== TRUE) {
-            return false;
-        }
-
-        return true;
+        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
     }
 
     /**
