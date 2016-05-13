@@ -14,38 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-@import "header.css";
-@import "footer.css";
-@import "session.css";
-@import "article.css";
-@import "pagination.css";
-@import "article_new.css";
-@import "profile.css";
 
-* {
-    margin: 0;
-    padding: 0;
+#content-menu {
+    border-bottom: 2px solid #232323;
+    float: left;
+    height: 30px;
+    list-style-type: none;
+    margin: -16px 0 0 0;
+    overflow: hidden;
+    width: 100%;
 }
 
-html {
-    min-height: 100%;
-    position: relative;
+#content-menu li {
+    float: left;
+    width: 25%;
 }
 
-body {
-    font-size: 1em;
-    margin: 0 0 50px 0;
-}
-
-h1 {
-    font-size: 2em;
-    font-weight: bold;
-}
-
-#content {
+#content-menu li a {
     color: #232323;
-    margin: 16px auto;
-    max-width: 800px;
-    padding: 16px auto;
-    width: 95%;
+    display: block;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+}
+
+#content-menu li a:hover {
+    text-decoration: underline;
+    font-weight: 900;
 }

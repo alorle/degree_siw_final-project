@@ -1,4 +1,5 @@
-/*
+<?php
+/**
  * Copyright (C) 2016 Álvaro Orduna León
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,38 +15,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-@import "header.css";
-@import "footer.css";
-@import "session.css";
-@import "article.css";
-@import "pagination.css";
-@import "article_new.css";
-@import "profile.css";
 
-* {
-    margin: 0;
-    padding: 0;
-}
+namespace App\Views\Profile;
 
-html {
-    min-height: 100%;
-    position: relative;
-}
 
-body {
-    font-size: 1em;
-    margin: 0 0 50px 0;
-}
+use App\Models\User;
+use App\Views\FooterPartial;
+use App\Views\HeaderPartial;
 
-h1 {
-    font-size: 2em;
-    font-weight: bold;
-}
+class BlogProfileView extends AbstractProfileView
+{
 
-#content {
-    color: #232323;
-    margin: 16px auto;
-    max-width: 800px;
-    padding: 16px auto;
-    width: 95%;
+    /**
+     * BlogProfileView constructor.
+     * @param User $user
+     */
+    public function __construct($user)
+    {
+        parent::__construct($user, new HeaderPartial(), new FooterPartial());
+        $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR . 'blog.html');
+        $this->setTitle($user->getName() . ' | ' . PROJECT_NAME);
+    }
+
+    public function render()
+    {
+        $template = parent::render();
+
+        echo $template;
+    }
 }

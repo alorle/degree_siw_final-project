@@ -31,7 +31,7 @@ switch ($path) {
         $controller = new App\Controllers\ArticleController($params);
         break;
     case 'profile':
-        $controller = new App\Controllers\ErrorController(501);
+        $controller = new App\Controllers\ProfileController($params);
         break;
     case 'user':
         $controller = new App\Controllers\ErrorController(501);
