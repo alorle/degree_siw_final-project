@@ -159,6 +159,33 @@ class Article
     }
 
     /**
+     * Get all articles written by given author
+     * @param string $author_username Author id
+     * @return array Array containing all the articles written by given author
+     */
+    public static function getByAuthorUsername($author_username)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from author_id
+        $author_username = $db_helper->connection->real_escape_string($author_username);
+
+        // Build sql query string
+        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE " .
+            self::COLUMN_AUTHOR_USERNAME . " = '" . $author_username . "'";
+
+        // Initialize array of articles.
+        $results_array = array();
+
+        // For each query result we include a new article in the array.
+        foreach ($db_helper->query($query) as $index => $row) {
+            $results_array[$index] = new Article($row);
+        }
+
+        return $results_array;
+    }
+
+    /**
      * Insert a new article in the database
      * @param array $article New article data to insert in database
      * @return bool Whether the insertion was successful

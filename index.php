@@ -37,7 +37,7 @@ switch ($path) {
         $controller = new App\Controllers\ProfileController($params);
         break;
     case 'user':
-        $controller = new App\Controllers\ErrorController(501);
+        $controller = new App\Controllers\UserController($params);
         break;
     case 'session':
         $controller = new App\Controllers\SessionController($params);
