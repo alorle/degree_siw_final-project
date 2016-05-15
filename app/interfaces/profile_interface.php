@@ -21,7 +21,7 @@ namespace App\Interfaces;
 
 interface ProfileInterface
 {
-    const KEY_LATERAL_MENU = "##LATERAL_MENU##";
+    const KEY_MENU = "##PROFILE_MENU##";
     const KEY_SECTION_WRITER = '##SECTION_WRITER##';
     const KEY_SECTION_MODERATOR = '##SECTION_MODERATOR##';
     const KEY_SECTION_ADMIN = '##SECTION_ADMIN##';

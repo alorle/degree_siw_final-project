@@ -42,7 +42,7 @@ abstract class AbstractProfileView extends AbstractView implements ProfileInterf
     {
         parent::__construct(new HeaderPartial(), new FooterPartial());
         $this->setLateralMenuTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR .
-            'lateral_menu.html');
+            'menu.html');
         $this->user = $user;
     }
 
@@ -51,9 +51,9 @@ abstract class AbstractProfileView extends AbstractView implements ProfileInterf
         $template = parent::render();
 
         if (!$this->user->isWriter() && !$this->user->isModerator() && !$this->user->isAdmin()) {
-            $template = str_replace(self::KEY_LATERAL_MENU, '', $template);
+            $template = str_replace(self::KEY_MENU, '', $template);
         } else {
-            $template = str_replace(self::KEY_LATERAL_MENU, $this->readLateralMenuFile(), $template);
+            $template = str_replace(self::KEY_MENU, $this->readLateralMenuFile(), $template);
 
             $template_parts = explode(self::KEY_SECTION_WRITER, $template);
             if ($this->user->isWriter()) {
