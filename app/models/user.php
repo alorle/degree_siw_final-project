@@ -101,6 +101,24 @@ class User
         return $this->is_admin;
     }
 
+    public static function getAll()
+    {
+        $db_helper = DbHelper::instance();
+
+        // Build sql query string
+        $sql = "SELECT * FROM " . self::TABLE_NAME . " ORDER BY " . self::COLUMN_NAME . " DESC";
+
+        // Initialize array of users.
+        $results_array = array();
+
+        // For each query result we include a new user in the array.
+        foreach ($db_helper->query($sql) as $index => $row) {
+            $results_array[$index] = new User($row);
+        }
+
+        return $results_array;
+    }
+
     /**
      * Get a user from database with the given SQL statement
      * @param DbHelper $db_helper

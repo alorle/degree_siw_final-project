@@ -48,9 +48,14 @@ table {
 }
 
 table, td {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 1px solid #222222;
+    border-bottom: 1px solid #222222;
     border-collapse: collapse;
+}
+
+th {
+    background-color: #222222;
+    color: white;
 }
 
 th, td {
@@ -76,12 +81,16 @@ table .button {
     margin: auto;
 }
 
+table .checkbox {
+    width: 50px;
+    margin: auto;
+}
 
 p.submit {
     text-align: right;
 }
 
-input[type=submit] {
+.submit input[type=submit] {
     background: #232323;
     border: 0;
     color: #FFFFFF;
@@ -89,10 +98,16 @@ input[type=submit] {
     padding: 8px;
 }
 
-input[type=submit]:hover {
+.submit input[type=submit]:hover {
     background: black;
     box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
     -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.button input[type=submit] {
+    background: transparent;
+    border: 0;
+    color: #232323;
 }
 

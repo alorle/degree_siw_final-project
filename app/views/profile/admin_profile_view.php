@@ -19,12 +19,18 @@
 namespace App\Views\Profile;
 
 
+use App\Interfaces\UserInterface;
 use App\Models\User;
 use App\Views\FooterPartial;
 use App\Views\HeaderPartial;
 
-class AdminProfileView extends AbstractProfileView
+class AdminProfileView extends AbstractProfileView implements UserInterface
 {
+    const KEY_CHECKBOX_CHECKED = "checked";
+
+    const KEY_USER_IS_WRITER = "##USER_IS_WRITER##";
+    const KEY_USER_IS_MODERATOR = "##USER_IS_MODERATOR##";
+    const KEY_USER_IS_ADMIN = "##USER_IS_ADMIN##";
 
     /**
      * AdminProfileView constructor.
@@ -41,6 +47,44 @@ class AdminProfileView extends AbstractProfileView
     {
         $template = parent::render();
 
+        $users = User::getAll();
+        $template_parts = explode(self::KEY_ADMIN_TABLE, $template);
+        if (!is_null($users) && count($users) > 0) {
+            $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+
+            $template_parts = explode(self::KEY_ADMIN_TABLE_ROW, $template);
+            $template_users = '';
+            foreach ($users as $user) {
+                $template_users .= $this->replaceUser($template_parts[1], $user);
+            }
+            $template = $template_parts[0] . $template_users . $template_parts[2];
+        } else {
+            $template = $template_parts[0] . $template_parts[2];
+        }
+
         echo $template;
+    }
+
+    private function replaceUser($template, User $user)
+    {
+        $template = str_replace(self::KEY_USER_NAME, $user->getName(), $template);
+        $template = str_replace(self::KEY_USER_USERNAME, $user->getUsername(), $template);
+        if ($user->isWriter()) {
+            $template = str_replace(self::KEY_USER_IS_WRITER, self::KEY_CHECKBOX_CHECKED, $template);
+        } else {
+            $template = str_replace(self::KEY_USER_IS_WRITER, '', $template);
+        }
+        if ($user->isModerator()) {
+            $template = str_replace(self::KEY_USER_IS_MODERATOR, self::KEY_CHECKBOX_CHECKED, $template);
+        } else {
+            $template = str_replace(self::KEY_USER_IS_MODERATOR, '', $template);
+        }
+        if ($user->isAdmin()) {
+            $template = str_replace(self::KEY_USER_IS_ADMIN, self::KEY_CHECKBOX_CHECKED, $template);
+        } else {
+            $template = str_replace(self::KEY_USER_IS_ADMIN, '', $template);
+        }
+
+        return $template;
     }
 }

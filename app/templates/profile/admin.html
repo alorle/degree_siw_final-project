@@ -28,6 +28,44 @@
     ##PROFILE_MENU##
     <div id="content-main">
         <h1>Administrador</h1>
+        ##PROFILE_ADMIN_TABLE##
+        <table>
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Redactor</th>
+                <th>Moderador</th>
+                <th>Admin</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            ##PROFILE_ADMIN_TABLE_ROW##
+            <tr>
+                <td>##USER_NAME##</td>
+                <form method="post" action="##BASE_URL##/profile/admin/##USER_USERNAME##">
+                    <td class="checkbox">
+                        <input type="checkbox" ##USER_IS_WRITER##/>
+                    </td>
+                    <td class="checkbox">
+                        <input type="checkbox" ##USER_IS_MODERATOR##/>
+                    </td>
+                    <td class="checkbox">
+                        <input type="checkbox" ##USER_IS_ADMIN##/>
+                    </td>
+                    <td class="button">
+                        <input type="submit" name="update" class="material-icons" value="done">
+                    </td>
+                    <td class="button">
+                        <input type="submit" name="delete" class="material-icons" value="delete">
+                    </td>
+                </form>
+            </tr>
+            ##PROFILE_ADMIN_TABLE_ROW##
+            </tbody>
+        </table>
+        ##PROFILE_ADMIN_TABLE##
     </div>
 </main>
 
