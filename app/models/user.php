@@ -244,6 +244,50 @@ class User
     }
 
     /**
+     * Update users permissions
+     * @param string $username User's username
+     * @param array $permissions Array containing new permissions
+     * @return bool Whether the update process was successful
+     */
+    public static function updatePermissions($username, $permissions)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from username
+        $username = $db_helper->connection->real_escape_string($username);
+
+        // Build sql query string
+        $query = "UPDATE " . self::TABLE_NAME .
+            " SET " .
+            self::COLUMN_WRITER . " = " . $permissions[self::COLUMN_WRITER] . ", " .
+            self::COLUMN_MODERATOR . " = " . $permissions[self::COLUMN_MODERATOR] . ", " .
+            self::COLUMN_ADMIN . " = " . $permissions[self::COLUMN_ADMIN] .
+            " WHERE " . self::COLUMN_USERNAME . " = '" . $username . "'";
+
+        // Execute query
+        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
+    }
+
+    /**
+     * Delete a user fromn the database
+     * @param string $username User's username
+     * @return bool Whether the deletion was successful
+     */
+    public static function delete($username)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from username
+        $username = $db_helper->connection->real_escape_string($username);
+
+        // Build sql query string
+        $query = "DELETE FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_USERNAME . " = '" . $username . "'";
+
+        // Execute query
+        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
+    }
+
+    /**
      * Check if exists a user with the given username
      * @param $username
      * @return bool

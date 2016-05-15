@@ -46,13 +46,13 @@
                 <td>##USER_NAME##</td>
                 <form method="post" action="##BASE_URL##/profile/admin/##USER_USERNAME##">
                     <td class="checkbox">
-                        <input type="checkbox" ##USER_IS_WRITER##/>
+                        <input type="checkbox" name="writer" ##USER_IS_WRITER##/>
                     </td>
                     <td class="checkbox">
-                        <input type="checkbox" ##USER_IS_MODERATOR##/>
+                        <input type="checkbox" name="moderator" ##USER_IS_MODERATOR##/>
                     </td>
                     <td class="checkbox">
-                        <input type="checkbox" ##USER_IS_ADMIN##/>
+                        <input type="checkbox" name="admin" ##USER_IS_ADMIN##/>
                     </td>
                     <td class="button">
                         <input type="submit" name="update" class="material-icons" value="done">

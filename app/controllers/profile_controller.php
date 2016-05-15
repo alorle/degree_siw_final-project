@@ -21,6 +21,8 @@ namespace app\controllers;
 
 use App\Core\AbstractController;
 use App\Models\Session;
+use App\Models\User;
+use App\Views\ErrorView;
 use App\Views\Profile\AdminProfileView;
 use App\Views\Profile\BlogProfileView;
 use App\Views\Profile\ForumProfileView;
@@ -28,6 +30,13 @@ use App\Views\Profile\MainProfileView;
 
 class ProfileController extends AbstractController
 {
+
+    const KEY_POST_WRITER = 'writer';
+    const KEY_POST_MODERATOR = 'moderator';
+    const KEY_POST_ADMIN = 'admin';
+
+    const KEY_POST_UPDATE = 'update';
+    const KEY_POST_DELETE = 'delete';
 
     /**
      * ProfileController constructor.
@@ -50,13 +59,53 @@ class ProfileController extends AbstractController
                     $this->setView(new ForumProfileView($user));
                     break;
                 case 'admin':
-                    $this->setView(new AdminProfileView($user));
+                    if (!empty($params[1])) {
+                        $this->adminUser($params[1]);
+                    } else {
+                        $this->setView(new AdminProfileView($user));
+                    }
                     break;
                 default:
                     $this->setView(new MainProfileView($user));
             }
         } else {
             redirect(PROJECT_BASE_URL . '/session/login');
+        }
+    }
+
+    
+    private function adminUser($username)
+    {
+        $username = filter_var($username, FILTER_SANITIZE_STRING);
+        if (is_null(User::getByUsername($username))) {
+            $this->setView(new ErrorView(404, 'Not found', 'El usuario "' . $username . '" no existe.'));
+        } else {
+            if (isset($_POST[self::KEY_POST_UPDATE])) {
+                $writer = isset($_POST[self::KEY_POST_WRITER]) && $_POST[self::KEY_POST_WRITER] ? "1" : "0";
+                $moderator = isset($_POST[self::KEY_POST_MODERATOR]) && $_POST[self::KEY_POST_MODERATOR] ? "1" : "0";
+                $admin = isset($_POST[self::KEY_POST_ADMIN]) && $_POST[self::KEY_POST_ADMIN] ? "1" : "0";
+
+                $updated = User::updatePermissions($username, array(
+                    User::COLUMN_WRITER => $writer,
+                    User::COLUMN_MODERATOR => $moderator,
+                    User::COLUMN_ADMIN => $admin));
+
+                if ($updated) {
+                    redirect(PROJECT_BASE_URL . '/profile/admin');
+                } else {
+                    throw new \Exception('User permissions could not be updated', 500);
+                }
+            } elseif (isset($_POST[self::KEY_POST_DELETE])) {
+                $deleted = User::delete($username);
+
+                if ($deleted) {
+                    redirect(PROJECT_BASE_URL . '/profile/admin');
+                } else {
+                    throw new \Exception('User permissions could not be updated', 500);
+                }
+            } else {
+                redirect(PROJECT_BASE_URL . '/profile/admin');
+            }
         }
     }
 }
