@@ -26,6 +26,8 @@ use App\Views\HeaderPartial;
 
 class AdminProfileView extends AbstractProfileView implements UserInterface
 {
+    const KEY_CONFIRM_DELETE = '##CONFIRM_DELETE##';
+
     const KEY_CHECKBOX_CHECKED = "checked";
 
     const KEY_USER_IS_WRITER = "##USER_IS_WRITER##";
@@ -84,6 +86,9 @@ class AdminProfileView extends AbstractProfileView implements UserInterface
         } else {
             $template = str_replace(self::KEY_USER_IS_ADMIN, '', $template);
         }
+
+        $confirm_delete_question = '¿Quieres eliminar a ' . $user->getName() . '?';
+        $template = str_replace(self::KEY_CONFIRM_DELETE, $confirm_delete_question, $template);
 
         return $template;
     }
