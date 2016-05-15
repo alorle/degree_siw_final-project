@@ -30,7 +30,7 @@ abstract class AbstractProfileView extends AbstractView implements ProfileInterf
 {
     private $lateral_menu_template;
 
-    private $user;
+    protected $user;
 
     /**
      * MainProfileView constructor.

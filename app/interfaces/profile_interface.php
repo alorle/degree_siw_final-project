@@ -25,4 +25,6 @@ interface ProfileInterface
     const KEY_SECTION_WRITER = '##SECTION_WRITER##';
     const KEY_SECTION_MODERATOR = '##SECTION_MODERATOR##';
     const KEY_SECTION_ADMIN = '##SECTION_ADMIN##';
+    const KEY_WRITER_TABLE = '##PROFILE_WRITER_TABLE##';
+    const KEY_WRITER_TABLE_ROW = '##PROFILE_WRITER_TABLE_ROW##';
 }

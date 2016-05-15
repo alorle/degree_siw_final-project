@@ -19,12 +19,15 @@
 namespace App\Views\Profile;
 
 
+use App\Interfaces\ArticleInterface;
+use App\Models\Article;
 use App\Models\User;
 use App\Views\FooterPartial;
 use App\Views\HeaderPartial;
 
-class BlogProfileView extends AbstractProfileView
+class BlogProfileView extends AbstractProfileView implements ArticleInterface
 {
+    const KEY_CONFIRM_DELETE = '##CONFIRM_DELETE##';
 
     /**
      * BlogProfileView constructor.
@@ -41,6 +44,33 @@ class BlogProfileView extends AbstractProfileView
     {
         $template = parent::render();
 
+        $writer_articles = Article::getByAuthorUsername($this->user->getUsername());
+        $template_parts = explode(self::KEY_WRITER_TABLE, $template);
+        if (!is_null($writer_articles) && count($writer_articles) > 0) {
+            $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+
+            $template_parts = explode(self::KEY_WRITER_TABLE_ROW, $template);
+            $template_articles = '';
+            foreach ($writer_articles as $article) {
+                $template_articles .= $this->replaceArticle($template_parts[1], $article);
+            }
+            $template = $template_parts[0] . $template_articles . $template_parts[2];
+        } else {
+            $template = $template_parts[0] . $template_parts[2];
+        }
+
         echo $template;
+    }
+
+    private function replaceArticle($template, Article $article)
+    {
+        $template = str_replace(self::KEY_ARTICLE_ID, $article->getId(), $template);
+        $template = str_replace(self::KEY_ARTICLE_TITLE, $article->getTitle(), $template);
+        $template = str_replace(self::KEY_ARTICLE_TIME, $article->getTime(), $template);
+
+        $confirm_delete_question = '¿Quieres eliminar el artículo ' . $article->getId() . '?';
+        $template = str_replace(self::KEY_CONFIRM_DELETE, $confirm_delete_question, $template);
+
+        return $template;
     }
 }

@@ -61,6 +61,9 @@ class ArticleController extends AbstractController
             case 'edit':
                 $this->editArticle($params[1]);
                 break;
+            case 'delete':
+                $this->deleteArticle($params[1]);
+                break;
             default:
                 $this->showArticle($params[0]);
                 break;
@@ -160,6 +163,33 @@ class ArticleController extends AbstractController
                     }
                 } else {
                     $this->setView(new EditArticleView($article));
+                }
+            } else {
+                // Logged user can not modify the article
+                $this->setView(new ErrorView(403, 'Forbidden', 'No está autorizado a modificar este artículo.'));
+            }
+        }
+    }
+
+    private function deleteArticle($id)
+    {
+        $id = filter_var($id, FILTER_SANITIZE_STRING);
+        if (is_null($article = Article::getById($id))) {
+            $this->setView(new ErrorView(404, 'Not found', 'El articulo "' . $id . '" no existe.'));
+        } else {
+            if (is_null($user = Session::getCurrentUser())) {
+                // User is not identified
+                redirect(PROJECT_BASE_URL . '/session/login');
+            } elseif ($user->getUsername() == $article->getAuthorUsername()) {
+                // Logged user can modify the article
+                $deleted = Article::delete($id);
+
+                // If the update was successful, return to profile/blog.
+                // In other case, show an error.
+                if ($deleted) {
+                    redirect(PROJECT_BASE_URL . '/profile/blog');
+                } else {
+                    throw new \Exception('Data could not be updated', 500);
                 }
             } else {
                 // Logged user can not modify the article

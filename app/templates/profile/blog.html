@@ -28,6 +28,28 @@
     ##PROFILE_MENU##
     <div id="content-main">
         <h1>Redactor</h1>
+        ##PROFILE_WRITER_TABLE##
+        <table>
+            <tbody>
+            ##PROFILE_WRITER_TABLE_ROW##
+            <tr>
+                <td>##ARTICLE_TITLE##</td>
+                <td>##ARTICLE_TIME##</td>
+                <td class="button">
+                    <a href="##BASE_URL##/article/##ARTICLE_ID##"><i class="material-icons">search</i></a>
+                </td>
+                <td class="button">
+                    <a href="##BASE_URL##/article/edit/##ARTICLE_ID##"><i class="material-icons">edit</i></a>
+                </td>
+                <td class="button">
+                    <a href="##BASE_URL##/article/delete/##ARTICLE_ID##"
+                       onclick="return(confirm('##CONFIRM_DELETE##'))"> <i class="material-icons">delete</i></a>
+                </td>
+            </tr>
+            ##PROFILE_WRITER_TABLE_ROW##
+            </tbody>
+        </table>
+        ##PROFILE_WRITER_TABLE##
     </div>
 </main>
 
