@@ -25,22 +25,27 @@ use App\Views\HeaderPartial;
 
 class MainProfileView extends AbstractProfileView
 {
+    const KEY_MESSAGE = '##MESSAGE##';
+
+    private $message;
 
     /**
      * MainProfileView constructor.
      * @param User $user
+     * @param string $msg
      */
-    public function __construct($user)
+    public function __construct($user, $msg = '')
     {
         parent::__construct(self::ACTIVE_MAIN, $user, new HeaderPartial(), new FooterPartial());
         $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR . 'main.html');
         $this->setTitle($user->getName() . ' | ' . PROJECT_NAME);
+        $this->message = $msg;
     }
 
     public function render()
     {
         $template = parent::render();
-
+        $template = str_replace(self::KEY_MESSAGE, $this->message, $template);
         echo $template;
     }
 }

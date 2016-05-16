@@ -283,6 +283,37 @@ class User
     }
 
     /**
+     * Update user data
+     * @param string $username User's username
+     * @param array $data Array containing new data
+     * @return bool Whether the update process was successful
+     */
+    public static function update($username, $data)
+    {
+        if (empty($data)) {
+            return true;
+        }
+
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from username
+        $username = $db_helper->connection->real_escape_string($username);
+
+        // Build sql query string
+        $query = "UPDATE " . self::TABLE_NAME . " SET ";
+
+        foreach ($data as $key => $value) {
+            $value = $db_helper->connection->real_escape_string($value);
+            $query .= $key . " = '" . $value . "', ";
+        }
+        $query = rtrim($query, ', ');
+        $query .= " WHERE " . self::COLUMN_USERNAME . " = '" . $username . "'";
+
+        // Execute query
+        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
+    }
+
+    /**
      * Delete a user fromn the database
      * @param string $username User's username
      * @return bool Whether the deletion was successful

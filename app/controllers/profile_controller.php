@@ -41,6 +41,11 @@ class ProfileController extends AbstractController
     const KEY_POST_UPDATE = 'update';
     const KEY_POST_DELETE = 'delete';
 
+    const KEY_POST_UPDATE_FORM_NAME = 'name';
+    const KEY_POST_UPDATE_FORM_EMAIL = 'email';
+    const KEY_POST_UPDATE_FORM_PASSWORD = 'password';
+    const KEY_POST_UPDATE_FORM_PASSWORD_NEW = 'password_new';
+
     /**
      * ProfileController constructor.
      * @param $params
@@ -69,10 +74,47 @@ class ProfileController extends AbstractController
                     }
                     break;
                 default:
-                    $this->setView(new MainProfileView($user));
+                    $this->profile($user);
             }
         } else {
             redirect(PROJECT_BASE_URL . '/session/login');
+        }
+    }
+
+    private function profile(User $user)
+    {
+        if (isset($_POST[self::KEY_POST_UPDATE])) {
+            // We have received the update form, so check fields
+            $name = filter_var($_POST[self::KEY_POST_UPDATE_FORM_NAME], FILTER_SANITIZE_STRING);
+            $email = filter_var($_POST[self::KEY_POST_UPDATE_FORM_EMAIL], FILTER_SANITIZE_EMAIL);
+            $password = filter_var($_POST[self::KEY_POST_UPDATE_FORM_PASSWORD], FILTER_SANITIZE_STRING);
+            $password_new = filter_var($_POST[self::KEY_POST_UPDATE_FORM_PASSWORD_NEW], FILTER_SANITIZE_STRING);
+
+            $new_data = array();
+            if (!empty($name)) {
+                $new_data[User::COLUMN_NAME] = $name;
+            }
+            if (!empty($email)) {
+                $new_data[User::COLUMN_EMAIL] = $email;
+            }
+            if (!empty($password) && !empty($password_new)) {
+                if (strcmp($user->getPassword(), $password)) {
+                    $new_data[User::COLUMN_PASSWORD] = md5($password_new);
+                } else {
+                    $this->setView(new MainProfileView($user, 'Contraseña incorrecta'));
+                    return;
+                }
+            }
+
+            $updated = User::update($user->getUsername(), $new_data);
+
+            if ($updated === true) {
+                redirect(PROJECT_BASE_URL . '/profile');
+            } else {
+                throw new \Exception('Data could not be stored', 500);
+            }
+        } else {
+            $this->setView(new MainProfileView($user));
         }
     }
 
