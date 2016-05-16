@@ -20,13 +20,14 @@ namespace App\Views\User;
 
 
 use App\Core\AbstractView;
+use App\Interfaces\ArticleInterface;
 use App\Interfaces\UserInterface;
 use App\Models\Article;
 use App\Models\User;
 use App\Views\FooterPartial;
 use App\Views\HeaderPartial;
 
-class UserView extends AbstractView implements UserInterface
+class UserView extends AbstractView implements UserInterface, ArticleInterface
 {
     private $user;
 
