@@ -34,35 +34,47 @@ class AdminProfileView extends AbstractProfileView implements UserInterface
     const KEY_USER_IS_MODERATOR = "##USER_IS_MODERATOR##";
     const KEY_USER_IS_ADMIN = "##USER_IS_ADMIN##";
 
+    private $users;
+    private $total_pages;
+    private $current_page;
+
     /**
      * AdminProfileView constructor.
      * @param User $user
+     * @param $users array Array of users to show
+     * @param $total_pages int Count of pages
+     * @param $current_page int Current page number
      */
-    public function __construct($user)
+    public function __construct($user, $users, $total_pages = null, $current_page = null)
     {
         parent::__construct(self::ACTIVE_ADMIN, $user, new HeaderPartial(), new FooterPartial());
         $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR . 'admin.html');
         $this->setTitle($user->getName() . ' | ' . PROJECT_NAME);
+        $this->users = $users;
+        $this->total_pages = $total_pages;
+        $this->current_page = $current_page;
     }
 
     public function render()
     {
         $template = parent::render();
 
-        $users = User::getAll();
         $template_parts = explode(self::KEY_ADMIN_TABLE, $template);
-        if (!is_null($users) && count($users) > 0) {
+        if (!is_null($this->users) && count($this->users) > 0) {
             $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
 
             $template_parts = explode(self::KEY_ADMIN_TABLE_ROW, $template);
             $template_users = '';
-            foreach ($users as $user) {
+            foreach ($this->users as $user) {
                 $template_users .= $this->replaceUser($template_parts[1], $user);
             }
             $template = $template_parts[0] . $template_users . $template_parts[2];
         } else {
             $template = $template_parts[0] . $template_parts[2];
         }
+
+        // Fill pagination section
+        $template = $this->replacePagination($template);
 
         echo $template;
     }
@@ -89,6 +101,59 @@ class AdminProfileView extends AbstractProfileView implements UserInterface
 
         $confirm_delete_question = '¿Quieres eliminar a ' . $user->getName() . '?';
         $template = str_replace(self::KEY_CONFIRM_DELETE, $confirm_delete_question, $template);
+
+        return $template;
+    }
+
+    private function replacePagination($template)
+    {
+        $template_parts = explode(self::KEY_PAGINATION, $template);
+        if (isset($this->current_page) && isset($this->total_pages)) {
+            // Pagination must be rendered
+            $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+
+            // Show first page if necessary
+            $template_parts = explode(self::KEY_PAGINATION_FIRST, $template);
+            if ($this->current_page <= 2) {
+                $template = $template_parts[0] . $template_parts[2];
+            } else {
+                $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+                $template = str_replace(self::KEY_PAGINATION_FIRST_ID, 1, $template);
+            }
+
+            // Show previous page if necessary
+            $template_parts = explode(self::KEY_PAGINATION_PREV, $template);
+            if ($this->current_page <= 1) {
+                $template = $template_parts[0] . $template_parts[2];
+            } else {
+                $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+                $template = str_replace(self::KEY_PAGINATION_PREV_ID, $this->current_page - 1, $template);
+            }
+
+            // Show current page
+            $template = str_replace(self::KEY_PAGINATION_CURRENT_ID, $this->current_page, $template);
+
+            // Show next page if necessary
+            $template_parts = explode(self::KEY_PAGINATION_NEXT, $template);
+            if ($this->current_page > $this->total_pages - 1) {
+                $template = $template_parts[0] . $template_parts[2];
+            } else {
+                $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+                $template = str_replace(self::KEY_PAGINATION_NEXT_ID, $this->current_page + 1, $template);
+            }
+
+            // Show last page if necessary
+            $template_parts = explode(self::KEY_PAGINATION_LAST, $template);
+            if ($this->current_page > $this->total_pages - 2) {
+                $template = $template_parts[0] . $template_parts[2];
+            } else {
+                $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+                $template = str_replace(self::KEY_PAGINATION_LAST_ID, $this->total_pages, $template);
+            }
+        } else {
+            // Pagination is not necessary
+            $template = $template_parts[0] . $template_parts[2];
+        }
 
         return $template;
     }

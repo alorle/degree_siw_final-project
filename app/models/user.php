@@ -101,12 +101,26 @@ class User
         return $this->is_admin;
     }
 
-    public static function getAll()
+    public static function getAll($limit = 0, $offset = 0)
     {
         $db_helper = DbHelper::instance();
 
+        if ($limit < 0) {
+            $limit = 0;
+        }
+
+        if ($offset < 0) {
+            $offset = 0;
+        }
+
         // Build sql query string
-        $sql = "SELECT * FROM " . self::TABLE_NAME . " ORDER BY " . self::COLUMN_NAME . " DESC";
+        $sql = "SELECT * FROM " . self::TABLE_NAME . " ORDER BY " . self::COLUMN_NAME . " ASC";
+        if (isset($limit) && $limit != 0) {
+            $sql .= " LIMIT " . $limit;
+            if (isset($offset) && $offset != 0) {
+                $sql .= " OFFSET " . $offset;
+            }
+        }
 
         // Initialize array of users.
         $results_array = array();
