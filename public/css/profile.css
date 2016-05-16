@@ -67,6 +67,10 @@
 
 #content-main th, td {
     padding: 6px;
+    text-align: center;
+}
+
+#content-main .left {
     text-align: left;
 }
 

@@ -31,7 +31,7 @@
         <table>
             <thead>
             <tr>
-                <th>Nombre</th>
+                <th class="left">Nombre</th>
                 <th>Redactor</th>
                 <th>Moderador</th>
                 <th>Admin</th>
@@ -42,7 +42,7 @@
             <tbody>
             ##PROFILE_ADMIN_TABLE_ROW##
             <tr>
-                <td>##USER_NAME##</td>
+                <td class="left"><a href="##BASE_URL##/user/##USER_USERNAME##">##USER_NAME##</a></td>
                 <form method="post" action="##BASE_URL##/profile/admin/##USER_USERNAME##">
                     <td class="checkbox">
                         <input type="checkbox" name="writer" ##USER_IS_WRITER##/>
