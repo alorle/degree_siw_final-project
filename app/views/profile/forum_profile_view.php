@@ -32,7 +32,7 @@ class ForumProfileView extends AbstractProfileView
      */
     public function __construct($user)
     {
-        parent::__construct($user, new HeaderPartial(), new FooterPartial());
+        parent::__construct(self::ACTIVE_FORUM, $user, new HeaderPartial(), new FooterPartial());
         $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR . 'forum.html');
         $this->setTitle($user->getName() . ' | ' . PROJECT_NAME);
     }

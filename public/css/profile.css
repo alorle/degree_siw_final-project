@@ -16,9 +16,7 @@
  */
 
 #content-menu {
-    border-bottom: 2px solid #232323;
-    float: left;
-    height: 30px;
+    height: 50px;
     list-style-type: none;
     margin: -16px 0 0 0;
     overflow: hidden;
@@ -33,64 +31,72 @@
 #content-menu li a {
     color: #232323;
     display: block;
-    padding: 8px;
+    padding: 16px;
     text-align: center;
     text-decoration: none;
 }
 
 #content-menu li a:hover {
-    font-weight: 900;
+    font-weight: bold;
+}
+
+#content-menu .active {
+    font-weight: bold;
     text-decoration: underline;
 }
 
-table {
+#content-main {
+    padding-top: 16px;
+}
+
+#content-main table {
     width: 100%;
 }
 
-table, td {
-    border-top: 1px solid #222222;
+#content-main table, td {
     border-bottom: 1px solid #222222;
     border-collapse: collapse;
+    border-top: 1px solid #222222;
 }
 
-th {
+#content-main th {
     background-color: #222222;
     color: white;
 }
 
-th, td {
+#content-main th, td {
     padding: 6px;
     text-align: left;
 }
 
-table tr:nth-child(even) {
+#content-main table tr:nth-child(even) {
     background-color: #eee;
 }
 
-table tr:nth-child(odd) {
+#content-main table tr:nth-child(odd) {
     background-color: #fff;
 }
 
-table a {
+#content-main table a {
     color: #222222;
     text-decoration: none;
 }
 
-table .button {
-    width: 50px;
+#content-main table .button {
     margin: auto;
+    width: 50px;
 }
 
-table .checkbox {
-    width: 50px;
+#content-main table .checkbox {
     margin: auto;
+    width: 50px;
 }
 
-p.submit {
+#content-main p.submit {
     text-align: right;
 }
 
-.submit input[type=submit] {
+#content-main .submit input[type=submit] {
     background: #232323;
     border: 0;
     color: #FFFFFF;
@@ -98,14 +104,14 @@ p.submit {
     padding: 8px;
 }
 
-.submit input[type=submit]:hover {
+#content-main .submit input[type=submit]:hover {
     background: black;
     box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
     -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
-.button input[type=submit] {
+#content-main .button input[type=submit] {
     background: transparent;
     border: 0;
     color: #232323;

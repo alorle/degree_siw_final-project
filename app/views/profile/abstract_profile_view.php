@@ -28,22 +28,30 @@ use App\Views\HeaderPartial;
 
 abstract class AbstractProfileView extends AbstractView implements ProfileInterface
 {
-    private $lateral_menu_template;
+    const ACTIVE_MAIN = 0;
+    const ACTIVE_BLOG = 1;
+    const ACTIVE_FORUM = 2;
+    const ACTIVE_ADMIN = 3;
+
+    private $menu_template;
 
     protected $user;
+    private $active_section;
 
     /**
      * MainProfileView constructor.
+     * @param int $active_section Which section is active
      * @param User $user
      * @param AbstractPartial|null $header
      * @param AbstractPartial|null $footer
      */
-    public function __construct($user, $header = null, $footer = null)
+    public function __construct($active_section, $user, $header = null, $footer = null)
     {
         parent::__construct(new HeaderPartial(), new FooterPartial());
-        $this->setLateralMenuTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR .
+        $this->setMenuTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR .
             'menu.html');
         $this->user = $user;
+        $this->active_section = $active_section;
     }
 
     public function render()
@@ -51,10 +59,13 @@ abstract class AbstractProfileView extends AbstractView implements ProfileInterf
         $template = parent::render();
 
         if (!$this->user->isWriter() && !$this->user->isModerator() && !$this->user->isAdmin()) {
+            // The logged user is "normal" so no menu is needed
             $template = str_replace(self::KEY_MENU, '', $template);
         } else {
-            $template = str_replace(self::KEY_MENU, $this->readLateralMenuFile(), $template);
+            // Show profile menu
+            $template = str_replace(self::KEY_MENU, $this->readMenuFile(), $template);
 
+            // Enable writer section if needed
             $template_parts = explode(self::KEY_SECTION_WRITER, $template);
             if ($this->user->isWriter()) {
                 $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
@@ -62,6 +73,7 @@ abstract class AbstractProfileView extends AbstractView implements ProfileInterf
                 $template = $template_parts[0] . $template_parts[2];
             }
 
+            // Enable moderator section if needed
             $template_parts = explode(self::KEY_SECTION_MODERATOR, $template);
             if ($this->user->isModerator()) {
                 $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
@@ -69,6 +81,7 @@ abstract class AbstractProfileView extends AbstractView implements ProfileInterf
                 $template = $template_parts[0] . $template_parts[2];
             }
 
+            // Enable admin section if needed
             $template_parts = explode(self::KEY_SECTION_ADMIN, $template);
             if ($this->user->isAdmin()) {
                 $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
@@ -76,8 +89,13 @@ abstract class AbstractProfileView extends AbstractView implements ProfileInterf
                 $template = $template_parts[0] . $template_parts[2];
             }
 
-            $template = str_replace(self::KEY_BASE_URL, PROJECT_BASE_URL, $template);
+            // Set menu items class
+            $template_parts = explode(self::KEY_MENU_ITEM_CLASS, $template);
+            $template = implode(array_slice($template_parts, 0, $this->active_section + 1)) .
+                'class="active"' . implode(array_slice($template_parts, $this->active_section + 1));
         }
+
+        $template = str_replace(self::KEY_BASE_URL, PROJECT_BASE_URL, $template);
 
         return $template;
     }
@@ -86,19 +104,19 @@ abstract class AbstractProfileView extends AbstractView implements ProfileInterf
      * Set name of the file containing the lateral menu template
      * @param string $file
      */
-    public function setLateralMenuTemplateFile($file)
+    public function setMenuTemplateFile($file)
     {
-        $this->lateral_menu_template = $file;
+        $this->menu_template = $file;
     }
 
     /**
-     * Read lateral menu file
-     * @return string Lateral menu file content or empty string if file is not defined
+     * Read menu file
+     * @return string Menu file content or empty string if file is not defined
      */
-    private function readLateralMenuFile()
+    private function readMenuFile()
     {
-        if (isset($this->lateral_menu_template) && file_exists($this->lateral_menu_template)) {
-            return file_get_contents($this->lateral_menu_template);
+        if (isset($this->menu_template) && file_exists($this->menu_template)) {
+            return file_get_contents($this->menu_template);
         }
         return '';
     }

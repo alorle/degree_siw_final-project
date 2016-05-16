@@ -40,7 +40,7 @@ class AdminProfileView extends AbstractProfileView implements UserInterface
      */
     public function __construct($user)
     {
-        parent::__construct($user, new HeaderPartial(), new FooterPartial());
+        parent::__construct(self::ACTIVE_ADMIN, $user, new HeaderPartial(), new FooterPartial());
         $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR . 'admin.html');
         $this->setTitle($user->getName() . ' | ' . PROJECT_NAME);
     }

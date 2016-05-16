@@ -35,7 +35,7 @@ class BlogProfileView extends AbstractProfileView implements ArticleInterface
      */
     public function __construct($user)
     {
-        parent::__construct($user, new HeaderPartial(), new FooterPartial());
+        parent::__construct(self::ACTIVE_BLOG, $user, new HeaderPartial(), new FooterPartial());
         $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR . 'blog.html');
         $this->setTitle($user->getName() . ' | ' . PROJECT_NAME);
     }
