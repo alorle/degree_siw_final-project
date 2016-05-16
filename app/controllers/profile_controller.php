@@ -20,6 +20,7 @@ namespace app\controllers;
 
 
 use App\Core\AbstractController;
+use App\Models\Article;
 use App\Models\Session;
 use App\Models\User;
 use App\Views\ErrorView;
@@ -30,6 +31,7 @@ use App\Views\Profile\MainProfileView;
 
 class ProfileController extends AbstractController
 {
+    const ARTICLES_PER_PAGE = 9;
 
     const KEY_POST_WRITER = 'writer';
     const KEY_POST_MODERATOR = 'moderator';
@@ -53,7 +55,7 @@ class ProfileController extends AbstractController
         if (!is_null($user = Session::getCurrentUser())) {
             switch ($action) {
                 case 'blog':
-                    $this->setView(new BlogProfileView($user));
+                    $this->blog($user, $params[1]);
                     break;
                 case 'forum':
                     $this->setView(new ForumProfileView($user));
@@ -73,7 +75,27 @@ class ProfileController extends AbstractController
         }
     }
 
-    
+    private function blog(User $user, $requested_page)
+    {
+        $articles = Article::getByAuthorUsername($user->getUsername());
+
+        $total_articles = count($articles);
+
+        // Calculate the number of pages needed
+        $total_pages = ceil($total_articles / self::ARTICLES_PER_PAGE);
+
+        // Get the requested page
+        $current_page = 1;
+        if (isset($requested_page) && !filter_var($requested_page, FILTER_VALIDATE_INT) === false) {
+            $current_page = min($total_pages, $requested_page);
+        }
+
+        // Get articles to show
+        $articles = Article::getAll(self::ARTICLES_PER_PAGE, ($current_page - 1) * self::ARTICLES_PER_PAGE);
+
+        $this->setView(new BlogProfileView($user, $articles, $total_pages, $current_page));
+    }
+
     private function adminUser($username)
     {
         $username = filter_var($username, FILTER_SANITIZE_STRING);

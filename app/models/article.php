@@ -161,18 +161,35 @@ class Article
     /**
      * Get all articles written by given author
      * @param string $author_username Author id
+     * @param int $limit Number of articles
+     * @param int $offset First article you want
      * @return array Array containing all the articles written by given author
      */
-    public static function getByAuthorUsername($author_username)
+    public static function getByAuthorUsername($author_username, $limit = 0, $offset = 0)
     {
         $db_helper = DbHelper::instance();
 
         // Escape special characters from author_id
         $author_username = $db_helper->connection->real_escape_string($author_username);
 
+        if ($limit < 0) {
+            $limit = 0;
+        }
+
+        if ($offset < 0) {
+            $offset = 0;
+        }
+
         // Build sql query string
-        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE " .
-            self::COLUMN_AUTHOR_USERNAME . " = '" . $author_username . "'";
+        $query = "SELECT * FROM " . self::TABLE_NAME .
+            " WHERE " . self::COLUMN_AUTHOR_USERNAME . " = '" . $author_username . "'" .
+            " ORDER BY " . self::COLUMN_TIME . " DESC";
+        if (isset($limit) && $limit != 0) {
+            $query .= " LIMIT " . $limit;
+            if (isset($offset) && $offset != 0) {
+                $query .= " OFFSET " . $offset;
+            }
+        }
 
         // Initialize array of articles.
         $results_array = array();

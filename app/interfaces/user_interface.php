@@ -19,7 +19,7 @@
 namespace App\Interfaces;
 
 
-interface UserInterface extends BlogInterface
+interface UserInterface
 {
     const KEY_USER_NAME = "##USER_NAME##";
     const KEY_USER_USERNAME = "##USER_USERNAME##";
