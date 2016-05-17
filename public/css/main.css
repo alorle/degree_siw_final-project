@@ -21,6 +21,7 @@
 @import "pagination.css";
 @import "article_new.css";
 @import "profile.css";
+@import "dropzone.css";
 
 * {
     margin: 0;

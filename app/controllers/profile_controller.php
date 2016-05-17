@@ -97,8 +97,8 @@ class ProfileController extends AbstractController
             if (!empty($email)) {
                 $new_data[User::COLUMN_EMAIL] = $email;
             }
-            if (!empty($password) && !empty($password_new)) {
-                if (strcmp($user->getPassword(), $password)) {
+            if (!empty($password_new)) {
+                if (!empty($password) && strcmp($user->getPassword(), md5($password)) == 0) {
                     $new_data[User::COLUMN_PASSWORD] = md5($password_new);
                 } else {
                     $this->setView(new MainProfileView($user, 'Contraseña incorrecta'));
@@ -109,7 +109,7 @@ class ProfileController extends AbstractController
             $updated = User::update($user->getUsername(), $new_data);
 
             if ($updated === true) {
-                redirect(PROJECT_BASE_URL . '/profile');
+                $this->setView(new MainProfileView($user, 'Datos actualizados correctamente'));
             } else {
                 throw new \Exception('Data could not be stored', 500);
             }

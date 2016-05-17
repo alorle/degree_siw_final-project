@@ -27,7 +27,14 @@
 
 <main id="content">
     ##PROFILE_MENU##
-    <div id="content-main" class="session">
+    <div id="content-main" class="text-form">
+        <h1>Imagen de usuario</h1>
+        <form method="post" action="##BASE_URL##/profile" enctype="multipart/form-data">
+            <p><input type="file" id="profile-image" name="profile-image"></p>
+            <p id="message-image" class="message">##MESSAGE_IMAGE##</p>
+            <p class="submit"><input type="submit" name="profile-image" value="Upload Image"></p>
+        </form>
+        <h1>Información personal</h1>
         <form method="post" action="##BASE_URL##/profile" onsubmit="return(validateForm());">
             <p><input type="text" id="name" name="name" value="##USER_NAME##" placeholder="Nombre"></p>
             <p><input type="email" name="email" value="##USER_EMAIL##" placeholder="Correo electrónico"></p>

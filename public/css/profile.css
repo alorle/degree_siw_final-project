@@ -50,8 +50,8 @@
 }
 
 #content-main table {
-    width: 100%;
     margin: 16px 0;
+    width: 100%;
 }
 
 #content-main table, td {
@@ -98,7 +98,7 @@
 }
 
 #content-main p.submit {
-    text-align: right;
+    /*text-align: right;*/
 }
 
 #content-main .submit input[type=submit] {
@@ -122,3 +122,68 @@
     color: #232323;
 }
 
+.text-form {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.text-form h1 {
+    color: #232323;
+    font-size: 1.3em;
+}
+
+.text-form form {
+    margin: 16px 0;
+}
+
+.text-form #upload_picture {
+    max-width: 200px;
+}
+
+.text-form p {
+    margin: 20px 0 0 0;
+}
+
+.text-form p.message {
+    color: red;
+    float: right;
+    line-height: 31px;
+    position: relative;
+    vertical-align: middle;
+}
+
+.text-form p.submit {
+    margin-right: 12px;
+}
+
+.text-form input[type=text], .text-form input[type=email], .text-form input[type=password] {
+    border: 0;
+    color: #232323;
+    min-height: 34px;
+    outline: 5px solid #EFF4F7;
+    padding: 0 8px;
+}
+
+.text-form input[type=text]:focus, .text-form input[type=email]:focus, input[type=password]:focus {
+    outline-color: #A4FFB2;
+    outline-offset: 0;
+}
+
+.text-form input[type=submit] {
+    background: #232323;
+    border: 0;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 8px;
+}
+
+.text-form input[type=submit]:hover {
+    background: black;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.text-form input[type=text], .text-form input[type=email], .text-form input[type=password] {
+    line-height: 34px;
+}
