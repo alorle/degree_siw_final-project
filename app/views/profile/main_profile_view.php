@@ -19,11 +19,12 @@
 namespace App\Views\Profile;
 
 
+use App\Interfaces\UserInterface;
 use App\Models\User;
 use App\Views\FooterPartial;
 use App\Views\HeaderPartial;
 
-class MainProfileView extends AbstractProfileView
+class MainProfileView extends AbstractProfileView implements UserInterface
 {
     const KEY_MESSAGE = '##MESSAGE##';
 
@@ -46,6 +47,8 @@ class MainProfileView extends AbstractProfileView
     {
         $template = parent::render();
         $template = str_replace(self::KEY_MESSAGE, $this->message, $template);
+        $template = str_replace(self::KEY_USER_NAME, $this->user->getName(), $template);
+        $template = str_replace(self::KEY_USER_EMAIL, $this->user->getEmail(), $template);
         echo $template;
     }
 }

@@ -23,5 +23,6 @@ interface UserInterface
 {
     const KEY_USER_NAME = "##USER_NAME##";
     const KEY_USER_USERNAME = "##USER_USERNAME##";
+    const KEY_USER_EMAIL = "##USER_EMAIL##";
     const KEY_USER_BLOG_ARTICLES = "##USER_BLOG_ARTICLES##";
 }
