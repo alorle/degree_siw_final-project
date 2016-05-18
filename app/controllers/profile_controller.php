@@ -40,6 +40,7 @@ class ProfileController extends AbstractController
 
     const KEY_POST_UPDATE = 'update';
     const KEY_POST_DELETE = 'delete';
+    const KEY_POST_PROFILE_IMAGE = 'profile-image';
 
     const KEY_POST_UPDATE_FORM_NAME = 'name';
     const KEY_POST_UPDATE_FORM_EMAIL = 'email';
@@ -101,7 +102,7 @@ class ProfileController extends AbstractController
                 if (!empty($password) && strcmp($user->getPassword(), md5($password)) == 0) {
                     $new_data[User::COLUMN_PASSWORD] = md5($password_new);
                 } else {
-                    $this->setView(new MainProfileView($user, 'Contraseña incorrecta'));
+                    $this->setView(new MainProfileView($user, '', 'Contraseña incorrecta'));
                     return;
                 }
             }
@@ -109,9 +110,41 @@ class ProfileController extends AbstractController
             $updated = User::update($user->getUsername(), $new_data);
 
             if ($updated === true) {
-                $this->setView(new MainProfileView($user, 'Datos actualizados correctamente'));
+                $this->setView(new MainProfileView($user, '', 'Datos actualizados correctamente'));
             } else {
                 throw new \Exception('Data could not be stored', 500);
+            }
+        } elseif (isset($_POST[self::KEY_POST_PROFILE_IMAGE])) {
+            if (isset($_FILES[self::KEY_POST_PROFILE_IMAGE])) {
+                $file = $_FILES[self::KEY_POST_PROFILE_IMAGE];
+
+                $result = 5;
+                if (empty($file['tmp_name'])) {
+                    $result = 1;
+                } elseif (getimagesize($file['tmp_name']) === false) {
+                    $result = 2;
+                } else {
+                    $tmp = explode('.', $file['name']);
+                    $target = FOLDER_PROFILE_IMAGES . DIRECTORY_SEPARATOR . $user->getUsername() . '.' . end($tmp);
+                    if (move_uploaded_file($file['tmp_name'], $target)) {
+                        if (User::updateProfileImage($user->getUsername(), $user->getUsername() . '.' . end($tmp))) {
+                            $result = 0;
+                        } else {
+                            $result = 3;
+                        }
+                    } else {
+                        $result = 4;
+                    }
+                }
+                $image_msg = array('Imagen actualizada',
+                    'Ningun fichero seleccionado',
+                    'El fichero no es una imagen',
+                    'Hubo un problema al asociar al usaurio con su nueva imagen',
+                    'Hubo un problema al copiar la imagen al servidor',
+                    'Hubo un error desconocido');
+                $this->setView(new MainProfileView($user, $image_msg[$result], ''));
+            } else {
+                throw new \Exception('Internal server error', 500);
             }
         } else {
             $this->setView(new MainProfileView($user));

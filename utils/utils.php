@@ -24,11 +24,14 @@ $base_url = substr($request, 0, strrpos($request, 'trabajofinal')) . 'trabajofin
 define('PROJECT_PATH', dirname(__DIR__));
 define('PROJECT_NAME', 'Filosofía Joven');
 define('PROJECT_BASE_URL', $base_url);
+define('PROJECT_PROFILE_IMAGES', $base_url . "/public/images/profiles/");
 
 // Define PROJECT folders
 define('FOLDER_UTIL', PROJECT_PATH . DIRECTORY_SEPARATOR . 'utils');
 define('FOLDER_TEMPLATES', PROJECT_PATH . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'templates');
 define('FOLDER_CONFIG', PROJECT_PATH . DIRECTORY_SEPARATOR . 'config');
+define('FOLDER_IMAGES', PROJECT_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'images');
+define('FOLDER_PROFILE_IMAGES', FOLDER_IMAGES . DIRECTORY_SEPARATOR . 'profiles');
 
 // Include util files
 include_once FOLDER_UTIL . DIRECTORY_SEPARATOR . 'functions.php';

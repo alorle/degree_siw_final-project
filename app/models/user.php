@@ -32,6 +32,7 @@ class User
     const COLUMN_WRITER = 'writer';
     const COLUMN_MODERATOR = 'moderator';
     const COLUMN_ADMIN = 'admin';
+    const COLUMN_IMAGE = 'image';
 
     private $username;
     private $name;
@@ -42,6 +43,7 @@ class User
     private $is_writer;
     private $is_moderator;
     private $is_admin;
+    private $image;
 
     public function __construct($row)
     {
@@ -54,6 +56,7 @@ class User
         $this->is_writer = $row[self::COLUMN_WRITER];
         $this->is_moderator = $row[self::COLUMN_MODERATOR];
         $this->is_admin = $row[self::COLUMN_ADMIN];
+        $this->image = $row[self::COLUMN_IMAGE];
     }
 
     public function getUsername()
@@ -99,6 +102,11 @@ class User
     public function isAdmin()
     {
         return $this->is_admin;
+    }
+
+    public function getImageSrc()
+    {
+        return (isset($this->image)) ? PROJECT_PROFILE_IMAGES . $this->image : null;
     }
 
     public static function getAll($limit = 0, $offset = 0)
@@ -276,6 +284,28 @@ class User
             self::COLUMN_WRITER . " = " . $permissions[self::COLUMN_WRITER] . ", " .
             self::COLUMN_MODERATOR . " = " . $permissions[self::COLUMN_MODERATOR] . ", " .
             self::COLUMN_ADMIN . " = " . $permissions[self::COLUMN_ADMIN] .
+            " WHERE " . self::COLUMN_USERNAME . " = '" . $username . "'";
+
+        // Execute query
+        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
+    }
+
+    /**
+     * Update user profile picture
+     * @param string $username User's username
+     * @param string $image_name Name of the new image
+     * @return bool Whether the update process was successful
+     */
+    public static function updateProfileImage($username, $image_name)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from image_name
+        $image_name = $db_helper->connection->real_escape_string($image_name);
+
+        // Build sql query string
+        $query = "UPDATE " . self::TABLE_NAME .
+            " SET " . self::COLUMN_IMAGE . " = '" . $image_name . "'" .
             " WHERE " . self::COLUMN_USERNAME . " = '" . $username . "'";
 
         // Execute query
