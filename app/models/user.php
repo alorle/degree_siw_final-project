@@ -106,7 +106,12 @@ class User
 
     public function getImageSrc()
     {
-        return (isset($this->image)) ? PROJECT_PROFILE_IMAGES . $this->image : null;
+        $file = FOLDER_PROFILE_IMAGES . DIRECTORY_SEPARATOR . $this->image;
+        if (isset($this->image) && !empty($this->image) && file_exists($file)) {
+            return PROJECT_PROFILE_IMAGES . $this->image;
+        }
+
+        return PROJECT_PROFILE_IMAGES . 'generic.png';
     }
 
     public static function getAll($limit = 0, $offset = 0)

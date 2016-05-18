@@ -54,11 +54,7 @@ class MainProfileView extends AbstractProfileView implements UserInterface
         $template = str_replace(self::KEY_MESSAGE, $this->message, $template);
         $template = str_replace(self::KEY_USER_NAME, $this->user->getName(), $template);
         $template = str_replace(self::KEY_USER_EMAIL, $this->user->getEmail(), $template);
-        if (!is_null($this->user->getImageSrc())) {
-            $template = str_replace(self::KEY_USER_IMAGE_SRC, $this->user->getImageSrc(), $template);
-        } else {
-            $template = str_replace(self::KEY_USER_IMAGE_SRC, '', $template);
-        }
+        $template = str_replace(self::KEY_USER_IMAGE_SRC, $this->user->getImageSrc(), $template);
         echo $template;
     }
 }
