@@ -48,6 +48,7 @@ class UserView extends AbstractView implements UserInterface, ArticleInterface
         $template = parent::render();
 
         $template = str_replace(self::KEY_USER_NAME, $this->user->getName(), $template);
+        $template = str_replace(self::KEY_USER_IMAGE_SRC, $this->user->getImageSrc(), $template);
 
         $articles = Article::getByAuthorUsername($this->user->getUsername());
         $template_parts = explode(self::KEY_USER_BLOG_ARTICLES, $template);
