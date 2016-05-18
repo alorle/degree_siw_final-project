@@ -26,6 +26,7 @@ use App\Views\Article\EditArticleView;
 use App\Views\Article\NewArticleView;
 use App\Views\Article\ShowArticleView;
 use App\Views\ErrorView;
+use lib\FPDF;
 
 class ArticleController extends AbstractController
 {
@@ -63,6 +64,9 @@ class ArticleController extends AbstractController
                 break;
             case 'delete':
                 $this->deleteArticle($params[1]);
+                break;
+            case 'print':
+                $this->printArticle($params[1]);
                 break;
             default:
                 $this->showArticle($params[0]);
@@ -205,6 +209,28 @@ class ArticleController extends AbstractController
             $this->setView(new ErrorView(404, 'Not found', 'El articulo "' . $id . '" no existe.'));
         } else {
             $this->setView(new ShowArticleView($article));
+        }
+    }
+
+    private function printArticle($id)
+    {
+        if (is_null($article = Article::getById($id))) {
+            $this->setView(new ErrorView(404, 'Not found', 'El articulo "' . $id . '" no existe.'));
+        } else {
+            $pdf = new FPDF();
+            $pdf->AddPage();
+            $pdf->SetFont('Arial', 'B', 16);
+            $pdf->Cell(190, 10, utf8_decode(PROJECT_NAME . ' | ' . $article->getTitle()));
+            $pdf->Ln();
+            $pdf->SetFont('Arial', 'B', 14);
+            $pdf->Cell(190, 10, 'Autor: ' . utf8_decode($article->getAuthorName()));
+            $pdf->Ln();
+            $pdf->Cell(190, 10, 'Fecha: ' . $article->getTime());
+            $pdf->Ln();
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->MultiCell(190, 10, utf8_decode($article->getBody()));
+            $pdf->Output();
+            die();
         }
     }
 }
