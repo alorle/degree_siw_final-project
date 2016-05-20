@@ -22,7 +22,7 @@ namespace App\Interfaces;
 interface UserInterface
 {
     const KEY_USER_NAME = "##USER_NAME##";
-    const KEY_USER_USERNAME = "##USER_USERNAME##";
+    const KEY_USER_ID = "##USER_USERNAME##";
     const KEY_USER_EMAIL = "##USER_EMAIL##";
     const KEY_USER_IMAGE_SRC = "##USER_IMAGE_SRC##";
     const KEY_USER_BLOG_ARTICLES = "##USER_BLOG_ARTICLES##";

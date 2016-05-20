@@ -28,11 +28,11 @@ use App\Views\Session\SignUpView;
 class SessionController extends AbstractController
 {
     const KEY_POST_LOGIN_FORM = 'login';
-    const KEY_POST_LOGIN_FORM_USERNAME = 'username';
+    const KEY_POST_LOGIN_FORM_ID = 'username';
     const KEY_POST_LOGIN_FORM_PASSWORD = 'password';
 
     const KEY_POST_SIGN_UP_FORM = 'sign_up';
-    const KEY_POST_SIGN_UP_FORM_USERNAME = 'username';
+    const KEY_POST_SIGN_UP_FORM_ID = 'username';
     const KEY_POST_SIGN_UP_FORM_NAME = 'name';
     const KEY_POST_SIGN_UP_FORM_EMAIL = 'email';
     const KEY_POST_SIGN_UP_FORM_PASSWORD = 'password';
@@ -74,25 +74,25 @@ class SessionController extends AbstractController
         } else {
             if (isset($_POST[self::KEY_POST_LOGIN_FORM])) {
                 // We have received the login form, so check fields
-                $username = filter_var($_POST[self::KEY_POST_LOGIN_FORM_USERNAME], FILTER_SANITIZE_STRING);
+                $id = filter_var($_POST[self::KEY_POST_LOGIN_FORM_ID], FILTER_SANITIZE_STRING);
                 $password = filter_var($_POST[self::KEY_POST_LOGIN_FORM_PASSWORD], FILTER_SANITIZE_STRING);
 
-                if (empty($username) || empty($password)) {
+                if (empty($id) || empty($password)) {
                     // Login fields are empty (after sanitize),
                     // so display login view with error message
                     $this->setView(new LoginView(self::STR_INVALID_FORM));
                 } else {
                     // Get user with given name and password
-                    $user = User::getByUsernameAndPassword($username, md5($password));
+                    $user = User::getByIdAndPassword($id, md5($password));
 
                     // Login info will be correct if $user is set
                     if (isset($user)) {
                         // Create the new session key
-                        $session_key = md5($user->getUsername() . $user->getEmail() . time());
+                        $session_key = md5($user->getId() . $user->getEmail() . time());
 
                         // Update and store new session key
                         Session::setUserSession($session_key);
-                        User::updateSession($user->getUsername(), $session_key);
+                        User::updateSession($user->getId(), $session_key);
 
                         redirect();
                     } else {
@@ -118,18 +118,18 @@ class SessionController extends AbstractController
         } else {
             if (isset($_POST[self::KEY_POST_SIGN_UP_FORM])) {
                 // We have received the sign_up form, so check fields
-                $username = filter_var($_POST[self::KEY_POST_SIGN_UP_FORM_USERNAME], FILTER_SANITIZE_STRING);
+                $id = filter_var($_POST[self::KEY_POST_SIGN_UP_FORM_ID], FILTER_SANITIZE_STRING);
                 $name = filter_var($_POST[self::KEY_POST_SIGN_UP_FORM_NAME], FILTER_SANITIZE_STRING);
                 $email = filter_var($_POST[self::KEY_POST_SIGN_UP_FORM_EMAIL], FILTER_SANITIZE_EMAIL);
                 $password = filter_var($_POST[self::KEY_POST_SIGN_UP_FORM_PASSWORD], FILTER_SANITIZE_STRING);
 
-                if (empty($username) || empty($name) || empty($email) || empty($password)) {
+                if (empty($id) || empty($name) || empty($email) || empty($password)) {
                     // Sign_up fields are empty (after sanitize),
                     // so display sign up view with error message
                     $this->setView(new SignUpView(self::STR_INVALID_FORM));
                 } else {
-                    // Check if username is unique
-                    if (User::existsUsername($username)) {
+                    // Check if id is unique
+                    if (User::existsId($id)) {
                         $this->setView(new SignUpView('Nombre de usuario no válido'));
                         return;
                     }
@@ -141,11 +141,11 @@ class SessionController extends AbstractController
                     }
 
                     // Create user session key
-                    $session_key = md5($username . $email . time());
+                    $session_key = md5($id . $email . time());
 
                     // Insert the new user in the database
                     $inserted = User::insert(array(
-                        User::COLUMN_USERNAME => $username,
+                        User::COLUMN_ID => $id,
                         User::COLUMN_NAME => $name,
                         User::COLUMN_EMAIL => $email,
                         User::COLUMN_PASSWORD => md5($password),

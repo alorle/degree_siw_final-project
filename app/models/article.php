@@ -28,16 +28,14 @@ class Article
     const COLUMN_ID = 'id';
     const COLUMN_TITLE = 'title';
     const COLUMN_BODY = 'body';
-    const COLUMN_AUTHOR_NAME = 'author_name';
-    const COLUMN_AUTHOR_USERNAME = 'author_username';
+    const COLUMN_AUTHOR_ID = 'author_id';
     const COLUMN_TIME = 'time';
 
     private $id;
     private $title;
     private $summary;
     private $body;
-    private $author_name;
-    private $author_username;
+    private $author_id;
     private $time;
 
     public function __construct($row)
@@ -46,8 +44,7 @@ class Article
         $this->title = $row[self::COLUMN_TITLE];
         $this->summary = substr($row[self::COLUMN_BODY], 0, 500) . ' ...';
         $this->body = $row[self::COLUMN_BODY];
-        $this->author_name = $row[self::COLUMN_AUTHOR_NAME];
-        $this->author_username = $row[self::COLUMN_AUTHOR_USERNAME];
+        $this->author_id = $row[self::COLUMN_AUTHOR_ID];
         $this->time = $row[self::COLUMN_TIME];
     }
 
@@ -71,14 +68,9 @@ class Article
         return $this->body;
     }
 
-    public function getAuthorName()
+    public function getAuthorId()
     {
-        return $this->author_name;
-    }
-
-    public function getAuthorUsername()
-    {
-        return $this->author_username;
+        return $this->author_id;
     }
 
     public function getTime()
@@ -160,17 +152,17 @@ class Article
 
     /**
      * Get all articles written by given author
-     * @param string $author_username Author id
+     * @param string $author_id Author id
      * @param int $limit Number of articles
      * @param int $offset First article you want
      * @return array Array containing all the articles written by given author
      */
-    public static function getByAuthorUsername($author_username, $limit = 0, $offset = 0)
+    public static function getByAuthorId($author_id, $limit = 0, $offset = 0)
     {
         $db_helper = DbHelper::instance();
 
         // Escape special characters from author_id
-        $author_username = $db_helper->connection->real_escape_string($author_username);
+        $author_id = $db_helper->connection->real_escape_string($author_id);
 
         if ($limit < 0) {
             $limit = 0;
@@ -182,7 +174,7 @@ class Article
 
         // Build sql query string
         $query = "SELECT * FROM " . self::TABLE_NAME .
-            " WHERE " . self::COLUMN_AUTHOR_USERNAME . " = '" . $author_username . "'" .
+            " WHERE " . self::COLUMN_AUTHOR_ID . " = '" . $author_id . "'" .
             " ORDER BY " . self::COLUMN_TIME . " DESC";
         if (isset($limit) && $limit != 0) {
             $query .= " LIMIT " . $limit;
@@ -216,14 +208,12 @@ class Article
             self::COLUMN_ID . ", " .
             self::COLUMN_TITLE . ", " .
             self::COLUMN_BODY . ", " .
-            self::COLUMN_AUTHOR_NAME . ", " .
-            self::COLUMN_AUTHOR_USERNAME .
+            self::COLUMN_AUTHOR_ID .
             ") VALUES (" .
             "'" . $article[self::COLUMN_ID] . "', " .
             "'" . $article[self::COLUMN_TITLE] . "', " .
             "'" . $article[self::COLUMN_BODY] . "', " .
-            "'" . $article[self::COLUMN_AUTHOR_NAME] . "', " .
-            "'" . $article[self::COLUMN_AUTHOR_USERNAME] . "')";
+            "'" . $article[self::COLUMN_AUTHOR_ID] . "')";
 
         // Execute query
         return ($db_helper->connection->query($query) !== TRUE) ? false : true;

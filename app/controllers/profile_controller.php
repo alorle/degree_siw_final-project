@@ -107,7 +107,7 @@ class ProfileController extends AbstractController
                 }
             }
 
-            $updated = User::update($user->getUsername(), $new_data);
+            $updated = User::update($user->getId(), $new_data);
 
             if ($updated === true) {
                 $this->setView(new MainProfileView($user, '', 'Datos actualizados correctamente'));
@@ -125,9 +125,9 @@ class ProfileController extends AbstractController
                     $result = 2;
                 } else {
                     $tmp = explode('.', $file['name']);
-                    $target = FOLDER_PROFILE_IMAGES . DIRECTORY_SEPARATOR . $user->getUsername() . '.' . end($tmp);
+                    $target = FOLDER_PROFILE_IMAGES . DIRECTORY_SEPARATOR . $user->getId() . '.' . end($tmp);
                     if (move_uploaded_file($file['tmp_name'], $target)) {
-                        if (User::updateProfileImage($user->getUsername(), $user->getUsername() . '.' . end($tmp))) {
+                        if (User::updateProfileImage($user->getId(), $user->getId() . '.' . end($tmp))) {
                             $result = 0;
                         } else {
                             $result = 3;
@@ -153,7 +153,7 @@ class ProfileController extends AbstractController
 
     private function blog(User $user, $requested_page)
     {
-        $articles = Article::getByAuthorUsername($user->getUsername());
+        $articles = Article::getByAuthorId($user->getId());
 
         $total_articles = count($articles);
 
@@ -175,7 +175,7 @@ class ProfileController extends AbstractController
     private function adminUser(User $user, $param)
     {
         $param = filter_var($param, FILTER_SANITIZE_STRING);
-        if (is_null(User::getByUsername($param))) {
+        if (is_null(User::getById($param))) {
             if (!filter_var($param, FILTER_VALIDATE_INT) === false) {
                 $requested_page = $param;
 
@@ -200,13 +200,13 @@ class ProfileController extends AbstractController
                 $this->setView(new ErrorView(404, 'Not found', 'El usuario "' . $param . '" no existe.'));
             }
         } else {
-            $username = $param;
+            $id = $param;
             if (isset($_POST[self::KEY_POST_UPDATE])) {
                 $writer = isset($_POST[self::KEY_POST_WRITER]) && $_POST[self::KEY_POST_WRITER] ? "1" : "0";
                 $moderator = isset($_POST[self::KEY_POST_MODERATOR]) && $_POST[self::KEY_POST_MODERATOR] ? "1" : "0";
                 $admin = isset($_POST[self::KEY_POST_ADMIN]) && $_POST[self::KEY_POST_ADMIN] ? "1" : "0";
 
-                $updated = User::updatePermissions($username, array(
+                $updated = User::updatePermissions($id, array(
                     User::COLUMN_WRITER => $writer,
                     User::COLUMN_MODERATOR => $moderator,
                     User::COLUMN_ADMIN => $admin));
@@ -217,12 +217,12 @@ class ProfileController extends AbstractController
                     throw new \Exception('User permissions could not be updated', 500);
                 }
             } elseif (isset($_POST[self::KEY_POST_DELETE])) {
-                $deleted = User::delete($username);
+                $deleted = User::delete($id);
 
                 if ($deleted) {
                     redirect(PROJECT_BASE_URL . '/profile/admin');
                 } else {
-                    throw new \Exception('User permissions could not be updated', 500);
+                    throw new \Exception('User could not be deleted', 500);
                 }
             } else {
                 redirect(PROJECT_BASE_URL . '/profile/admin');

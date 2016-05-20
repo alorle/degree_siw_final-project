@@ -22,6 +22,7 @@ namespace app\controllers;
 use App\Core\AbstractController;
 use App\Models\Article;
 use App\Models\Session;
+use App\Models\User;
 use App\Views\Article\EditArticleView;
 use App\Views\Article\NewArticleView;
 use App\Views\Article\ShowArticleView;
@@ -103,8 +104,7 @@ class ArticleController extends AbstractController
                         Article::COLUMN_ID => $id,
                         Article::COLUMN_TITLE => $title,
                         Article::COLUMN_BODY => $body,
-                        Article::COLUMN_AUTHOR_NAME => $user->getName(),
-                        Article::COLUMN_AUTHOR_USERNAME => $user->getUsername()));
+                        Article::COLUMN_AUTHOR_ID => $user->getId()));
 
                     // If the insertion was successful, return to blog.
                     // In other case, show an error.
@@ -132,7 +132,7 @@ class ArticleController extends AbstractController
             if (is_null($user = Session::getCurrentUser())) {
                 // User is not identified
                 redirect(PROJECT_BASE_URL . '/session/login');
-            } elseif ($user->getUsername() == $article->getAuthorUsername()) {
+            } elseif ($user->getId() == $article->getAuthorId()) {
                 // Logged user can modify the article
                 if (isset($_POST[self::KEY_POST_DELETE])) {
                     $deleted = Article::delete($id);
@@ -184,7 +184,7 @@ class ArticleController extends AbstractController
             if (is_null($user = Session::getCurrentUser())) {
                 // User is not identified
                 redirect(PROJECT_BASE_URL . '/session/login');
-            } elseif ($user->getUsername() == $article->getAuthorUsername()) {
+            } elseif ($user->getId() == $article->getAuthorId()) {
                 // Logged user can modify the article
                 $deleted = Article::delete($id);
 
@@ -217,13 +217,17 @@ class ArticleController extends AbstractController
         if (is_null($article = Article::getById($id))) {
             $this->setView(new ErrorView(404, 'Not found', 'El articulo "' . $id . '" no existe.'));
         } else {
+            $author = $article->getAuthorId();
+            if (!is_null($user = User::getById($author))) {
+                $author = $user->getName();
+            }
             $pdf = new FPDF();
             $pdf->AddPage();
             $pdf->SetFont('Arial', 'B', 16);
             $pdf->Cell(190, 10, utf8_decode(PROJECT_NAME . ' | ' . $article->getTitle()));
             $pdf->Ln();
             $pdf->SetFont('Arial', 'B', 14);
-            $pdf->Cell(190, 10, 'Autor: ' . utf8_decode($article->getAuthorName()));
+            $pdf->Cell(190, 10, 'Autor: ' . utf8_decode($author));
             $pdf->Ln();
             $pdf->Cell(190, 10, 'Fecha: ' . $article->getTime());
             $pdf->Ln();

@@ -82,7 +82,7 @@ class AdminProfileView extends AbstractProfileView implements UserInterface
     private function replaceUser($template, User $user)
     {
         $template = str_replace(self::KEY_USER_NAME, $user->getName(), $template);
-        $template = str_replace(self::KEY_USER_USERNAME, $user->getUsername(), $template);
+        $template = str_replace(self::KEY_USER_ID, $user->getId(), $template);
         if ($user->isWriter()) {
             $template = str_replace(self::KEY_USER_IS_WRITER, self::KEY_CHECKBOX_CHECKED, $template);
         } else {

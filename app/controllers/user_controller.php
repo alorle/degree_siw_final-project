@@ -33,12 +33,12 @@ class UserController extends AbstractController
      */
     public function __construct($params)
     {
-        $username = '';
+        $user_id = '';
         if (isset($params[0])) {
-            $username = $params[0];
+            $user_id = $params[0];
         }
 
-        if (isset($username) && !is_null($user = User::getByUsername($username))) {
+        if (isset($user_id) && !is_null($user = User::getById($user_id))) {
             $this->setView(new UserView($user));
         } else {
             redirect();

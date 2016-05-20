@@ -51,12 +51,12 @@ class ShowArticleView extends AbstractView implements ArticleInterface
         $template = str_replace(self::KEY_ARTICLE_BODY, $this->article->getBody(), $template);
         $template = str_replace(self::KEY_ARTICLE_TIME, $this->article->getTime(), $template);
 
-        if (is_null($user = User::getByUsername($this->article->getAuthorUsername()))) {
-            $template = str_replace(self::KEY_ARTICLE_AUTHOR, $this->article->getAuthorName(), $template);
+        if (is_null($user = User::getById($this->article->getAuthorId()))) {
+            $template = str_replace(self::KEY_ARTICLE_AUTHOR, $this->article->getAuthorId(), $template);
             $template = str_replace(self::KEY_ARTICLE_AUTHOR_LINK, '', $template);
         } else {
             $template = str_replace(self::KEY_ARTICLE_AUTHOR, $user->getName(), $template);
-            $link = 'href="' . PROJECT_BASE_URL . '/user/' . $user->getUsername() . '"';
+            $link = 'href="' . PROJECT_BASE_URL . '/user/' . $user->getId() . '"';
             $template = str_replace(self::KEY_ARTICLE_AUTHOR_LINK, $link, $template);
         }
 
