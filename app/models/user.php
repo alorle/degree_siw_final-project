@@ -114,6 +114,11 @@ class User
         return PROJECT_PROFILE_IMAGES . 'generic.png';
     }
 
+    public static function getDefaultImageSrc()
+    {
+        return PROJECT_PROFILE_IMAGES . 'generic.png';
+    }
+
     public static function getAll($limit = 0, $offset = 0)
     {
         $db_helper = DbHelper::instance();
@@ -364,7 +369,6 @@ class User
         // Build sql query string
         $query = "DELETE FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
 
-        
 
         // Execute query
         return ($db_helper->connection->query($query) !== TRUE) ? false : true;

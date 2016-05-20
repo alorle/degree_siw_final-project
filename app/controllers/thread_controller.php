@@ -20,14 +20,14 @@ namespace app\controllers;
 
 
 use App\Core\AbstractController;
-use App\Models\Forum;
+use App\Models\Thread;
 use App\Views\ErrorView;
-use App\Views\Forum\ShowForumView;
+use App\Views\Thread\ShowThreadView;
 
-class ForumController extends AbstractController
+class ThreadController extends AbstractController
 {
     /**
-     * ForumController constructor.
+     * ThreadController constructor.
      * @param $params
      * @throws \Exception
      */
@@ -40,43 +40,43 @@ class ForumController extends AbstractController
 
         switch ($action) {
             case 'new':
-                $this->newForum();
+                $this->newThread();
                 break;
             case 'edit':
-                $this->editForum($params[1]);
+                $this->editThread($params[1]);
                 break;
             case 'delete':
-                $this->deleteForum($params[1]);
+                $this->deleteThread($params[1]);
                 break;
             default:
-                $this->showForums($params);
+                $this->showThread($params);
                 break;
         }
     }
 
-    private function newForum()
+    private function newThread()
     {
     }
 
-    private function editForum($int)
+    private function editThread($int)
     {
     }
 
-    private function deleteForum($int)
+    private function deleteThread($int)
     {
     }
 
-    private function showForums($params)
+    private function showThread($params)
     {
         if (isset($params[0])) {
             $id = filter_var($params[0], FILTER_SANITIZE_STRING);
-            if (is_null($forum = Forum::getById($id))) {
-                $this->setView(new ErrorView(404, 'Not found', 'El foro "' . $id . '" no existe.'));
+            if (is_null($thread = Thread::getById($id))) {
+                $this->setView(new ErrorView(404, 'Not found', 'El hilo "' . $id . '" no existe.'));
             } else {
-                $this->setView(new ShowForumView($forum));
+                $this->setView(new ShowThreadView($thread));
             }
         } else {
-            $this->setView(new ShowForumView());
+            $this->setView(new ShowThreadView());
         }
     }
 }

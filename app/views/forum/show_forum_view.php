@@ -110,8 +110,8 @@ class ShowForumView extends AbstractView implements ForumInterface
             $template = str_replace(self::KEY_FORUM_THREAD_AUTHOR_ID, $author->getId(), $template);
             $template = str_replace(self::KEY_FORUM_THREAD_AUTHOR_NAME, $author->getName(), $template);
         } else {
-            $template = str_replace(self::KEY_FORUM_THREAD_AUTHOR_ID, $author->getId(), $template);
-            $template = str_replace(self::KEY_FORUM_THREAD_AUTHOR_NAME, $author->getId(), $template);
+            $template = str_replace(self::KEY_FORUM_THREAD_AUTHOR_ID, $thread->getAuthorId(), $template);
+            $template = str_replace(self::KEY_FORUM_THREAD_AUTHOR_NAME, $thread->getAuthorId(), $template);
         }
         $template = str_replace(self::KEY_FORUM_THREAD_COUNT_COMMENTS, $thread->getCommentsCount(), $template);
 

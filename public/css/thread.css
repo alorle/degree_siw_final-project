@@ -14,40 +14,58 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-@import "header.css";
-@import "footer.css";
-@import "session.css";
-@import "article.css";
-@import "pagination.css";
-@import "article_new.css";
-@import "profile.css";
-@import "forum.css";
-@import "thread.css";
 
-* {
-    margin: 0;
-    padding: 0;
+.thread_table {
+    margin: 16px 0;
+    width: 100%;
 }
 
-html {
-    min-height: 100%;
-    position: relative;
+.thread_table, .thread_table td {
+    border-collapse: collapse;
 }
 
-body {
-    font-size: 1em;
-    margin: 0 0 50px 0;
+.thread_table {
+    border: 1px solid #232323;
 }
 
-h1 {
-    font-size: 2em;
-    font-weight: bold;
+.thread_table th {
+    background-color: #232323;
+    color: white;
 }
 
-#content {
+.thread_table th, td {
+    border-bottom: 1px solid #232323;
+    border-top: 1px solid #232323;
+    padding: 6px;
+    text-align: center;
+}
+
+.thread_table .left {
+    text-align: left;
+}
+
+.thread_table a {
     color: #232323;
-    margin: 16px auto;
-    max-width: 800px;
-    padding: 16px auto;
-    width: 95%;
+    text-decoration: none;
+}
+
+.comment_author_image {
+    float: left;
+}
+
+.comment_author_name {
+    float: left;
+}
+
+.comment_time {
+    float: right;
+}
+
+.comment_title {
+    font-size: 1.2em;
+    text-align: left;
+}
+
+.comment_body {
+    text-align: left;
 }

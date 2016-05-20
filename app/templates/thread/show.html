@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (C) 2016 Álvaro Orduna León
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<html lang="es">
+<head>
+    ##HEAD##
+</head>
+<body>
+
+##HEADER##
+
+<main id="content">
+    ##THREAD_COMMENTS##
+    ##THREAD_COMMENT##
+    <table class="thread_table">
+        <tbody>
+        <tr>
+            <td>
+                <img class="comment_author_image" src="##THREAD_COMMENT_AUTHOR_IMAGE##"
+                     alt="##THREAD_COMMENT_AUTHOR_NAME##" height="60">
+                <a class="comment_author_name" href="##BASE_URL##/user/##THREAD_COMMENT_AUTHOR_ID##">##THREAD_COMMENT_AUTHOR_NAME##</a>
+                <p class="comment_time">##THREAD_COMMENT_TIME##</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h1 class="comment_title">##THREAD_COMMENT_TITLE##</h1>
+                <p class="comment_body"> ##THREAD_COMMENT_BODY## </p>
+            </td>
+        </tr>
+        <!--<h1>##THREAD_COMMENT_ID##</h1>-->
+        <!--<p>##THREAD_COMMENT_TITLE##</p>-->
+        <!--<p>##THREAD_COMMENT_BODY##</p>-->
+        <!--<p>##THREAD_COMMENT_TIME##</p>-->
+        <!--<p>##THREAD_COMMENT_AUTHOR_ID##</p>-->
+        <!--<p>##THREAD_COMMENT_AUTHOR_NAME##</p>-->
+        </tbody>
+    </table>
+    ##THREAD_COMMENT##
+    ##THREAD_COMMENTS##
+</main>
+
+##FOOTER##
+
+</body>
+</html>
