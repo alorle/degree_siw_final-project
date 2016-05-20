@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (C) 2016 Álvaro Orduna León
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<html lang="es">
+<head>
+    ##HEAD##
+</head>
+<body>
+
+##HEADER##
+
+<main id="content">
+    ##FORUM_CHILDREN##
+    <table class="forum_table">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Temáticas</th>
+            <th>Hilos</th>
+        </tr>
+        </thead>
+        <tbody>
+        ##FORUM_CHILD##
+        <tr>
+            <td class="left">
+                <h2><a href="##BASE_URL##/forum/##FORUM_CHILD_ID##">##FORUM_CHILD_NAME##</a></h2>
+                <p>##FORUM_CHILD_DESCRIPTION##</p>
+            </td>
+            <td>##FORUM_CHILD_COUNT_CHILDREN##</td>
+            <td>##FORUM_CHILD_COUNT_THREADS##</td>
+        </tr>
+        ##FORUM_CHILD##
+        </tbody>
+    </table>
+    ##FORUM_CHILDREN##
+    ##FORUM_THREADS##
+    <table class="forum_table">
+        <thead>
+        <tr>
+            <th class="left">Temas</th>
+            <th>Comentarios</th>
+        </tr>
+        </thead>
+        <tbody>
+        ##FORUM_THREAD##
+        <tr>
+            <td class="left">
+                <h2><a href="##BASE_URL##/thread/##FORUM_THREAD_ID##">##FORUM_THREAD_NAME##</a></h2>
+                <p>Publicado por <a
+                        href="##BASE_URL##/user/##FORUM_THREAD_AUTHOR_ID##">##FORUM_THREAD_AUTHOR_NAME##</a></p>
+            </td>
+            <td>##FORUM_THREAD_COUNT_COMMENTS##</td>
+        </tr>
+        ##FORUM_THREAD##
+        </tbody>
+    </table>
+    ##FORUM_THREADS##
+</main>
+
+##FOOTER##
+
+</body>
+</html>

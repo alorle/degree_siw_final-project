@@ -31,6 +31,9 @@ switch ($path) {
         $controller = new App\Controllers\ArticleController($params);
         break;
     case 'forum':
+        $controller = new App\Controllers\ForumController($params);
+        break;
+    case 'thread':
         $controller = new App\Controllers\ErrorController(501);
         break;
     case 'profile':

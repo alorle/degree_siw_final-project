@@ -35,15 +35,15 @@ class EditArticleView extends AbstractView implements ArticleInterface
 
     /**
      * EditArticleView constructor.
-     * @param Article $article
+     * @param Article $forum
      * @param string $msg
      */
-    public function __construct($article, $msg = '')
+    public function __construct($forum, $msg = '')
     {
         parent::__construct(new HeaderPartial(), new FooterPartial());
         $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'article' . DIRECTORY_SEPARATOR . 'edit.html');
-        $this->setTitle('Editar "' . $article->getTitle() . '"" | ' . PROJECT_NAME);
-        $this->article = $article;
+        $this->setTitle('Editar "' . $forum->getTitle() . '"" | ' . PROJECT_NAME);
+        $this->article = $forum;
     }
 
     public function render()

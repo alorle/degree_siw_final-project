@@ -32,14 +32,14 @@ class ShowArticleView extends AbstractView implements ArticleInterface
 
     /**
      * ShowArticleView constructor.
-     * @param Article $article
+     * @param Article $forum
      */
-    public function __construct($article)
+    public function __construct($forum)
     {
         parent::__construct(new HeaderPartial(), new FooterPartial());
         $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'article' . DIRECTORY_SEPARATOR . 'show.html');
-        $this->setTitle($article->getTitle() . ' | ' . PROJECT_NAME);
-        $this->article = $article;
+        $this->setTitle($forum->getTitle() . ' | ' . PROJECT_NAME);
+        $this->article = $forum;
     }
 
     public function render()

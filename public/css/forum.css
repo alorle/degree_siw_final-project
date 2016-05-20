@@ -14,39 +14,45 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-@import "header.css";
-@import "footer.css";
-@import "session.css";
-@import "article.css";
-@import "pagination.css";
-@import "article_new.css";
-@import "profile.css";
-@import "forum.css";
 
-* {
-    margin: 0;
-    padding: 0;
+.forum_table {
+    margin: 16px 0;
+    width: 100%;
 }
 
-html {
-    min-height: 100%;
-    position: relative;
+.forum_table, .forum_table td {
+    border-collapse: collapse;
 }
 
-body {
-    font-size: 1em;
-    margin: 0 0 50px 0;
+.forum_table {
+    border: 1px solid #232323;
 }
 
-h1 {
-    font-size: 2em;
-    font-weight: bold;
+.forum_table th {
+    background-color: #232323;
+    color: white;
 }
 
-#content {
+.forum_table th, td {
+    border-bottom: 1px solid #232323;
+    border-top: 1px solid #232323;
+    padding: 6px;
+    text-align: center;
+}
+
+.forum_table .left {
+    text-align: left;
+}
+
+.forum_table a {
     color: #232323;
-    margin: 16px auto;
-    max-width: 800px;
-    padding: 16px auto;
-    width: 95%;
+    text-decoration: none;
+}
+
+.forum_table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.forum_table tr:nth-child(odd) {
+    background-color: #ffffff;
 }
