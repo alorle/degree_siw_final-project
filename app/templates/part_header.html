@@ -1,17 +1,14 @@
-<header id="header-container">
-    <nav id="header-content">
-        <ul id="header-menu">
-            <li><a href="##BASE_URL##">Blog</a></li>
-            <li><a href="##BASE_URL##/forum">Foro</a></li>
-        </ul>
-        <ul id="header-session">
-            ##SECTION_SESSION##
-            <li><a href="##BASE_URL##/profile">##NAME##</a></li>
-            <li><a href="##BASE_URL##/session/logout">Cerrar sesión</a></li>
-            ##SECTION_SESSION##
-            <li><a href="##BASE_URL##/session/sign_up">Registrar</a></li>
-            <li><a href="##BASE_URL##/session/login">Iniciar sesión</a></li>
-            ##SECTION_SESSION##
-        </ul>
-    </nav>
+<header id="page-header">
+    <ul>
+        <li><a href="##BASE_URL##" class="logo">Filosofía Joven</a></li>
+        <li><a href="##BASE_URL##/blog">Blog</a></li>
+        <li><a href="##BASE_URL##/forum">Foro</a></li>
+        ##SECTION_SESSION##
+        <li class="right"><a href="##BASE_URL##/session/logout" class="material-icons" title="Cerrar sesión">power_settings_new</a></li>
+        <li class="right"><a href="##BASE_URL##/profile" class="material-icons" title="##NAME##">person</a></li>
+        ##SECTION_SESSION##
+        <li class="right"><a href="##BASE_URL##/session/login">Iniciar sesión</a></li>
+        <li class="right"><a href="##BASE_URL##/session/sign_up">Registrar</a></li>
+        ##SECTION_SESSION##
+    </ul>
 </header>

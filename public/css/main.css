@@ -14,15 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-@import "header.css";
-@import "footer.css";
-@import "session.css";
-@import "article.css";
-@import "pagination.css";
-@import "article_new.css";
-@import "profile.css";
-@import "forum.css";
-@import "thread.css";
 
 * {
     margin: 0;
@@ -30,24 +21,123 @@
 }
 
 html {
+    font-family: 'Lato', sans-serif;
     min-height: 100%;
     position: relative;
 }
 
 body {
+    color: #212121;
     font-size: 1em;
     margin: 0 0 50px 0;
 }
 
+/* ---------- TITLES ---------- */
+h1, h2, h3 {
+    color: #FF5252;
+}
+
 h1 {
-    font-size: 2em;
+    font-size: 1.8em;
+    font-weight: bolder;
+}
+
+h2 {
+    font-size: 1.5em;
     font-weight: bold;
 }
 
+h3 {
+    font-size: 1.2em;
+    font-weight: normal;
+}
+
+h1 a, h2 a, h3 a {
+    color: #FF5252;
+}
+
+/* ---------- LINKS ---------- */
+a {
+    color: #212121;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #FF5252;
+}
+
+/* ---------- CONTENT ---------- */
 #content {
-    color: #232323;
-    margin: 16px auto;
-    max-width: 800px;
-    padding: 16px auto;
-    width: 95%;
+    padding: 14px 16px;
+}
+
+/* ---------- HEADER ---------- */
+#page-header ul {
+    background-color: #607D8B;
+    border-bottom: 1px solid #455A64;
+    list-style-type: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+#page-header li {
+    float: left;
+}
+
+#page-header li a {
+    border-bottom: 4px solid #607D8B;
+    color: #FFFFFF;
+    display: block;
+    padding: 14px 16px;
+    text-align: center;
+    text-decoration: none;
+}
+
+#page-header li a:not(.material-icons) {
+    font-size: 20px;
+}
+
+#page-header li a:hover {
+    color: #FF5252;
+}
+
+#page-header li a:hover:not(.logo) {
+    border-bottom: 4px solid #FF5252;
+}
+
+#page-header li a.logo {
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+#page-header li.right {
+    float: right;
+}
+
+/* ---------- FOOTER ---------- */
+#page-footer {
+    background-color: #607D8B;
+    border-top: 1px solid #455A64;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    color: #FFFFFF;
+}
+
+#page-footer .left {
+    display: inline;
+    float: left;
+    padding: 14px 16px;
+    text-align: left;
+}
+
+#page-footer .right {
+    display: inline;
+    float: right;
+    padding: 14px 16px;
+    text-align: right;
 }
