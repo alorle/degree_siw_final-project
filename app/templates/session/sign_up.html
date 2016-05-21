@@ -19,6 +19,10 @@
 <html lang="es">
 <head>
     ##HEAD##
+
+    <!-- Session style -->
+    <link href="##BASE_URL##/public/css/session.css" rel="stylesheet" type="text/css"/>
+
     <script src="##BASE_URL##/public/js/sign_up.js"></script>
 </head>
 <body>
@@ -29,15 +33,15 @@
     <div class="session">
         <h1>Registrar</h1>
         <form method="post" action="##BASE_URL##/session/sign_up" onsubmit="return(validateForm());">
-            <p><input type="text" id="name" name="name" value="" placeholder="Nombre"
-                      oninput="updateName();" required></p>
-            <p><input type="text" id="username" name="username" value="" placeholder="Usuario" required></p>
-            <p><input type="email" name="email" value="" placeholder="Correo electrónico" required></p>
-            <p><input type="password" id="password" name="password" value="" placeholder="Contraseña" required></p>
-            <p><input type="password" id="password_validation" name="password_validation" value=""
-                      placeholder="Repetir contraseña" required></p>
-            <p id="message" class="message">##MESSAGE##</p>
-            <p class="submit"><input type="submit" name="sign_up" value="Registrar"></p>
+            <input type="text" id="name" name="name" value="" placeholder="Nombre completo" oninput="updateName();"
+                   required>
+            <input type="text" id="username" name="username" value="" placeholder="Usuario" required>
+            <input type="email" name="email" value="" placeholder="Correo electrónico" required>
+            <input type="password" id="password" name="password" value="" placeholder="Contraseña" required>
+            <input type="password" id="password_validation" name="password_validation" value=""
+                   placeholder="Repetir contraseña" required>
+            <button type="submit" name="sign_up">Registrar</button>
+            <p class="message">##MESSAGE##</p>
         </form>
     </div>
 </main>

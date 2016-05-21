@@ -1,0 +1,58 @@
+/*
+ * Copyright (C) 2016 Álvaro Orduna León
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.session {
+    background-color: #607D8B;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    margin: 30px auto;
+    padding: 35px;
+    text-align: center;
+    width: 300px;
+}
+
+.session h1 {
+    color: #FFFFFF;
+    padding-bottom: 35px;
+}
+
+.session form input {
+    background: #f2f2f2;
+    border: 0;
+    box-sizing: border-box;
+    display: block;
+    font-size: 14px;
+    outline: 0;
+    padding: 15px;
+    width: 100%;
+}
+
+.session form button {
+    background: #FF5252;
+    border: 0;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 14px;
+    outline: 0;
+    padding: 15px;
+    text-transform: uppercase;
+    width: 100%;
+}
+.session .message {
+    padding-top: 35px;
+    color: #FFFFFF;
+}
+

@@ -30,6 +30,7 @@ body {
     color: #212121;
     font-size: 1em;
     margin: 0 0 50px 0;
+    background: #f2f2f2;
 }
 
 /* ---------- TITLES ---------- */
@@ -74,7 +75,7 @@ a:hover {
 /* ---------- HEADER ---------- */
 #page-header ul {
     background-color: #607D8B;
-    border-bottom: 1px solid #455A64;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
     list-style-type: none;
     margin: 0;
     overflow: hidden;
@@ -118,14 +119,14 @@ a:hover {
 /* ---------- FOOTER ---------- */
 #page-footer {
     background-color: #607D8B;
-    border-top: 1px solid #455A64;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
     bottom: 0;
+    color: #FFFFFF;
     left: 0;
     margin: 0;
     overflow: hidden;
     position: absolute;
     width: 100%;
-    color: #FFFFFF;
 }
 
 #page-footer .left {
