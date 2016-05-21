@@ -27,10 +27,10 @@ html {
 }
 
 body {
+    background: #f2f2f2;
     color: #212121;
     font-size: 1em;
     margin: 0 0 50px 0;
-    background: #f2f2f2;
 }
 
 /* ---------- TITLES ---------- */
@@ -73,6 +73,12 @@ a:hover {
 }
 
 /* ---------- HEADER ---------- */
+#page-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
 #page-header ul {
     background-color: #607D8B;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -119,8 +125,8 @@ a:hover {
 /* ---------- FOOTER ---------- */
 #page-footer {
     background-color: #607D8B;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
     bottom: 0;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
     color: #FFFFFF;
     left: 0;
     margin: 0;
