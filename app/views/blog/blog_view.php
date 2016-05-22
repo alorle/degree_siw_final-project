@@ -70,7 +70,7 @@ class BlogView extends AbstractView implements BlogInterface
     {
         $template = str_replace(self::KEY_ARTICLE_ID, $article->getId(), $template);
         $template = str_replace(self::KEY_ARTICLE_TITLE, $article->getTitle(), $template);
-        $template = str_replace(self::KEY_ARTICLE_SUMMARY, $article->getSummary(), $template);
+        $template = str_replace(self::KEY_ARTICLE_SUMMARY, nl2br($article->getSummary()), $template);
         $template = str_replace(self::KEY_ARTICLE_TIME, $article->getTime(), $template);
 
         if (is_null($user = User::getById($article->getAuthorId()))) {

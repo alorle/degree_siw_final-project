@@ -42,7 +42,7 @@ class Article
     {
         $this->id = $row[self::COLUMN_ID];
         $this->title = $row[self::COLUMN_TITLE];
-        $this->summary = substr($row[self::COLUMN_BODY], 0, 500) . ' ...';
+        $this->summary = strstr($row[self::COLUMN_BODY], '.' . PHP_EOL, true) . ' ...';
         $this->body = $row[self::COLUMN_BODY];
         $this->author_id = $row[self::COLUMN_AUTHOR_ID];
         $this->time = $row[self::COLUMN_TIME];
