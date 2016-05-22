@@ -219,3 +219,8 @@ button {
     text-transform: uppercase;
 }
 
+/* ---------- ICONS ---------- */
+.material-icons:hover {
+    color: #8BC34A;
+    cursor: pointer;
+}

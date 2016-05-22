@@ -57,10 +57,12 @@
                         <input type="checkbox" name="admin" ##USER_IS_ADMIN##/>
                     </td>
                     <td class="button">
-                        <input type="submit" name="update" class="material-icons" value="done">
+                        <label for="update" class="material-icons">done</label>
+                        <input id="update" type="submit" name="update" style="display: none;">
                     </td>
                     <td class="button">
-                        <input type="submit" name="delete" class="material-icons" value="delete"
+                        <label for="delete" class="material-icons">delete</label>
+                        <input id="delete" type="submit" name="delete" style="display: none;"
                                onclick="return(confirm('##CONFIRM_DELETE##'))">
                     </td>
                 </form>
