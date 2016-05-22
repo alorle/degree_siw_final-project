@@ -16,12 +16,12 @@
  */
 
 .article {
-    background: #CFD8DC;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    background: #FFFFFF;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
     display: block;
     margin: 14px auto;
     max-width: 800px;
-    padding: 14px 16px;
+    padding: 35px;
 }
 
 .article .meta {
@@ -41,7 +41,7 @@
 }
 
 .article .actions a {
-    background: #FF5252;
+    background: #8BC34A;
     border: 0;
     color: #FFFFFF;
     display: inline-block;

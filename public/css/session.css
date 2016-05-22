@@ -16,8 +16,8 @@
  */
 
 .session {
-    background-color: #607D8B;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    background-color: #FFFFFF;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
     margin: 30px auto;
     padding: 35px;
     text-align: center;
@@ -25,8 +25,8 @@
 }
 
 .session h1 {
-    color: #FFFFFF;
     padding-bottom: 35px;
+    color: #455A64;
 }
 
 .session form input {
@@ -41,7 +41,7 @@
 }
 
 .session form button {
-    background: #FF5252;
+    background: #8BC34A;
     border: 0;
     color: #FFFFFF;
     cursor: pointer;
@@ -53,6 +53,6 @@
 }
 .session .message {
     padding-top: 35px;
-    color: #FFFFFF;
+    color: #455A64;
 }
 

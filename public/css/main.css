@@ -35,7 +35,7 @@ body {
 
 /* ---------- TITLES ---------- */
 h1, h2, h3 {
-    color: #FF5252;
+    color: #455A64;
 }
 
 h1 {
@@ -54,7 +54,7 @@ h3 {
 }
 
 h1 a, h2 a, h3 a {
-    color: #FF5252;
+    color: #455A64;
 }
 
 /* ---------- LINKS ---------- */
@@ -64,7 +64,7 @@ a {
 }
 
 a:hover {
-    color: #FF5252;
+    color: #8BC34A;
 }
 
 /* ---------- CONTENT ---------- */
@@ -80,8 +80,8 @@ a:hover {
 }
 
 #page-header ul {
-    background-color: #607D8B;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    background-color: #455A64;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
     list-style-type: none;
     margin: 0;
     overflow: hidden;
@@ -93,7 +93,7 @@ a:hover {
 }
 
 #page-header li a {
-    border-bottom: 4px solid #607D8B;
+    border-bottom: 4px solid #455A64;
     color: #FFFFFF;
     display: block;
     padding: 14px 16px;
@@ -105,12 +105,12 @@ a:hover {
     font-size: 20px;
 }
 
-#page-header li a:hover {
-    color: #FF5252;
+#page-header li a:hover, #page-header li .logo {
+    color: #8BC34A;
 }
 
 #page-header li a:hover:not(.logo) {
-    border-bottom: 4px solid #FF5252;
+    border-bottom: 4px solid #8BC34A;
 }
 
 #page-header li a.logo {
@@ -124,9 +124,8 @@ a:hover {
 
 /* ---------- FOOTER ---------- */
 #page-footer {
-    background-color: #607D8B;
+    background-color: #455A64;
     bottom: 0;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
     color: #FFFFFF;
     left: 0;
     margin: 0;
