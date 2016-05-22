@@ -24,6 +24,10 @@
     padding: 35px;
 }
 
+.article header {
+    padding: 14px 0;
+}
+
 .article .meta {
     padding: 14px 0;
 }
@@ -38,6 +42,7 @@
 
 .article .summary, .article .body {
     line-height: 1.6;
+    padding: 14px 0;
     text-align: justify;
     text-justify: inter-word;
 }
@@ -56,3 +61,15 @@
     text-transform: uppercase;
 }
 
+/* For mobile */
+@media only screen and (max-width: 600px) {
+
+    .article .meta .date {
+        display: block;
+        padding-bottom: 14px;
+    }
+
+    .article .meta .author {
+        float: none;
+    }
+}
