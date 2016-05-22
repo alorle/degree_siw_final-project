@@ -42,10 +42,12 @@ class Article
     {
         $this->id = $row[self::COLUMN_ID];
         $this->title = $row[self::COLUMN_TITLE];
-        $this->summary = strstr($row[self::COLUMN_BODY], '.' . PHP_EOL, true) . ' ...';
         $this->body = $row[self::COLUMN_BODY];
         $this->author_id = $row[self::COLUMN_AUTHOR_ID];
         $this->time = $row[self::COLUMN_TIME];
+
+        $this->summary = substr($this->body, 0, stripos($this->body, PHP_EOL, stripos($this->body, PHP_EOL) + 1) - 3) .
+            ' ...';
     }
 
     public function getId()
