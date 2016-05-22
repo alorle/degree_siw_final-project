@@ -79,9 +79,6 @@ a:hover {
     position: fixed;
     top: 0;
     width: 100%;
-}
-
-#page-header {
     background-color: #455A64;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
 }
