@@ -14,36 +14,64 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+@import "profile.css";
 
-#profile-menu {
-    height: 50px;
-    list-style-type: none;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-#profile-menu li {
-    float: left;
-    width: 25%;
-}
-
-#profile-menu li a {
-    color: #455A64;
-    display: block;
-    padding: 14px 16px;
+#content-main form {
+    background-color: #FFFFFF;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
+    margin: 30px auto;
+    padding: 35px;
     text-align: center;
-    text-decoration: none;
+    width: 300px;
 }
 
-#profile-menu li a:hover, #profile-menu li .active {
-    border-bottom: 3px solid #455A64;
+#content-main form h1 {
+    padding-bottom: 15px;
 }
 
-#profile-menu li .active {
-    color: #8BC34A;
+#content-main form input {
+    background: #f2f2f2;
+    border: 0;
+    box-sizing: border-box;
+    display: block;
+    font-size: 14px;
+    outline: 0;
+    padding: 15px;
+    width: 100%;
 }
 
-#content-main {
-    margin: 14px auto;
-    max-width: 800px;
+#content-main form input[type=file] {
+    display: none;
+}
+
+#content-main #profile-image-preview {
+    cursor: pointer;
+}
+
+#content-main form button {
+    width: 100%;
+}
+
+#content-main .message {
+    color: #455A64;
+    padding-top: 35px;
+}
+
+/* For desktop */
+@media screen and (min-width: 768px) {
+
+    #content-main #profile-image-preview {
+        height: 225px;
+        cursor: pointer;
+    }
+
+    #content-main form:first-child {
+        float: left;
+        width: 250px;
+    }
+
+    #content-main form:last-child {
+        float: right;
+        width: 300px;
+    }
 }
