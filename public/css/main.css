@@ -76,11 +76,11 @@ a:hover {
 /* ---------- HEADER ---------- */
 
 #page-header {
+    background-color: #455A64;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #455A64;
-    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
 }
 
 #page-header h1 {
@@ -206,3 +206,16 @@ a:hover {
         text-align: right;
     }
 }
+
+/* ---------- BUTTONS ---------- */
+button {
+    background: #8BC34A;
+    border: 0;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 14px;
+    outline: 0;
+    padding: 15px;
+    text-transform: uppercase;
+}
+

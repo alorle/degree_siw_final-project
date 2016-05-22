@@ -37,7 +37,7 @@
         <form method="post" action="##BASE_URL##/profile" enctype="multipart/form-data">
             <p><input type="file" id="profile-image" name="profile-image"></p>
             <p id="message-image" class="message">##MESSAGE_IMAGE##</p>
-            <p class="submit"><input type="submit" name="profile-image" value="Upload Image"></p>
+            <button type="submit" name="profile-image">Actualizar imagen</button>
         </form>
         <h1>Información personal</h1>
         <form method="post" action="##BASE_URL##/profile" onsubmit="return(validateForm());">
@@ -48,7 +48,7 @@
             <p><input type="password" id="password_new_validation" name="password_new_validation" value=""
                       placeholder="Repetir nueva contraseña"></p>
             <p id="message" class="message">##MESSAGE##</p>
-            <p class="submit"><input type="submit" name="update" value="Actualizar"></p>
+            <button type="submit" name="update">Actualizar perfil</button>
         </form>
     </div>
 </main>
