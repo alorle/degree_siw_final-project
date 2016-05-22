@@ -27,3 +27,12 @@ function validateForm() {
 
     return true;
 }
+
+function profileImagePreview() {
+    var oFReader = new FileReader();
+    oFReader.readAsDataURL(document.getElementById("profile-image").files[0]);
+
+    oFReader.onload = function (oFREvent) {
+        document.getElementById("profile-image-preview").src = oFREvent.target.result;
+    };
+}

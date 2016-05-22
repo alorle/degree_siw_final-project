@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.session {
+#content-main form {
     background-color: #FFFFFF;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
     margin: 30px auto;
@@ -24,11 +24,11 @@
     width: 300px;
 }
 
-.session h1 {
-    padding-bottom: 35px;
+#content-main form h1 {
+    padding-bottom: 15px;
 }
 
-.session form input {
+#content-main form input {
     background: #f2f2f2;
     border: 0;
     box-sizing: border-box;
@@ -39,12 +39,38 @@
     width: 100%;
 }
 
-.session form button {
+#content-main form input[type=file] {
+    display: none;
+}
+
+#content-main #profile-image-preview {
+    cursor: pointer;
+}
+
+#content-main form button {
     width: 100%;
 }
 
-.session .message {
+#content-main .message {
     color: #455A64;
     padding-top: 35px;
 }
 
+/* For desktop */
+@media screen and (min-width: 768px) {
+
+    #content-main #profile-image-preview {
+        height: 225px;
+        cursor: pointer;
+    }
+
+    #content-main form:first-child {
+        float: left;
+        width: 250px;
+    }
+
+    #content-main form:last-child {
+        float: right;
+        width: 300px;
+    }
+}
