@@ -36,6 +36,12 @@
     font-weight: bold;
 }
 
+.article .summary, .article .body {
+    line-height: 1.6;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
 .article .actions {
     text-align: end;
 }
