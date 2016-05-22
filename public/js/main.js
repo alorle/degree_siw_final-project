@@ -16,9 +16,17 @@
  */
 
 $(document).ready(function () {
-    $('#content').css('margin-top', $('#page-header').outerHeight() + 'px');
+    $('#content').css('margin-bottom', $('#page-footer').outerHeight() + 'px');
+});
+
+$(document).click(function (event) {
+    if (!$(event.target).is('#menu-icon')) {
+        $('#menu-content').hide();
+    } else {
+        $('#menu-content').toggle();
+    }
 });
 
 window.onresize = function () {
-    $('#content').css('margin-top', $('#page-header').outerHeight() + 'px');
+    $('#content').css('margin-bottom', $('#page-footer').outerHeight() + 'px');
 };

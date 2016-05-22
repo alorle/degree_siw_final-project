@@ -69,30 +69,48 @@ a:hover {
 
 /* ---------- CONTENT ---------- */
 #content {
+    margin-top: 50px;
     padding: 14px 16px;
 }
 
 /* ---------- HEADER ---------- */
+
 #page-header {
     position: fixed;
     top: 0;
     width: 100%;
 }
 
-#page-header ul {
+#page-header {
     background-color: #455A64;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+}
+
+#page-header h1 {
+    display: inline-block;
+    font-size: 20px;
+    padding: 14px 16px;
+    text-transform: uppercase;
+}
+
+#page-header h1 a {
+    color: #8BC34A;
+    display: block;
+}
+
+#menu-content {
+    float: right;
     list-style-type: none;
     margin: 0;
     overflow: hidden;
     padding: 0;
 }
 
-#page-header li {
+#menu-content li {
     float: left;
 }
 
-#page-header li a {
+#menu-content li a {
     border-bottom: 4px solid #455A64;
     color: #FFFFFF;
     display: block;
@@ -101,25 +119,53 @@ a:hover {
     text-decoration: none;
 }
 
-#page-header li a:not(.material-icons) {
+#menu-content li a:not(.material-icons) {
     font-size: 20px;
 }
 
-#page-header li a:hover, #page-header li .logo {
+#menu-content li a:hover {
+    border-bottom: 4px solid #8BC34A;
     color: #8BC34A;
 }
 
-#page-header li a:hover:not(.logo) {
-    border-bottom: 4px solid #8BC34A;
+#menu-icon {
+    display: none;
 }
 
-#page-header li a.logo {
-    font-weight: bolder;
-    text-transform: uppercase;
-}
+/* For tablets and mobil */
+@media only screen and (max-width: 768px) {
 
-#page-header li.right {
-    float: right;
+    #menu-icon {
+        color: white;
+        display: inline-block;
+        float: right;
+        padding: 14px 16px;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    #menu-content {
+        background-color: #455A64;
+        display: none;
+        position: absolute;
+        top: 50px;
+        width: 100%;
+    }
+
+    #page-header li {
+        display: inherit;
+        text-align: center;
+        width: 100%;
+    }
+
+    #page-header li a {
+        border: 0;
+    }
+
+    #page-header li a:hover {
+        border: 0;
+        color: #8BC34A;
+    }
 }
 
 /* ---------- FOOTER ---------- */
@@ -134,16 +180,32 @@ a:hover {
     width: 100%;
 }
 
-#page-footer .left {
-    display: inline;
-    float: left;
-    padding: 14px 16px;
+#page-footer .copyright, #page-footer .designer {
     text-align: left;
 }
 
-#page-footer .right {
-    display: inline;
-    float: right;
-    padding: 14px 16px;
-    text-align: right;
+#page-footer .copyright {
+    padding: 14px 16px 7px 16px;
+}
+
+#page-footer .designer {
+    padding: 7px 16px 14px 16px;
+}
+
+/* For tablets and desktop */
+@media only screen and (min-width: 600px) {
+
+    #page-footer .copyright {
+        display: inline;
+        float: left;
+        padding: 14px 16px;
+        text-align: left;
+    }
+
+    #page-footer .designer {
+        display: inline;
+        float: right;
+        padding: 14px 16px;
+        text-align: right;
+    }
 }
