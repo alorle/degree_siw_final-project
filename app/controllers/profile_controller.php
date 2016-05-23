@@ -137,11 +137,11 @@ class ProfileController extends AbstractController
                     }
                 }
                 $image_msg = array('Imagen actualizada',
-                    'Ningun fichero seleccionado',
-                    'El fichero no es una imagen',
-                    'Hubo un problema al asociar al usaurio con su nueva imagen',
-                    'Hubo un problema al copiar la imagen al servidor',
-                    'Hubo un error desconocido');
+                    'Ningún fichero seleccionado. Pincha en la imagen superior para seleccionar una nueva imagen.',
+                    'El fichero no es una imagen. Seleccione un fichero válido.',
+                    'Hubo un problema al asociar al usaurio con su nueva imagen.',
+                    'Hubo un problema al copiar la imagen al servidor.',
+                    'Hubo un error desconocido.');
                 $this->setView(new MainProfileView($user, $image_msg[$result], ''));
             } else {
                 throw new \Exception('Internal server error', 500);
