@@ -62,7 +62,7 @@ class ProfileController extends AbstractController
         if (!is_null($user = Session::getCurrentUser())) {
             switch ($action) {
                 case 'blog':
-                    $this->blog($user, $params[1]);
+                    $this->blog($user, $params);
                     break;
                 case 'forum':
                     $this->setView(new ForumProfileView($user));
@@ -151,8 +151,13 @@ class ProfileController extends AbstractController
         }
     }
 
-    private function blog(User $user, $requested_page)
+    private function blog(User $user, $params)
     {
+        $requested_page = 1;
+        if (isset($params[1])) {
+            $requested_page = filter_var($params[1], FILTER_SANITIZE_NUMBER_INT);
+        }
+
         $articles = Article::getByAuthorId($user->getId());
 
         $total_articles = count($articles);
