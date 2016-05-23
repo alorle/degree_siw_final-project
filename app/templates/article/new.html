@@ -19,6 +19,10 @@
 <html lang="es">
 <head>
     ##HEAD##
+
+    <!-- Article edition style -->
+    <link href="##BASE_URL##/public/css/article_edition.css" rel="stylesheet" type="text/css"/>
+
     <script src="##BASE_URL##/public/js/article_new.js"></script>
 </head>
 <body>
@@ -26,17 +30,19 @@
 ##HEADER##
 
 <main id="content">
-    <div class="article-new">
+    <div class="article-form">
         <h1>Nuevo artículo</h1>
         <form method="post" action="##BASE_URL##/article/new" onsubmit="return(validateForm());">
-            <p><label for="title">Título</label></p>
-            <p><input type="text" name="title" id="title" value="" placeholder="Título" oninput="updateId();" required></p>
-            <p><label for="id">ID</label></p>
-            <p><input type="text" name="id" id="id" value="" placeholder="Identificador" required></p>
-            <p><label for="body">Cuerpo</label></p>
-            <p><textarea name="body" id="body" rows="10" placeholder="Cuerpo" required></textarea></p>
+            <label for="title">Título</label>
+            <input type="text" name="title" id="title" value="" placeholder="Título" oninput="updateId();" required>
+            <label for="id">URL</label>
+            <input type="text" name="id" id="id" value="" placeholder="nombre-de-la-url" required>
+            <label for="body">Cuerpo</label>
+            <textarea name="body" id="body" rows="10" placeholder="Cuerpo" required></textarea>
+            <div class="actions">
+                <button type="submit" name="new">Añadir</button>
+            </div>
             <p class="message">##MESSAGE##</p>
-            <button type="submit" name="new">Añadir</button>
         </form>
     </div>
 </main>

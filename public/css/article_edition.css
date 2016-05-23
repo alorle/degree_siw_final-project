@@ -1,0 +1,63 @@
+/*
+ * Copyright (C) 2016 Álvaro Orduna León
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.article-form {
+    background-color: #FFFFFF;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
+    margin: 30px auto;
+    padding: 35px;
+    width: 800px;
+}
+
+.article-form h1 {
+    padding-bottom: 35px;
+    text-align: center;
+}
+
+.article-form form label {
+    color: #455A64;
+    font-weight: bold;
+    width: 100%;
+}
+
+.article-form form input, .article-form form textarea {
+    background: #f2f2f2;
+    border: 0;
+    box-sizing: border-box;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 28px;
+    margin-top: 14px;
+    outline: 0;
+    padding: 15px;
+    width: 100%;
+}
+
+.article-form .actions {
+    text-align: right;
+}
+
+.article-form .actions #delete {
+    float: left;
+    background-color: #727272;
+}
+
+.article-form .message {
+    color: #455A64;
+    padding-top: 35px;
+    text-align: center;
+}

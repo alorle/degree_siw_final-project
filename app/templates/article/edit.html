@@ -19,25 +19,28 @@
 <html lang="es">
 <head>
     ##HEAD##
+
+    <!-- Article edition style -->
+    <link href="##BASE_URL##/public/css/article_edition.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
 ##HEADER##
 
 <main id="content">
-    <div class="article-new">
+    <div class="article-form">
         <h1>Editar artículo</h1>
         <form method="post" action="##BASE_URL##/article/edit/##ARTICLE_ID##">
-            <p><label for="title">Título</label></p>
-            <p><input type="text" name="title" id="title" value="##ARTICLE_TITLE##" placeholder="Título"
-                      oninput="updateId();" required></p>
-            <p><label for="body">Cuerpo</label></p>
-            <p><textarea name="body" id="body" rows="10" placeholder="Cuerpo" required>##ARTICLE_BODY##</textarea></p>
-            <p class="message">##MESSAGE##</p>
-            <p class="submit">
-                <button type="submit" name="delete" onclick="return(confirm('##CONFIRM_DELETE##'))">Eliminar</button>
+            <label for="title">Título</label>
+            <input type="text" name="title" id="title" value="##ARTICLE_TITLE##" placeholder="Título"
+                   oninput="updateId();" required>
+            <label for="body">Cuerpo</label>
+            <textarea name="body" id="body" rows="10" placeholder="Cuerpo" required>##ARTICLE_BODY##</textarea>
+            <div class="actions">
+                <button id="delete" type="submit" name="delete" onclick="return(confirm('##CONFIRM_DELETE##'))">Eliminar</button>
                 <button type="submit" name="edit">Finalizar</button>
-            </p>
+            </div>
+            <p class="message">##MESSAGE##</p>
         </form>
     </div>
 </main>

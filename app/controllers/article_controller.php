@@ -95,7 +95,7 @@ class ArticleController extends AbstractController
                 } else {
                     // Check if id is unique
                     if (Article::existsId($id)) {
-                        $this->setView(new NewArticleView('Id existente. Prueba con otro.'));
+                        $this->setView(new NewArticleView('La URL ya existe. Prueba con otra diferente.'));
                         return;
                     }
 
