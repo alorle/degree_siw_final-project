@@ -21,7 +21,9 @@ $(document).ready(function () {
 
 $(document).click(function (event) {
     if (!$(event.target).is('#menu-icon')) {
-        $('#menu-content').hide();
+        if ($('#menu-icon').css('display') != 'none') {
+            $('#menu-content').hide();
+        }
     } else {
         $('#menu-content').toggle();
     }
@@ -29,4 +31,10 @@ $(document).click(function (event) {
 
 window.onresize = function () {
     $('#content').css('margin-bottom', $('#page-footer').outerHeight() + 'px');
+
+    if ($('#menu-icon').css('display') == 'none') {
+        $('#menu-content').show();
+    } else {
+        $('#menu-content').hide();
+    }
 };
