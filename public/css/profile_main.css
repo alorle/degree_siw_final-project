@@ -44,8 +44,35 @@
     display: none;
 }
 
+#content-main #profile-image-label {
+    display: inline-block;
+    height: 194px;
+}
+
 #content-main #profile-image-preview {
     cursor: pointer;
+    height: 100%;
+}
+
+#content-main #profile-image-text {
+    cursor: pointer;
+    background: #212121;
+    bottom: 50px;
+    color: #ffffff;
+    left: 0;
+    opacity: 0;
+    padding: 14px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: opacity 500ms;
+    -moz-transition: opacity 500ms;
+    -o-transition: opacity 500ms;
+    -webkit-transition: opacity 500ms;
+}
+
+#content-main #profile-image-label:hover #profile-image-text {
+    opacity: 0.8;
 }
 
 #content-main form button {
@@ -59,11 +86,6 @@
 
 /* For desktop */
 @media screen and (min-width: 768px) {
-
-    #content-main #profile-image-preview {
-        height: 225px;
-        cursor: pointer;
-    }
 
     #content-main form:first-child {
         float: left;

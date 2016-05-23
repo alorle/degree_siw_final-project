@@ -34,8 +34,9 @@
     <div id="content-main">
         <form method="post" action="##BASE_URL##/profile" enctype="multipart/form-data">
             <h1>Imagen de usuario</h1>
-            <label for="profile-image">
-                <img src="##USER_IMAGE_SRC##" id="profile-image-preview" alt="Imagen de ##USER_NAME##" height="100"/>
+            <label for="profile-image" id="profile-image-label">
+                <img src="##USER_IMAGE_SRC##" id="profile-image-preview" alt="Imagen de ##USER_NAME##"/>
+                <p id="profile-image-text">Cambiar imagen</p>
             </label>
             <input type="file" id="profile-image" name="profile-image" onchange="profileImagePreview();"/>
             <button type="submit" name="profile-image">Actualizar imagen</button>
