@@ -21,6 +21,8 @@ namespace app\controllers;
 
 use App\Core\AbstractController;
 use App\Models\Forum;
+use App\Models\Session;
+use App\Models\Thread;
 use App\Views\ErrorView;
 use App\Views\Forum\ShowForumView;
 
@@ -50,10 +52,21 @@ class CommentController extends AbstractController
 
     private function newComment()
     {
-        if (isset($_POST['thread'])) {
-            $this->setView(new ErrorView(501, 'New comment view not implemented (' . $_POST['thread'] . ')'));
+        if (is_null($user = Session::getCurrentUser())) {
+            // User is not identified
+            redirect(PROJECT_BASE_URL . '/session/login');
         } else {
-            $this->setView(new ErrorView(404, 'Not found'));
+            if (isset($_POST['thread'])) {
+                $threadId = $_POST['thread'];
+                $thread = Thread::getById($threadId);
+                if (!is_null($thread)) {
+                    $this->setView(new ErrorView(501, 'New comment view not implemented (Thread Id: ' . $threadId . ')'));
+                } else {
+                    $this->setView(new ErrorView(404, 'Not found'));
+                }
+            } else {
+                $this->setView(new ErrorView(404, 'Not found'));
+            }
         }
     }
 }
