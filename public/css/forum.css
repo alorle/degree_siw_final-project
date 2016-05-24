@@ -19,6 +19,7 @@
     background-color: #FFFFFF;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
     margin: 30px auto;
+    max-width: 800px;
     overflow-x: auto;
     padding: 35px;
 }
@@ -51,4 +52,10 @@
 
 #content .table-wrapper table tbody tr:hover {
     background-color: #CFD8DC;
+}
+
+#content .actions {
+    margin: 0 auto;
+    max-width: 870px;
+    text-align: right;
 }

@@ -56,9 +56,15 @@ class ShowForumView extends AbstractView implements ForumInterface
         if (is_null($this->forum)) {
             $forum_children = Forum::getAllParents();
             $forum_threads = array();
+            
+            $template_parts = explode(self::KEY_FORUM_ACTIONS, $template);
+            $template = $template_parts[0] . $template_parts[2];
         } else {
             $forum_children = Forum::getAllChildren($this->forum->getId());
             $forum_threads = Thread::getAll($this->forum->getId());
+
+            $template = str_replace(self::KEY_FORUM_ACTIONS, '', $template);
+            $template = str_replace(self::KEY_FORUM_ID, $this->forum->getId(), $template);
         }
 
         $template_parts = explode(self::KEY_FORUM_CHILDREN, $template);

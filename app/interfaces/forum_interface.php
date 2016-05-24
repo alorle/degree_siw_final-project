@@ -21,6 +21,7 @@ namespace App\Interfaces;
 
 interface ForumInterface
 {
+    const KEY_FORUM_ID = "##FORUM_ID##";
     const KEY_FORUM_CHILDREN = "##FORUM_CHILDREN##";
     const KEY_FORUM_CHILD = "##FORUM_CHILD##";
     const KEY_FORUM_CHILD_ID = "##FORUM_CHILD_ID##";
@@ -35,4 +36,5 @@ interface ForumInterface
     const KEY_FORUM_THREAD_AUTHOR_ID = "##FORUM_THREAD_AUTHOR_ID##";
     const KEY_FORUM_THREAD_AUTHOR_NAME = "##FORUM_THREAD_AUTHOR_NAME##";
     const KEY_FORUM_THREAD_COUNT_COMMENTS = "##FORUM_THREAD_COUNT_COMMENTS##";
+    const KEY_FORUM_ACTIONS = "##FORUM_ACTIONS##";
 }

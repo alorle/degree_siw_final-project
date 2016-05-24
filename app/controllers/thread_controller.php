@@ -20,12 +20,15 @@ namespace app\controllers;
 
 
 use App\Core\AbstractController;
+use App\Models\Comment;
 use App\Models\Thread;
 use App\Views\ErrorView;
 use App\Views\Thread\ShowThreadView;
 
 class ThreadController extends AbstractController
 {
+    const COMMENTS_PER_PAGE = 10;
+
     /**
      * ThreadController constructor.
      * @param $params
@@ -73,7 +76,27 @@ class ThreadController extends AbstractController
             if (is_null($thread = Thread::getById($id))) {
                 $this->setView(new ErrorView(404, 'Not found', 'El hilo "' . $id . '" no existe.'));
             } else {
-                $this->setView(new ShowThreadView($thread));
+                $total_comments = Comment::count($id);
+
+                if ($total_comments <= self::COMMENTS_PER_PAGE) {
+                    // Show all comments available, as they are less than the comments that fit on one page.
+                    $this->setView(new ShowThreadView($thread, Comment::getAll($id)));
+                } else {
+                    // Calculate the number of pages needed
+                    $total_pages = ceil($total_comments / self::COMMENTS_PER_PAGE);
+
+                    // Get the requested page
+                    $current_page = 1;
+                    if (isset($params[1]) && !filter_var($params[1], FILTER_VALIDATE_INT) === false) {
+                        $current_page = min($total_pages, $params[1]);
+                    }
+
+                    // Get comments to show
+                    $comments = Comment::getAll($id, '', self::COMMENTS_PER_PAGE, ($current_page - 1) * self::COMMENTS_PER_PAGE);
+
+                    // Set the view that will be rendered
+                    $this->setView(new ShowThreadView($thread, $comments, $total_pages, $current_page));
+                }
             }
         } else {
             $this->setView(new ShowThreadView());

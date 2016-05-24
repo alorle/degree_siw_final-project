@@ -22,12 +22,23 @@
 
     <!-- Thread style -->
     <link href="##BASE_URL##/public/css/thread.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Pagination style -->
+    <link href="##BASE_URL##/public/css/pagination.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Thread JavaScript -->
+    <script src="##BASE_URL##/public/js/thread.js"></script>
 </head>
 <body>
 
 ##HEADER##
 
 <main id="content">
+
+    <div class="actions">
+        <button type="submit" onclick="onCommentButtonClick('##THREAD_ID##')">Comentar</button>
+    </div>
+
     ##THREAD_COMMENTS##
     ##THREAD_COMMENT##
     <article>
@@ -40,6 +51,29 @@
     </article>
     ##THREAD_COMMENT##
     ##THREAD_COMMENTS##
+
+    <div class="actions">
+        <button type="submit" onclick="onCommentButtonClick('##THREAD_ID##')">Comentar</button>
+    </div>
+
+    ##PAGINATION##
+    <ul class="pagination">
+        ##PAGINATION_FIRST##
+        <li><a href="##BASE_URL##/thread/##THREAD_ID##/##PAGINATION_FIRST_ID##"><<</a></li>
+        ##PAGINATION_FIRST##
+        ##PAGINATION_PREV##
+        <li><a href="##BASE_URL##/thread/##THREAD_ID##/##PAGINATION_PREV_ID##">##PAGINATION_PREV_ID##</a></li>
+        ##PAGINATION_PREV##
+        <li><a class="active" href="##BASE_URL##/thread/##THREAD_ID##/##PAGINATION_CURRENT_ID##">##PAGINATION_CURRENT_ID##</a>
+        </li>
+        ##PAGINATION_NEXT##
+        <li><a href="##BASE_URL##/thread/##THREAD_ID##/##PAGINATION_NEXT_ID##">##PAGINATION_NEXT_ID##</a></li>
+        ##PAGINATION_NEXT##
+        ##PAGINATION_LAST##
+        <li><a href="##BASE_URL##/thread/##THREAD_ID##/##PAGINATION_LAST_ID##">>></a></li>
+        ##PAGINATION_LAST##
+    </ul>
+    ##PAGINATION##
 </main>
 
 ##FOOTER##

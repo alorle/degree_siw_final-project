@@ -22,12 +22,16 @@
 
     <!-- Forum style -->
     <link href="##BASE_URL##/public/css/forum.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Forum JavaScript -->
+    <script src="##BASE_URL##/public/js/forum.js"></script>
 </head>
 <body>
 
 ##HEADER##
 
 <main id="content">
+
     ##FORUM_CHILDREN##
     <div class="table-wrapper">
         <h1>Categorías</h1>
@@ -54,6 +58,7 @@
         </table>
     </div>
     ##FORUM_CHILDREN##
+
     ##FORUM_THREADS##
     <div class="table-wrapper">
         <h1>Temas</h1>
@@ -81,6 +86,15 @@
         </table>
     </div>
     ##FORUM_THREADS##
+
+    ##FORUM_ACTIONS##
+    <div class="actions">
+        <button type="submit" onclick="onThreadAddButtonClick('##BASE_URL##/thread/new', '##FORUM_ID##')">Abrir nuevo
+            tema
+        </button>
+    </div>
+    ##FORUM_ACTIONS##
+
 </main>
 
 ##FOOTER##

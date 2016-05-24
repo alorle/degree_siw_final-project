@@ -15,39 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#content article {
-    background: #FFFFFF;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
-    display: block;
-    margin: 14px auto;
-    max-width: 800px;
-    padding: 35px;
-}
 
-.comment_author_image, .comment_author_name {
-    float: right;
-    margin: 0;
-}
 
-.comment_author_name {
-    font-weight: bold;
-}
-
-.comment_title, .comment_time {
-    margin: 14px 0;
-    text-align: left;
-    width: 100%;
-}
-
-.comment_body {
-    clear: both;
-    margin: 14px 0;
-    text-align: justify;
-    width: 100%;
-}
-
-#content .actions {
-    margin: 0 auto;
-    max-width: 870px;
-    text-align: right;
+function onThreadAddButtonClick(url, forumId) {
+    $.redirectPost(url, {forum: forumId});
 }
