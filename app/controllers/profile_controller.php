@@ -65,7 +65,7 @@ class ProfileController extends AbstractController
                     $this->blog($user, $params);
                     break;
                 case 'forum':
-                    $this->setView(new ForumProfileView($user));
+                    $this->forum($user);
                     break;
                 case 'admin':
                     if (!empty($params[1])) {
@@ -153,93 +153,113 @@ class ProfileController extends AbstractController
 
     private function blog(User $user, $params)
     {
-        $articles = Article::getByAuthorId($user->getId());
-        $total_articles = count($articles);
+        if ($user->isWriter()) {
+            $articles = Article::getByAuthorId($user->getId());
+            $total_articles = count($articles);
 
-        if ($total_articles <= self::ARTICLES_PER_PAGE) {
-            $this->setView(new BlogProfileView($user, $articles));
+            if ($total_articles <= self::ARTICLES_PER_PAGE) {
+                $this->setView(new BlogProfileView($user, $articles));
+            } else {
+
+                $requested_page = 1;
+                if (isset($params[1])) {
+                    $requested_page = filter_var($params[1], FILTER_SANITIZE_NUMBER_INT);
+                }
+
+                // Calculate the number of pages needed
+                $total_pages = ceil($total_articles / self::ARTICLES_PER_PAGE);
+
+                // Get the requested page
+                $current_page = 1;
+                if (isset($requested_page) && !filter_var($requested_page, FILTER_VALIDATE_INT) === false) {
+                    $current_page = min($total_pages, $requested_page);
+                }
+
+                // Get articles to show
+                $articles = Article::getByAuthorId($user->getId(), self::ARTICLES_PER_PAGE,
+                    ($current_page - 1) * self::ARTICLES_PER_PAGE);
+
+                $this->setView(new BlogProfileView($user, $articles, $total_pages, $current_page));
+            }
         } else {
+            // Logged user is not a writer
+            $this->setView(new ErrorView(403, 'Forbidden', 'No puede administrar el blog.'));
+        }
+    }
 
-            $requested_page = 1;
-            if (isset($params[1])) {
-                $requested_page = filter_var($params[1], FILTER_SANITIZE_NUMBER_INT);
-            }
-
-            // Calculate the number of pages needed
-            $total_pages = ceil($total_articles / self::ARTICLES_PER_PAGE);
-
-            // Get the requested page
-            $current_page = 1;
-            if (isset($requested_page) && !filter_var($requested_page, FILTER_VALIDATE_INT) === false) {
-                $current_page = min($total_pages, $requested_page);
-            }
-
-            // Get articles to show
-            $articles = Article::getByAuthorId($user->getId(), self::ARTICLES_PER_PAGE,
-                ($current_page - 1) * self::ARTICLES_PER_PAGE);
-
-            $this->setView(new BlogProfileView($user, $articles, $total_pages, $current_page));
+    private function forum(User $user)
+    {
+        if ($user->isModerator()) {
+            $this->setView(new ForumProfileView($user));
+        } else {
+            // Logged user is not a moderator
+            $this->setView(new ErrorView(403, 'Forbidden', 'No puede administrar el foro.'));
         }
     }
 
     private function adminUser(User $user, $param)
     {
-        $param = filter_var($param, FILTER_SANITIZE_STRING);
-        if (is_null(User::getById($param))) {
-            if (!filter_var($param, FILTER_VALIDATE_INT) === false) {
-                $users = User::getAll();
-                $total_users = count($users);
+        if ($user->isAdmin()) {
+            $param = filter_var($param, FILTER_SANITIZE_STRING);
+            if (is_null(User::getById($param))) {
+                if (!filter_var($param, FILTER_VALIDATE_INT) === false) {
+                    $users = User::getAll();
+                    $total_users = count($users);
 
-                if ($total_users <= self::USERS_PER_PAGE) {
-                    $this->setView(new AdminProfileView($user, $users));
-                } else {
-                    $requested_page = $param;
+                    if ($total_users <= self::USERS_PER_PAGE) {
+                        $this->setView(new AdminProfileView($user, $users));
+                    } else {
+                        $requested_page = $param;
 
-                    // Calculate the number of pages needed
-                    $total_pages = ceil($total_users / self::USERS_PER_PAGE);
+                        // Calculate the number of pages needed
+                        $total_pages = ceil($total_users / self::USERS_PER_PAGE);
 
-                    // Get the requested page
-                    $current_page = 1;
-                    if (isset($requested_page) && !filter_var($requested_page, FILTER_VALIDATE_INT) === false) {
-                        $current_page = min($total_pages, $requested_page);
+                        // Get the requested page
+                        $current_page = 1;
+                        if (isset($requested_page) && !filter_var($requested_page, FILTER_VALIDATE_INT) === false) {
+                            $current_page = min($total_pages, $requested_page);
+                        }
+
+                        // Get articles to show
+                        $users = User::getAll(self::USERS_PER_PAGE, ($current_page - 1) * self::USERS_PER_PAGE);
+
+                        $this->setView(new AdminProfileView($user, $users, $total_pages, $current_page));
                     }
-
-                    // Get articles to show
-                    $users = User::getAll(self::USERS_PER_PAGE, ($current_page - 1) * self::USERS_PER_PAGE);
-
-                    $this->setView(new AdminProfileView($user, $users, $total_pages, $current_page));
+                } else {
+                    $this->setView(new ErrorView(404, 'Not found', 'El usuario "' . $param . '" no existe.'));
                 }
             } else {
-                $this->setView(new ErrorView(404, 'Not found', 'El usuario "' . $param . '" no existe.'));
+                $id = $param;
+                if (isset($_POST[self::KEY_POST_UPDATE])) {
+                    $writer = isset($_POST[self::KEY_POST_WRITER]) && $_POST[self::KEY_POST_WRITER] ? "1" : "0";
+                    $moderator = isset($_POST[self::KEY_POST_MODERATOR]) && $_POST[self::KEY_POST_MODERATOR] ? "1" : "0";
+                    $admin = isset($_POST[self::KEY_POST_ADMIN]) && $_POST[self::KEY_POST_ADMIN] ? "1" : "0";
+
+                    $updated = User::updatePermissions($id, array(
+                        User::COLUMN_WRITER => $writer,
+                        User::COLUMN_MODERATOR => $moderator,
+                        User::COLUMN_ADMIN => $admin));
+
+                    if ($updated) {
+                        redirect(PROJECT_BASE_URL . '/profile/admin');
+                    } else {
+                        throw new \Exception('User permissions could not be updated', 500);
+                    }
+                } elseif (isset($_POST[self::KEY_POST_DELETE])) {
+                    $deleted = User::delete($id);
+
+                    if ($deleted) {
+                        redirect(PROJECT_BASE_URL . '/profile/admin');
+                    } else {
+                        throw new \Exception('User could not be deleted', 500);
+                    }
+                } else {
+                    redirect(PROJECT_BASE_URL . '/profile/admin');
+                }
             }
         } else {
-            $id = $param;
-            if (isset($_POST[self::KEY_POST_UPDATE])) {
-                $writer = isset($_POST[self::KEY_POST_WRITER]) && $_POST[self::KEY_POST_WRITER] ? "1" : "0";
-                $moderator = isset($_POST[self::KEY_POST_MODERATOR]) && $_POST[self::KEY_POST_MODERATOR] ? "1" : "0";
-                $admin = isset($_POST[self::KEY_POST_ADMIN]) && $_POST[self::KEY_POST_ADMIN] ? "1" : "0";
-
-                $updated = User::updatePermissions($id, array(
-                    User::COLUMN_WRITER => $writer,
-                    User::COLUMN_MODERATOR => $moderator,
-                    User::COLUMN_ADMIN => $admin));
-
-                if ($updated) {
-                    redirect(PROJECT_BASE_URL . '/profile/admin');
-                } else {
-                    throw new \Exception('User permissions could not be updated', 500);
-                }
-            } elseif (isset($_POST[self::KEY_POST_DELETE])) {
-                $deleted = User::delete($id);
-
-                if ($deleted) {
-                    redirect(PROJECT_BASE_URL . '/profile/admin');
-                } else {
-                    throw new \Exception('User could not be deleted', 500);
-                }
-            } else {
-                redirect(PROJECT_BASE_URL . '/profile/admin');
-            }
+            // Logged user is not an admin
+            $this->setView(new ErrorView(403, 'Forbidden', 'No puede administrar el sitio.'));
         }
     }
 }
