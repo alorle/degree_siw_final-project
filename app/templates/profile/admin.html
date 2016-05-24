@@ -22,6 +22,8 @@
 
     <!-- Profile style -->
     <link href="##BASE_URL##/public/css/profile_admin.css" rel="stylesheet" type="text/css"/>
+
+    <script src="##BASE_URL##/public/js/profile_admin.js"></script>
 </head>
 <body>
 
@@ -47,26 +49,23 @@
                 ##PROFILE_ADMIN_TABLE_ROW##
                 <tr>
                     <td class="name left"><a href="##BASE_URL##/user/##USER_USERNAME##">##USER_NAME##</a></td>
-                    <form method="post" action="##BASE_URL##/profile/admin/##USER_USERNAME##">
-                        <td class="checkbox">
-                            <input type="checkbox" name="writer" ##USER_IS_WRITER##/>
-                        </td>
-                        <td class="checkbox">
-                            <input type="checkbox" name="moderator" ##USER_IS_MODERATOR##/>
-                        </td>
-                        <td class="checkbox">
-                            <input type="checkbox" name="admin" ##USER_IS_ADMIN##/>
-                        </td>
-                        <td class="button">
-                            <label for="update" class="material-icons">save</label>
-                            <input id="update" type="submit" name="update" style="display: none;">
-                        </td>
-                        <td class="button">
-                            <label for="delete" class="material-icons">delete</label>
-                            <input id="delete" type="submit" name="delete" style="display: none;"
-                                   onclick="return(confirm('##CONFIRM_DELETE##'))">
-                        </td>
-                    </form>
+                    <td class="checkbox">
+                        <input type="checkbox" id="writer-##USER_USERNAME##" ##USER_IS_WRITER##/>
+                    </td>
+                    <td class="checkbox">
+                        <input type="checkbox" id="moderator-##USER_USERNAME##" ##USER_IS_MODERATOR##/>
+                    </td>
+                    <td class="checkbox">
+                        <input type="checkbox" id="admin-##USER_USERNAME##" ##USER_IS_ADMIN##/>
+                    </td>
+                    <td class="button"
+                        onclick="onSaveClick('##BASE_URL##/profile/admin/##USER_USERNAME##', '##USER_USERNAME##')">
+                        <i class="material-icons">save</i>
+                    </td>
+                    <td class="button"
+                        onclick="onDeleteClick('##BASE_URL##/profile/admin/##USER_USERNAME##', '##CONFIRM_DELETE##')">
+                        <i class="material-icons">delete</i>
+                    </td>
                 </tr>
                 ##PROFILE_ADMIN_TABLE_ROW##
                 </tbody>
