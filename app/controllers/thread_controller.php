@@ -21,6 +21,7 @@ namespace app\controllers;
 
 use App\Core\AbstractController;
 use App\Models\Comment;
+use App\Models\Session;
 use App\Models\Thread;
 use App\Views\ErrorView;
 use App\Views\Thread\ShowThreadView;
@@ -56,17 +57,41 @@ class ThreadController extends AbstractController
 
     private function newThread()
     {
-        if (isset($_POST['forum'])) {
-            $this->setView(new ErrorView(501, 'New thread view not implemented (' . $_POST['forum'] . ')'));
+        if (is_null($user = Session::getCurrentUser())) {
+            // User is not identified
+            redirect(PROJECT_BASE_URL . '/session/login');
         } else {
-            $this->setView(new ErrorView(404, 'Not found'));
+            if (isset($_POST['forum'])) {
+                $this->setView(new ErrorView(501, 'New thread view not implemented (' . $_POST['forum'] . ')'));
+            } else {
+                $this->setView(new ErrorView(404, 'Not found'));
+            }
         }
     }
 
-    private function deleteThread($threadId)
+    private function deleteThread($id)
     {
-        if ($threadId) {
-            $this->setView(new ErrorView(501, 'Delete thread view not implemented (' . $threadId . ')'));
+        $thread = Thread::getById($id);
+        if (!is_null($thread)) {
+            if (is_null($user = Session::getCurrentUser())) {
+                // User is not identified
+                redirect(PROJECT_BASE_URL . '/session/login');
+            } else {
+                if ($thread->getAuthorId() == $user->getId()) {
+                    $deleted = Thread::delete($id);
+
+                    // If the update was successful, return to profile/blog.
+                    // In other case, show an error.
+                    if ($deleted) {
+                        redirect(PROJECT_BASE_URL . '/profile/forum');
+                    } else {
+                        throw new \Exception('Data could not be updated', 500);
+                    }
+                } else {
+                    // Logged user is not the author of the thread
+                    $this->setView(new ErrorView(403, 'Forbidden', 'No puedes eliminar un foro que no has creado.'));
+                }
+            }
         } else {
             $this->setView(new ErrorView(404, 'Not found'));
         }

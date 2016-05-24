@@ -207,4 +207,23 @@ class Thread
 
         return $results_array;
     }
+
+    /**
+     * Delete an thread in the database
+     * @param string $id Thread ID
+     * @return bool Whether the insertion was successful
+     */
+    public static function delete($id)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from article_id
+        $id = $db_helper->connection->real_escape_string($id);
+
+        // Build sql query string
+        $query = "DELETE FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
+
+        // Execute query
+        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
+    }
 }
