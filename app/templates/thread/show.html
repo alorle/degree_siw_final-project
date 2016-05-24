@@ -19,6 +19,9 @@
 <html lang="es">
 <head>
     ##HEAD##
+
+    <!-- Thread style -->
+    <link href="##BASE_URL##/public/css/thread.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
@@ -27,30 +30,14 @@
 <main id="content">
     ##THREAD_COMMENTS##
     ##THREAD_COMMENT##
-    <table class="thread_table">
-        <tbody>
-        <tr>
-            <td>
-                <img class="comment_author_image" src="##THREAD_COMMENT_AUTHOR_IMAGE##"
-                     alt="##THREAD_COMMENT_AUTHOR_NAME##" height="60">
-                <a class="comment_author_name" href="##BASE_URL##/user/##THREAD_COMMENT_AUTHOR_ID##">##THREAD_COMMENT_AUTHOR_NAME##</a>
-                <p class="comment_time">##THREAD_COMMENT_TIME##</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h1 class="comment_title">##THREAD_COMMENT_TITLE##</h1>
-                <p class="comment_body"> ##THREAD_COMMENT_BODY## </p>
-            </td>
-        </tr>
-        <!--<h1>##THREAD_COMMENT_ID##</h1>-->
-        <!--<p>##THREAD_COMMENT_TITLE##</p>-->
-        <!--<p>##THREAD_COMMENT_BODY##</p>-->
-        <!--<p>##THREAD_COMMENT_TIME##</p>-->
-        <!--<p>##THREAD_COMMENT_AUTHOR_ID##</p>-->
-        <!--<p>##THREAD_COMMENT_AUTHOR_NAME##</p>-->
-        </tbody>
-    </table>
+    <article>
+        <img class="comment_author_image" src="##THREAD_COMMENT_AUTHOR_IMAGE##" height="60"/>
+        <h1 class="comment_title">##THREAD_COMMENT_TITLE##</h1>
+        <p><a class="comment_author_name"
+              href="##BASE_URL##/user/##THREAD_COMMENT_AUTHOR_ID##">##THREAD_COMMENT_AUTHOR_NAME##</a></p>
+        <p class="comment_time">##THREAD_COMMENT_TIME##</p>
+        <p class="comment_body"> ##THREAD_COMMENT_BODY## </p>
+    </article>
     ##THREAD_COMMENT##
     ##THREAD_COMMENTS##
 </main>
