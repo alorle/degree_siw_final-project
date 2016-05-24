@@ -19,8 +19,8 @@
     background-color: #FFFFFF;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
     margin: 30px auto;
+    max-width: 800px;
     padding: 35px;
-    width: 800px;
 }
 
 .article-form h1 {
@@ -47,13 +47,17 @@
     width: 100%;
 }
 
+.article-form form textarea {
+    resize: vertical;
+}
+
 .article-form .actions {
     text-align: right;
 }
 
 .article-form .actions #delete {
-    float: left;
     background-color: #727272;
+    float: left;
 }
 
 .article-form .message {

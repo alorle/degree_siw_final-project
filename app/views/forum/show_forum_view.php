@@ -43,7 +43,7 @@ class ShowForumView extends AbstractView implements ForumInterface
         if (isset($forum)) {
             $this->setTitle($forum->getName() . ' | ' . PROJECT_NAME);
         } else {
-            $this->setTitle('Forum | ' . PROJECT_NAME);
+            $this->setTitle('Foro | ' . PROJECT_NAME);
         }
 
         $this->forum = $forum;

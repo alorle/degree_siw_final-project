@@ -42,7 +42,7 @@ class EditArticleView extends AbstractView implements ArticleInterface
     {
         parent::__construct(new HeaderPartial(), new FooterPartial());
         $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'article' . DIRECTORY_SEPARATOR . 'edit.html');
-        $this->setTitle('Editar "' . $forum->getTitle() . '"" | ' . PROJECT_NAME);
+        $this->setTitle('Editar "' . $forum->getTitle() . '" | ' . PROJECT_NAME);
         $this->article = $forum;
     }
 
