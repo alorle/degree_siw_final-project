@@ -275,4 +275,39 @@ class Forum
         // We return an forum only if the result is unique
         return (count($result) == 1) ? new Forum($result[0]) : null;
     }
+
+    public static function insert($array)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Build sql query string
+        $query = "INSERT INTO " . self::TABLE_NAME . " (" .
+            self::COLUMN_ID . ", " .
+            self::COLUMN_NAME . ", " .
+            self::COLUMN_DESCRIPTION;
+
+        if (isset($array[self::COLUMN_PARENT_FORUM_ID])) {
+            $query .= ", " . self::COLUMN_PARENT_FORUM_ID;
+        }
+
+        $query .= ") VALUES (" .
+            "'" . $array[self::COLUMN_ID] . "', " .
+            "'" . $array[self::COLUMN_NAME] . "', " .
+            "'" . $array[self::COLUMN_DESCRIPTION];
+
+
+        if (isset($array[self::COLUMN_PARENT_FORUM_ID])) {
+            $query .= "', '" . $array[self::COLUMN_PARENT_FORUM_ID];
+        }
+
+        $query .= "')";
+
+        // Execute query
+        return ($db_helper->connection->query($query) !== TRUE) ? false  : true;
+    }
+
+    public static function existsId($id)
+    {
+        return !is_null(self::getById($id));
+    }
 }

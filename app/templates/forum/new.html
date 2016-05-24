@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (C) 2016 Álvaro Orduna León
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<html lang="es">
+<head>
+    ##HEAD##
+
+    <!-- Forum edition style -->
+    <link href="##BASE_URL##/public/css/forum_edition.css" rel="stylesheet" type="text/css"/>
+
+    <!-- New forum JavaScript -->
+    <script src="##BASE_URL##/public/js/forum_new.js"></script>
+</head>
+<body>
+
+##HEADER##
+
+<main id="content">
+    <div class="forum-form">
+        <h1>Nuevo foro</h1>
+        <form method="post" action="##BASE_URL##/forum/new" onsubmit="return(validateForm());">
+            <label for="title">Título</label>
+            <input type="text" name="title" id="title" value="" placeholder="Título" oninput="updateId();" required>
+            <label for="id">URL</label>
+            <input type="text" name="id" id="id" value="" placeholder="url-del-foro" required>
+            <input type="hidden" name="forum" id="forum" value="##PARENT_ID##" hidden>
+            <label for="description">Cuerpo</label>
+            <textarea name="description" id="description" rows="10" placeholder="Descripción" required></textarea>
+            <div class="actions">
+                <button type="submit" name="new">Añadir</button>
+            </div>
+            <p class="message">##MESSAGE##</p>
+        </form>
+    </div>
+</main>
+
+##FOOTER##
+
+</body>
+</html>

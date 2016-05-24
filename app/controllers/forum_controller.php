@@ -21,11 +21,15 @@ namespace app\controllers;
 
 use App\Core\AbstractController;
 use App\Models\Forum;
+use App\Models\Session;
 use App\Views\ErrorView;
+use App\Views\Forum\NewForumView;
 use App\Views\Forum\ShowForumView;
 
 class ForumController extends AbstractController
 {
+    const STR_INVALID_FORM = 'Formulario invalido';
+
     /**
      * ForumController constructor.
      * @param $params
@@ -50,10 +54,61 @@ class ForumController extends AbstractController
 
     private function newForum()
     {
-        if (isset($_POST['parent'])) {
-            $this->setView(new ErrorView(501, 'New forum view not implemented (' . $_POST['parent'] . ')'));
+        if (is_null($user = Session::getCurrentUser())) {
+            // User is not identified
+            redirect(PROJECT_BASE_URL . '/session/login');
+        } elseif ($user->isModerator()) {
+            $forum = null;
+            if (isset($_POST['parent'])) {
+                $forum = $_POST['parent'];
+
+                if ($forum == 'none') {
+                    $forum = null;
+                }
+            }
+
+            if (isset($_POST['new'])) {
+                $name = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+                $id = filter_var($_POST['id'], FILTER_SANITIZE_STRING);
+                $forum = filter_var($_POST['forum'], FILTER_SANITIZE_STRING);
+                $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
+
+                if (empty($name) || empty($id) || empty($description)) {
+                    // Fields are empty (after sanitize),
+                    // so display same view with error message
+                    $this->setView(new NewForumView($forum, self::STR_INVALID_FORM));
+                } else {
+                    if ($forum == '') {
+                        $forum = null;
+                    };
+
+                    // Check if id is unique
+                    if (Forum::existsId($id)) {
+                        $this->setView(new NewForumView($forum, 'La URL ya existe. Prueba con otra diferente.'));
+                        return;
+                    }
+
+                    // Insert the new article in the database
+                    $inserted = Forum::insert(array(
+                        Forum::COLUMN_ID => $id,
+                        Forum::COLUMN_NAME => $name,
+                        Forum::COLUMN_DESCRIPTION => $description,
+                        Forum::COLUMN_PARENT_FORUM_ID => $forum));
+
+                    // If the insertion was successful, return to forum.
+                    // In other case, show an error.
+                    if ($inserted) {
+                        redirect(PROJECT_BASE_URL . '/forum/' . $id);
+                    } else {
+                        throw new \Exception('Data could not be stored', 500);
+                    }
+                }
+            } else {
+                $this->setView(new NewForumView($forum));
+            }
         } else {
-            $this->setView(new ErrorView(501, 'New forum view not implemented'));
+            // Logged user can not add a new forum
+            $this->setView(new ErrorView(403, 'Forbidden', 'No está autorizado a crear nuevos foros.'));
         }
     }
 
