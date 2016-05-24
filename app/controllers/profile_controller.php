@@ -31,8 +31,8 @@ use App\Views\Profile\MainProfileView;
 
 class ProfileController extends AbstractController
 {
-    const ARTICLES_PER_PAGE = 9;
-    const USERS_PER_PAGE = 9;
+    const ARTICLES_PER_PAGE = 5;
+    const USERS_PER_PAGE = 5;
 
     const KEY_POST_WRITER = 'writer';
     const KEY_POST_MODERATOR = 'moderator';
@@ -153,28 +153,33 @@ class ProfileController extends AbstractController
 
     private function blog(User $user, $params)
     {
-        $requested_page = 1;
-        if (isset($params[1])) {
-            $requested_page = filter_var($params[1], FILTER_SANITIZE_NUMBER_INT);
-        }
-
         $articles = Article::getByAuthorId($user->getId());
-
         $total_articles = count($articles);
 
-        // Calculate the number of pages needed
-        $total_pages = ceil($total_articles / self::ARTICLES_PER_PAGE);
+        if ($total_articles <= self::ARTICLES_PER_PAGE) {
+            $this->setView(new BlogProfileView($user, $articles));
+        } else {
 
-        // Get the requested page
-        $current_page = 1;
-        if (isset($requested_page) && !filter_var($requested_page, FILTER_VALIDATE_INT) === false) {
-            $current_page = min($total_pages, $requested_page);
+            $requested_page = 1;
+            if (isset($params[1])) {
+                $requested_page = filter_var($params[1], FILTER_SANITIZE_NUMBER_INT);
+            }
+
+            // Calculate the number of pages needed
+            $total_pages = ceil($total_articles / self::ARTICLES_PER_PAGE);
+
+            // Get the requested page
+            $current_page = 1;
+            if (isset($requested_page) && !filter_var($requested_page, FILTER_VALIDATE_INT) === false) {
+                $current_page = min($total_pages, $requested_page);
+            }
+
+            // Get articles to show
+            $articles = Article::getByAuthorId($user->getId(), self::ARTICLES_PER_PAGE,
+                ($current_page - 1) * self::ARTICLES_PER_PAGE);
+
+            $this->setView(new BlogProfileView($user, $articles, $total_pages, $current_page));
         }
-
-        // Get articles to show
-        $articles = Article::getAll(self::ARTICLES_PER_PAGE, ($current_page - 1) * self::ARTICLES_PER_PAGE);
-
-        $this->setView(new BlogProfileView($user, $articles, $total_pages, $current_page));
     }
 
     private function adminUser(User $user, $param)
@@ -182,25 +187,28 @@ class ProfileController extends AbstractController
         $param = filter_var($param, FILTER_SANITIZE_STRING);
         if (is_null(User::getById($param))) {
             if (!filter_var($param, FILTER_VALIDATE_INT) === false) {
-                $requested_page = $param;
-
                 $users = User::getAll();
-
                 $total_users = count($users);
 
-                // Calculate the number of pages needed
-                $total_pages = ceil($total_users / self::USERS_PER_PAGE);
+                if ($total_users <= self::USERS_PER_PAGE) {
+                    $this->setView(new AdminProfileView($user, $users));
+                } else {
+                    $requested_page = $param;
 
-                // Get the requested page
-                $current_page = 1;
-                if (isset($requested_page) && !filter_var($requested_page, FILTER_VALIDATE_INT) === false) {
-                    $current_page = min($total_pages, $requested_page);
+                    // Calculate the number of pages needed
+                    $total_pages = ceil($total_users / self::USERS_PER_PAGE);
+
+                    // Get the requested page
+                    $current_page = 1;
+                    if (isset($requested_page) && !filter_var($requested_page, FILTER_VALIDATE_INT) === false) {
+                        $current_page = min($total_pages, $requested_page);
+                    }
+
+                    // Get articles to show
+                    $users = User::getAll(self::USERS_PER_PAGE, ($current_page - 1) * self::USERS_PER_PAGE);
+
+                    $this->setView(new AdminProfileView($user, $users, $total_pages, $current_page));
                 }
-
-                // Get articles to show
-                $users = User::getAll(self::USERS_PER_PAGE, ($current_page - 1) * self::USERS_PER_PAGE);
-
-                $this->setView(new AdminProfileView($user, $users, $total_pages, $current_page));
             } else {
                 $this->setView(new ErrorView(404, 'Not found', 'El usuario "' . $param . '" no existe.'));
             }
