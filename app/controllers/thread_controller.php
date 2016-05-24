@@ -45,9 +45,6 @@ class ThreadController extends AbstractController
             case 'new':
                 $this->newThread();
                 break;
-            case 'edit':
-                $this->editThread($params[1]);
-                break;
             case 'delete':
                 $this->deleteThread($params[1]);
                 break;
@@ -59,14 +56,20 @@ class ThreadController extends AbstractController
 
     private function newThread()
     {
+        if (isset($_POST['forum'])) {
+            $this->setView(new ErrorView(501, 'New thread view not implemented (' . $_POST['forum'] . ')'));
+        } else {
+            $this->setView(new ErrorView(404, 'Not found'));
+        }
     }
 
-    private function editThread($int)
+    private function deleteThread($threadId)
     {
-    }
-
-    private function deleteThread($int)
-    {
+        if ($threadId) {
+            $this->setView(new ErrorView(501, 'Delete thread view not implemented (' . $threadId . ')'));
+        } else {
+            $this->setView(new ErrorView(404, 'Not found'));
+        }
     }
 
     private function showThread($params)

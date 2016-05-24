@@ -48,8 +48,13 @@ function onSubforumSelected() {
 function updateForumSelector(data) {
     var select = document.getElementById('select-forum');
 
+    var option = document.createElement('option');
+    option.value = 'none';
+    option.innerHTML = 'Ninguno';
+    select.appendChild(option);
+
     for (var i = 0; i < data.length; i++) {
-        var option = document.createElement('option');
+        option = document.createElement('option');
         option.value = data[i].id;
         option.innerHTML = data[i].name;
 
@@ -129,11 +134,15 @@ function updateThreadsTable(data) {
 }
 
 function onNewForumClick() {
-    $.redirectPost('../../forum/new', {parent: getSelectionId()});
+    $.redirectPost('../../forum/new', {parent: getForumId()});
 }
 
 function onNewThreadClick() {
     $.redirectPost('../../thread/new', {forum: getSelectionId()});
+}
+
+function getForumId() {
+    return $('#select-forum').val();
 }
 
 function getSelectionId() {

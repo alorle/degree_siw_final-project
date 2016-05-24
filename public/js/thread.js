@@ -16,7 +16,6 @@
  */
 
 
-
-function onCommentButtonClick(threadId) {
-    $.redirectPost('../../comment/new', {thread: threadId});
+function onCommentButtonClick(url, threadId) {
+    $.redirectPost(url, {thread: threadId});
 }

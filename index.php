@@ -39,6 +39,9 @@ switch ($path) {
     case 'thread':
         $controller = new App\Controllers\ThreadController($params);
         break;
+    case 'comment':
+        $controller = new App\Controllers\CommentController($params);
+        break;
     case 'profile':
         $controller = new App\Controllers\ProfileController($params);
         break;

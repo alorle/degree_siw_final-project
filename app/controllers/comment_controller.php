@@ -24,10 +24,10 @@ use App\Models\Forum;
 use App\Views\ErrorView;
 use App\Views\Forum\ShowForumView;
 
-class ForumController extends AbstractController
+class CommentController extends AbstractController
 {
     /**
-     * ForumController constructor.
+     * CommentController constructor.
      * @param $params
      * @throws \Exception
      */
@@ -40,34 +40,20 @@ class ForumController extends AbstractController
 
         switch ($action) {
             case 'new':
-                $this->newForum();
+                $this->newComment();
                 break;
             default:
-                $this->showForums($params);
+                $this->setView(new ErrorView(404, 'Not found'));
                 break;
         }
     }
 
-    private function newForum()
+    private function newComment()
     {
-        if (isset($_POST['parent'])) {
-            $this->setView(new ErrorView(501, 'New forum view not implemented (' . $_POST['parent'] . ')'));
+        if (isset($_POST['thread'])) {
+            $this->setView(new ErrorView(501, 'New comment view not implemented (' . $_POST['thread'] . ')'));
         } else {
-            $this->setView(new ErrorView(501, 'New forum view not implemented'));
-        }
-    }
-
-    private function showForums($params)
-    {
-        if (isset($params[0])) {
-            $id = filter_var($params[0], FILTER_SANITIZE_STRING);
-            if (is_null($forum = Forum::getById($id))) {
-                $this->setView(new ErrorView(404, 'Not found', 'El foro "' . $id . '" no existe.'));
-            } else {
-                $this->setView(new ShowForumView($forum));
-            }
-        } else {
-            $this->setView(new ShowForumView());
+            $this->setView(new ErrorView(404, 'Not found'));
         }
     }
 }
