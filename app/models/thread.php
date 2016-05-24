@@ -133,6 +133,31 @@ class Thread
         return $results_array;
     }
 
+    public static function getAllJson($parent_id, $limit = 0, $offset = 0)
+    {
+
+        $threads = Thread::getAll($parent_id, $limit, $offset);
+        $threadsJson = '[';
+        foreach ($threads as $index => $thread) {
+            if ($threadsJson != '[') {
+                $threadsJson .= ', ';
+            }
+            $threadJson = '{';
+            foreach ($thread as $key => $value) {
+                if ($threadJson != '{') {
+                    $threadJson .= ', ';
+                }
+                $threadJson .= '"' . $key . '": "' . $value . '"';
+            }
+            $threadJson .= '}';
+            $threadsJson .= $threadJson;
+
+        }
+        $threadsJson .= ']';
+
+        return $threadsJson;
+    }
+
     /**
      * Get thread with given id from database
      * @param string $id Thread id

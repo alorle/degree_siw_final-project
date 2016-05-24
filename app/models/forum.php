@@ -20,6 +20,7 @@ namespace App\Models;
 
 
 use App\Database\DbHelper;
+use Exception;
 
 class Forum
 {
@@ -161,6 +162,37 @@ class Forum
         return $results_array;
     }
 
+    /**
+     * Get all parents forums from database
+     * @param int $limit Number of Forums
+     * @param int $offset First Forum you want
+     * @return array Array containing all the Forums
+     * @throws \Exception
+     */
+    public static function getAllParentsJSON($limit = 0, $offset = 0)
+    {
+        $parents = Forum::getAllParents($limit, $offset);
+        $parentsJson = '[';
+        foreach ($parents as $index => $parent) {
+            if ($parentsJson != '[') {
+                $parentsJson .= ', ';
+            }
+            $parentJson = '{';
+            foreach ($parent as $key => $value) {
+                if ($parentJson != '{') {
+                    $parentJson .= ', ';
+                }
+                $parentJson .= '"' . $key . '": "' . $value . '"';
+            }
+            $parentJson .= '}';
+            $parentsJson .= $parentJson;
+
+        }
+        $parentsJson .= ']';
+
+        return $parentsJson;
+    }
+
     public static function getAllChildren($parent_id, $limit = 0, $offset = 0)
     {
         $db_helper = DbHelper::instance();
@@ -195,6 +227,30 @@ class Forum
         }
 
         return $results_array;
+    }
+
+    public static function getAllChildrenJSON($parent_id, $limit = 0, $offset = 0)
+    {
+        $children = Forum::getAllChildren($parent_id, $limit, $offset);
+        $childrenJson = '[';
+        foreach ($children as $index => $child) {
+            if ($childrenJson != '[') {
+                $childrenJson .= ', ';
+            }
+            $childJson = '{';
+            foreach ($child as $key => $value) {
+                if ($childJson != '{') {
+                    $childJson .= ', ';
+                }
+                $childJson .= '"' . $key . '": "' . $value . '"';
+            }
+            $childJson .= '}';
+            $childrenJson .= $childJson;
+
+        }
+        $childrenJson .= ']';
+
+        return $childrenJson;
     }
 
     /**

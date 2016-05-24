@@ -15,3 +15,60 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 @import "profile.css";
+@import "pagination.css";
+
+#content-main {
+    background-color: #FFFFFF;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
+    margin: 30px auto;
+    padding: 35px;
+}
+
+#content-main .actions {
+    display: inline-block;
+}
+
+#content-main .filters {
+    display: inline-block;
+    margin-top: 30px;
+    white-space: nowrap;
+}
+
+#content-main .filters label {
+    padding-left: 14px;
+}
+
+#content-main .filters select {
+    background-color: transparent;
+    border: 1px solid #ccc;
+    box-shadow: none;
+    margin: 14px 16px;
+    padding: 5px 8px;
+}
+
+#content-main .table-wrapper {
+    margin: 30px 0;
+    overflow-x: auto;
+}
+
+#content-main table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#content-main table th, #content-main table td {
+    border-bottom: 1px solid #455A64;
+    padding: 8px;
+    text-align: left;
+}
+
+#content-main table .name, #content-main table .date, #content-main table .author {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#content-main table tbody tr:hover {
+    background-color: #CFD8DC;
+}

@@ -21,7 +21,9 @@
     ##HEAD##
 
     <!-- Profile style -->
-    <link href="##BASE_URL##/public/css/profile_blog.css" rel="stylesheet" type="text/css"/>
+    <link href="##BASE_URL##/public/css/profile_forum.css" rel="stylesheet" type="text/css"/>
+
+    <script src="##BASE_URL##/public/js/profile_forum.js"></script>
 </head>
 <body>
 
@@ -29,7 +31,35 @@
 
 <main id="content">
     ##PROFILE_MENU##
-    <div id="content-header">
+    <div id="content-main">
+        <div>
+            <div class="actions">
+                <button type="submit" onclick="onNewForumClick()">Nuevo foro</button>
+                <button type="submit" onclick="onNewThreadClick()">Nuevo hilo</button>
+            </div>
+            <div class="filters">
+                <label for="select-forum">Foro</label>
+                <select name="select-forum" id="select-forum" onchange="onForumSelected(this.value)"></select>
+                <label for="select-subforum">Subforo</label>
+                <select name="select-subforum" id="select-subforum" onchange="onSubforumSelected(this.value)"></select>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>Hilo</th>
+                    <th>Fecha</th>
+                    <th>Autor</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+        </div>
     </div>
 </main>
 

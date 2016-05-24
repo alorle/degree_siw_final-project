@@ -24,6 +24,9 @@ $path = $url[0];
 $params = array_slice($url, 1);
 
 switch ($path) {
+    case 'api':
+        $controller = new App\Controllers\ApiController($params);
+        break;
     case 'blog':
         $controller = new App\Controllers\BlogController($params);
         break;
@@ -53,4 +56,6 @@ switch ($path) {
         break;
 }
 
-$controller->render();
+if (!($controller instanceof App\Controllers\ApiController)) {
+    $controller->render();
+}
