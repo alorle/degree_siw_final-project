@@ -19,6 +19,9 @@
 <html lang="es">
 <head>
     ##HEAD##
+
+    <!-- Forum style -->
+    <link href="##BASE_URL##/public/css/forum.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
@@ -26,49 +29,57 @@
 
 <main id="content">
     ##FORUM_CHILDREN##
-    <table class="forum_table">
-        <thead>
-        <tr>
-            <th></th>
-            <th>Temáticas</th>
-            <th>Hilos</th>
-        </tr>
-        </thead>
-        <tbody>
-        ##FORUM_CHILD##
-        <tr>
-            <td class="left">
-                <h2><a href="##BASE_URL##/forum/##FORUM_CHILD_ID##">##FORUM_CHILD_NAME##</a></h2>
-                <p>##FORUM_CHILD_DESCRIPTION##</p>
-            </td>
-            <td>##FORUM_CHILD_COUNT_CHILDREN##</td>
-            <td>##FORUM_CHILD_COUNT_THREADS##</td>
-        </tr>
-        ##FORUM_CHILD##
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <h1>Categorías</h1>
+        <table class="forum_table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Subcategorías</th>
+                <th>Hilos</th>
+            </tr>
+            </thead>
+            <tbody>
+            ##FORUM_CHILD##
+            <tr>
+                <td class="left nowrap">
+                    <h2><a href="##BASE_URL##/forum/##FORUM_CHILD_ID##">##FORUM_CHILD_NAME##</a></h2>
+                    <p>##FORUM_CHILD_DESCRIPTION##</p>
+                </td>
+                <td>##FORUM_CHILD_COUNT_CHILDREN##</td>
+                <td>##FORUM_CHILD_COUNT_THREADS##</td>
+            </tr>
+            ##FORUM_CHILD##
+            </tbody>
+        </table>
+    </div>
     ##FORUM_CHILDREN##
     ##FORUM_THREADS##
-    <table class="forum_table">
-        <thead>
-        <tr>
-            <th class="left">Temas</th>
-            <th>Comentarios</th>
-        </tr>
-        </thead>
-        <tbody>
-        ##FORUM_THREAD##
-        <tr>
-            <td class="left">
-                <h2><a href="##BASE_URL##/thread/##FORUM_THREAD_ID##">##FORUM_THREAD_NAME##</a></h2>
-                <p>Publicado por <a
-                        href="##BASE_URL##/user/##FORUM_THREAD_AUTHOR_ID##">##FORUM_THREAD_AUTHOR_NAME##</a></p>
-            </td>
-            <td>##FORUM_THREAD_COUNT_COMMENTS##</td>
-        </tr>
-        ##FORUM_THREAD##
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <h1>Temas</h1>
+        <table class="forum_table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Autor</th>
+                <th>Comentarios</th>
+            </tr>
+            </thead>
+            <tbody>
+            ##FORUM_THREAD##
+            <tr>
+                <td class="left nowrap">
+                    <h2><a href="##BASE_URL##/thread/##FORUM_THREAD_ID##">##FORUM_THREAD_NAME##</a></h2>
+                </td>
+                <td class="nowrap">
+                    <a href="##BASE_URL##/user/##FORUM_THREAD_AUTHOR_ID##">##FORUM_THREAD_AUTHOR_NAME##</a>
+                </td>
+                <td>##FORUM_THREAD_COUNT_COMMENTS##</td>
+            </tr>
+            ##FORUM_THREAD##
+            </tbody>
+        </table>
+    </div>
     ##FORUM_THREADS##
 </main>
 
