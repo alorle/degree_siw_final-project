@@ -21,13 +21,15 @@ namespace App\Views\User;
 
 use App\Core\AbstractView;
 use App\Interfaces\ArticleInterface;
+use App\Interfaces\ThreadInterface;
 use App\Interfaces\UserInterface;
 use App\Models\Article;
+use App\Models\Thread;
 use App\Models\User;
 use App\Views\FooterPartial;
 use App\Views\HeaderPartial;
 
-class UserView extends AbstractView implements UserInterface, ArticleInterface
+class UserView extends AbstractView implements UserInterface, ArticleInterface, ThreadInterface
 {
     private $user;
 
@@ -62,6 +64,18 @@ class UserView extends AbstractView implements UserInterface, ArticleInterface
         }
         $template = $template_parts[0] . $template_articles . $template_parts[2];
 
+        $threads = Thread::getByAuthorId($this->user->getId());
+        $template_parts = explode(self::KEY_USER_FORUM_THREADS, $template);
+        if (empty($threads)) {
+            $template_threads = 'Ninguno';
+        } else {
+            $template_threads = '';
+            foreach ($threads as $thread) {
+                $template_threads .= $this->replaceThread($template_parts[1], $thread);
+            }
+        }
+        $template = $template_parts[0] . $template_threads . $template_parts[2];
+
         echo $template;
     }
 
@@ -69,6 +83,13 @@ class UserView extends AbstractView implements UserInterface, ArticleInterface
     {
         $template = str_replace(self::KEY_ARTICLE_ID, $article->getId(), $template);
         $template = str_replace(self::KEY_ARTICLE_TITLE, $article->getTitle(), $template);
+        return $template;
+    }
+
+    private function replaceThread($template, Thread $thread)
+    {
+        $template = str_replace(self::KEY_THREAD_ID, $thread->getId(), $template);
+        $template = str_replace(self::KEY_THREAD_TITLE, $thread->getName(), $template);
         return $template;
     }
 }

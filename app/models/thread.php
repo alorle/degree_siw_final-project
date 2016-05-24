@@ -180,4 +180,31 @@ class Thread
         // We return an forum only if the result is unique
         return (count($result) == 1) ? new Thread($result[0]) : null;
     }
+
+    /**
+     * Get threads started by given author
+     * @param string $author_id Author id
+     * @return Forum|null The requested thread if exists. If not, return null
+     */
+    public static function getByAuthorId($author_id)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from author_id
+        $author_id = $db_helper->connection->real_escape_string($author_id);
+
+        // Build sql query string
+        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE " .
+            self::COLUMN_AUTHOR_ID . " = '" . $author_id . "'";
+
+        // Initialize array of articles.
+        $results_array = array();
+
+        // For each query result we include a new article in the array.
+        foreach ($db_helper->query($query) as $index => $row) {
+            $results_array[$index] = new Thread($row);
+        }
+
+        return $results_array;
+    }
 }

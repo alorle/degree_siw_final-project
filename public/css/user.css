@@ -1,5 +1,4 @@
-<?php
-/**
+/*
  * Copyright (C) 2016 Álvaro Orduna León
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,15 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace App\Interfaces;
+#content .profile, #content .articles, #content .threads {
+    background: #FFFFFF;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+    display: block;
+    margin: 14px auto;
+    max-width: 500px;
+    padding: 35px;
+}
 
+#content .profile {
+    text-align: center;
+}
 
-interface UserInterface
-{
-    const KEY_USER_NAME = "##USER_NAME##";
-    const KEY_USER_ID = "##USER_USERNAME##";
-    const KEY_USER_EMAIL = "##USER_EMAIL##";
-    const KEY_USER_IMAGE_SRC = "##USER_IMAGE_SRC##";
-    const KEY_USER_BLOG_ARTICLES = "##USER_BLOG_ARTICLES##";
-    const KEY_USER_FORUM_THREADS = "##USER_FORUM_THREADS##";
+#content .profile h1, #content .articles h2, #content .threads h2 {
+    margin-bottom: 14px;
+}
+
+#content .articles p, #content .threads p {
+    padding: 8px 0;
 }

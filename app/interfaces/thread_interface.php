@@ -21,6 +21,8 @@ namespace App\Interfaces;
 
 interface ThreadInterface
 {
+    const KEY_THREAD_ID = "##THREAD_ID##";
+    const KEY_THREAD_TITLE = "##THREAD_TITLE##";
     const KEY_THREAD_COMMENTS = "##THREAD_COMMENTS##";
     const KEY_THREAD_COMMENT = "##THREAD_COMMENT##";
     const KEY_THREAD_COMMENT_ID = "##THREAD_COMMENT_ID##";

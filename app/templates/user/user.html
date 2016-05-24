@@ -19,19 +19,30 @@
 <html lang="es">
 <head>
     ##HEAD##
+
+    <!-- User style -->
+    <link href="##BASE_URL##/public/css/user.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
 ##HEADER##
 
 <main id="content">
-    <h1>##USER_NAME##</h1>
-    <img src="##USER_IMAGE_SRC##" alt="Imagen de perfil" height="200">
-    <div>
-        <h2>Artículos escritos:</h2>
+    <div class="profile">
+        <h1>##USER_NAME##</h1>
+        <img src="##USER_IMAGE_SRC##" alt="Imagen de perfil" height="200">
+    </div>
+    <div class="articles">
+        <h2>Artículos</h2>
         ##USER_BLOG_ARTICLES##
         <p><a href="##BASE_URL##/article/##ARTICLE_ID##">##ARTICLE_TITLE##</a></p>
         ##USER_BLOG_ARTICLES##
+    </div>
+    <div class="threads">
+        <h2>Hilos</h2>
+        ##USER_FORUM_THREADS##
+        <p><a href="##BASE_URL##/thread/##THREAD_ID##">##THREAD_TITLE##</a></p>
+        ##USER_FORUM_THREADS##
     </div>
 </main>
 
