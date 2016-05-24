@@ -140,7 +140,7 @@ class ArticleController extends AbstractController
                     // If the update was successful, return to blog.
                     // In other case, show an error.
                     if ($deleted) {
-                        redirect(PROJECT_BASE_URL . '/blog');
+                        redirect(PROJECT_BASE_URL . '/profile/blog');
                     } else {
                         throw new \Exception('Data could not be updated', 500);
                     }
@@ -160,7 +160,7 @@ class ArticleController extends AbstractController
                         // If the update was successful, return to blog.
                         // In other case, show an error.
                         if ($updated) {
-                            redirect(PROJECT_BASE_URL . '/blog');
+                            redirect(PROJECT_BASE_URL . '/profile/blog');
                         } else {
                             throw new \Exception('Data could not be updated', 500);
                         }
