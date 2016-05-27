@@ -24,6 +24,7 @@ use App\Models\Comment;
 use App\Models\Forum;
 use App\Models\Session;
 use App\Models\Thread;
+use App\Views\Comment\EditCommentView;
 use App\Views\Comment\NewCommentView;
 use App\Views\ErrorView;
 use App\Views\Forum\ShowForumView;
@@ -117,7 +118,29 @@ class CommentController extends AbstractController
                 if ($user->getId() != $comment->getAuthorId()) {
                     $this->setView(new ErrorView(403, 'Forbidden', 'No puedes editar un comentario que no hayas escrito tu.'));
                 } else {
-                    $this->setView(new ErrorView(501, 'Edit comment view not implemented (Comment Id: ' . $comment_id . ')'));
+                    if (isset($_POST['edit'])) {
+                        $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+                        $body = filter_var($_POST['body'], FILTER_SANITIZE_STRING);
+
+                        if (empty($title) || empty($body)) {
+                            // Fields are empty (after sanitize),
+                            // so display same view with error message
+                            $this->setView(new EditCommentView($comment, self::STR_INVALID_FORM));
+                        } else {
+                            // Update the article
+                            $updated = Comment::updateTitleAndBody($id, $title, $body);
+
+                            // If the update was successful, return to blog.
+                            // In other case, show an error.
+                            if ($updated) {
+                                redirect(PROJECT_BASE_URL . '/thread/' . $comment->getThreadId());
+                            } else {
+                                throw new \Exception('Data could not be updated', 500);
+                            }
+                        }
+                    } else {
+                        $this->setView(new EditCommentView($comment));
+                    }
                 }
             } else {
                 $this->setView(new ErrorView(404, 'Not found'));
@@ -138,7 +161,7 @@ class CommentController extends AbstractController
         } else {
             if (!is_null($comment = Comment::getById($comment_id))) {
                 if ($user->getId() != $comment->getAuthorId()) {
-                    $this->setView(new ErrorView(403, 'Forbidden', 'No puedes editar un comentario que no hayas escrito tu.'));
+                    $this->setView(new ErrorView(403, 'Forbidden', 'No puedes eliminar un comentario que no hayas escrito tu.'));
                 } else {
                     $thread_comments = Comment::getAll($comment->getThreadId());
 

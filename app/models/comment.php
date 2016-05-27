@@ -185,6 +185,26 @@ class Comment
         return ($db_helper->connection->query($query) === TRUE);
     }
 
+    public static function updateTitleAndBody($id, $title, $body)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from article_id
+        $id = $db_helper->connection->real_escape_string($id);
+        $title = $db_helper->connection->real_escape_string($title);
+        $body = $db_helper->connection->real_escape_string($body);
+
+        // Build sql query string
+        $query = "UPDATE " . self::TABLE_NAME .
+            " SET " .
+            self::COLUMN_TITLE . " = '" . $title . "', " .
+            self::COLUMN_BODY . " = '" . $body . "'" .
+            " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
+
+        // Execute query
+        return ($db_helper->connection->query($query) === TRUE);
+    }
+
     public static function delete($id)
     {
         $db_helper = DbHelper::instance();
