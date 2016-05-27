@@ -15,8 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
+$(document).ready(function () {
+    $(".clickable-row").click(function() {
+        window.document.location = $(this).data("href");
+    });
+});
 
 function onThreadAddButtonClick(url, forumId) {
     $.redirectPost(url, {forum: forumId});
 }
+
