@@ -82,54 +82,64 @@ function updateSubforumSelector(data) {
     }
 
     $('#select-subforum').change();
+    updateThreadsTable();
 }
 
 function updateThreadsTable(data) {
     var tBody = document.getElementById('table-body');
 
-    $("#table-body").find("tr").remove();
+    if (data === undefined || data.length == 0) {
+        $("#table").hide();
+        $("#no-threads-msg").show();
+    } else {
+        var nameStr, row, cell1, cell2, cell3, cell4, cell5, name, author, viewIcon, deleteIcon;
 
-    var nameStr, row, cell1, cell2, cell3, cell4, cell5, name, author, viewIcon, deleteIcon;
-    for (var i = 0; i < data.length; i++) {
-        nameStr = data[i].name;
+        $("#table-body").find("tr").remove();
 
-        row = tBody.insertRow(i);
-        cell1 = row.insertCell(0);
-        cell2 = row.insertCell(1);
-        cell3 = row.insertCell(2);
-        cell4 = row.insertCell(3);
-        cell5 = row.insertCell(4);
+        for (var i = 0; i < data.length; i++) {
+            nameStr = data[i].name;
 
-        cell1.className += "name";
-        cell2.className += "date";
-        cell3.className += "author";
-        cell4.className += "button";
-        cell5.className += "button";
+            row = tBody.insertRow(i);
+            cell1 = row.insertCell(0);
+            cell2 = row.insertCell(1);
+            cell3 = row.insertCell(2);
+            cell4 = row.insertCell(3);
+            cell5 = row.insertCell(4);
 
-        name = document.createElement("a");
-        name.innerHTML = data[i].name;
-        name.setAttribute("href", "../../thread/" + data[i].id);
+            cell1.className += "name";
+            cell2.className += "date";
+            cell3.className += "author";
+            cell4.className += "button";
+            cell5.className += "button";
 
-        author = document.createElement("a");
-        author.innerHTML = data[i].author_id;
-        author.setAttribute("href", "../../user/" + data[i].author_id);
+            name = document.createElement("a");
+            name.innerHTML = data[i].name;
+            name.setAttribute("href", "../../thread/" + data[i].id);
 
-        viewIcon = document.createElement("a");
-        viewIcon.innerHTML = '<i class="material-icons">visibility</i>';
-        viewIcon.setAttribute("href", "../../thread/" + data[i].id);
+            author = document.createElement("a");
+            author.innerHTML = data[i].author_id;
+            author.setAttribute("href", "../../user/" + data[i].author_id);
 
-        deleteIcon = document.createElement("a");
-        deleteIcon.innerHTML = '<i class="material-icons">delete</i>';
-        deleteIcon.setAttribute("href", "../../thread/delete/" + data[i].id);
-        deleteIcon.onclick = function () {
-            return confirm('¿Estás seguro de querer eliminar el hilo?');
-        };
+            viewIcon = document.createElement("a");
+            viewIcon.innerHTML = '<i class="material-icons">visibility</i>';
+            viewIcon.setAttribute("href", "../../thread/" + data[i].id);
 
-        cell1.appendChild(name);
-        cell2.innerHTML = data[i].time;
-        cell3.appendChild(author);
-        cell4.appendChild(viewIcon);
-        cell5.appendChild(deleteIcon);
+            deleteIcon = document.createElement("a");
+            deleteIcon.innerHTML = '<i class="material-icons">delete</i>';
+            deleteIcon.setAttribute("href", "../../thread/delete/" + data[i].id);
+            deleteIcon.onclick = function () {
+                return confirm('¿Estás seguro de querer eliminar el hilo?');
+            };
+
+            cell1.appendChild(name);
+            cell2.innerHTML = data[i].time;
+            cell3.appendChild(author);
+            cell4.appendChild(viewIcon);
+            cell5.appendChild(deleteIcon);
+        }
+
+        $("#table").show();
+        $("#no-threads-msg").hide();
     }
 }
 
