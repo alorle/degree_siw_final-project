@@ -33,20 +33,20 @@ class ShowForumView extends AbstractView implements ForumInterface
 
     /**
      * ShowForumView constructor.
-     * @param Forum $forum
+     * @param Forum $thread
      */
-    public function __construct($forum = null)
+    public function __construct($thread = null)
     {
         parent::__construct(new HeaderPartial(), new FooterPartial());
         $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'forum' . DIRECTORY_SEPARATOR . 'show.html');
 
-        if (isset($forum)) {
-            $this->setTitle($forum->getName() . ' | ' . PROJECT_NAME);
+        if (isset($thread)) {
+            $this->setTitle($thread->getName() . ' | ' . PROJECT_NAME);
         } else {
             $this->setTitle('Foro | ' . PROJECT_NAME);
         }
 
-        $this->forum = $forum;
+        $this->forum = $thread;
     }
 
     public function render()

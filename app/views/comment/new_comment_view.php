@@ -16,44 +16,39 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace App\Views\Thread;
+namespace App\Views\Comment;
 
 
 use App\Core\AbstractView;
-use App\Interfaces\ThreadInterface;
-use App\Models\Comment;
-use App\Models\Session;
-use App\Models\Thread;
-use App\Models\User;
 use App\Views\FooterPartial;
 use App\Views\HeaderPartial;
 
-class NewThreadView extends AbstractView
+class NewCommentView extends AbstractView
 {
-    const KEY_FORUM_ID = '##FORUM_ID##';
+    const KEY_THREAD_ID = '##THREAD_ID##';
     const KEY_MESSAGE = '##MESSAGE##';
 
-    private $forum_id;
+    private $thread_id;
     private $message;
 
     /**
-     * NewThreadView constructor.
-     * @param string $forum_id
+     * NewCommentView constructor.
+     * @param string $thread_id
      * @param string $msg
      */
-    public function __construct($forum_id, $msg = '')
+    public function __construct($thread_id, $msg = '')
     {
         parent::__construct(new HeaderPartial(), new FooterPartial());
-        $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'thread' . DIRECTORY_SEPARATOR . 'new.html');
-        $this->setTitle('Nuevo hilo | ' . PROJECT_NAME);
-        $this->forum_id = $forum_id;
+        $this->setTemplateFile(FOLDER_TEMPLATES . DIRECTORY_SEPARATOR . 'comment' . DIRECTORY_SEPARATOR . 'new.html');
+        $this->setTitle('Nuevo comentario | ' . PROJECT_NAME);
+        $this->thread_id = $thread_id;
         $this->message = $msg;
     }
 
     public function render()
     {
         $template = parent::render();
-        $template = str_replace(self::KEY_FORUM_ID, $this->forum_id, $template);
+        $template = str_replace(self::KEY_THREAD_ID, $this->thread_id, $template);
         $template = str_replace(self::KEY_MESSAGE, $this->message, $template);
         echo $template;
     }

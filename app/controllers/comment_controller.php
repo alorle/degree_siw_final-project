@@ -24,11 +24,14 @@ use App\Models\Comment;
 use App\Models\Forum;
 use App\Models\Session;
 use App\Models\Thread;
+use App\Views\Comment\NewCommentView;
 use App\Views\ErrorView;
 use App\Views\Forum\ShowForumView;
 
 class CommentController extends AbstractController
 {
+    const STR_INVALID_FORM = 'Formulario invalido';
+
     /**
      * CommentController constructor.
      * @param $params
@@ -63,16 +66,38 @@ class CommentController extends AbstractController
             // User is not identified
             redirect(PROJECT_BASE_URL . '/session/login');
         } else {
-            if (isset($_POST['thread'])) {
-                $threadId = $_POST['thread'];
-                $thread = Thread::getById($threadId);
-                if (!is_null($thread)) {
-                    $this->setView(new ErrorView(501, 'New comment view not implemented (Thread Id: ' . $threadId . ')'));
+            if (isset($_POST['new'])) {
+                $title = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+                $body = filter_var($_POST['body'], FILTER_SANITIZE_STRING);
+                $thread_id = filter_var($_POST['forum'], FILTER_SANITIZE_STRING);
+
+                if (empty($title) || empty($body)) {
+                    // Fields are empty (after sanitize),
+                    // so display same view with error message
+                    $this->setView(new NewCommentView($thread_id, self::STR_INVALID_FORM));
+                } else {
+                    $author_id = Session::getCurrentUser()->getId();
+
+                    $inserted = Comment::insert(array(
+                        Comment::COLUMN_TITLE => $title,
+                        Comment::COLUMN_BODY => $body,
+                        Comment::COLUMN_THREAD_ID => $thread_id,
+                        Comment::COLUMN_AUTHOR_ID => $author_id));
+
+                    // If the insertion was successful, redirect to created thread.
+                    // In other case, show an error.
+                    if ($inserted) {
+                        redirect(PROJECT_BASE_URL . '/thread/' . $thread_id);
+                    } else {
+                        throw new \Exception('Data could not be stored', 500);
+                    }
+                }
+            } else {
+                if (isset($_POST['thread']) && Thread::existsId($_POST['thread'])) {
+                    $this->setView(new NewCommentView($_POST['thread'], ''));
                 } else {
                     $this->setView(new ErrorView(404, 'Not found'));
                 }
-            } else {
-                $this->setView(new ErrorView(404, 'Not found'));
             }
         }
     }
