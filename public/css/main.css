@@ -81,6 +81,7 @@ a:hover {
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 10000000;
 }
 
 #page-header h1 {
@@ -223,4 +224,42 @@ button {
 .material-icons:hover {
     color: #8BC34A;
     cursor: pointer;
+}
+
+/* ---------- MARKDOWN EDITOR ---------- */
+.editor-toolbar {
+    background: #f2f2f2;
+    border: 0;
+    margin-top: 14px;
+}
+
+.markdown code, pre {
+    background-color: #F8F8F8;
+    border-radius: 3px;
+    color: inherit;
+}
+
+.markdown code {
+    border: 1px solid #EAEAEA;
+    margin: 0 2px;
+    padding: 0 5px;
+}
+
+.markdown pre {
+    border: 1px solid #CCCCCC;
+    line-height: 1.25em;
+    overflow: auto;
+    padding: 6px 10px;
+}
+
+.markdown pre > code {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.markdown a, .markdown a:visited {
+    background-color: inherit;
+    color: #4183C4;
+    text-decoration: none;
 }

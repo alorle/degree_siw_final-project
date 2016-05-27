@@ -17,6 +17,21 @@
 
 $(document).ready(function () {
     $('#content').css('margin-bottom', $('#page-footer').outerHeight() + 'px');
+
+    var converter = new showdown.Converter();
+    $('.markdown').each(function () {
+        $(this).html(converter.makeHtml($(this).html()));
+    });
+
+    new SimpleMDE({
+        element: document.getElementsByClassName("markdown-editor")[0],
+        promptURLs: true,
+        toolbar: ["bold", "italic", "code", "|",
+            "link", "image", "|",
+            "unordered-list", "ordered-list", "|",
+            "preview", "clean-block", "|",
+            "guide"]
+    });
 });
 
 $(document).click(function (event) {
