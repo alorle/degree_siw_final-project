@@ -233,6 +233,18 @@ button {
     margin-top: 14px;
 }
 
+.markdown hr {
+    background-color: #CCCCCC;
+    border: 0;
+    color: #CCCCCC;
+    height: 0.2em;
+}
+
+.markdown p, .markdown blockquote, .markdown ul, .markdown ol,
+.markdown dl, .markdown li, .markdown table, .markdown pre {
+    margin: 15px 0;
+}
+
 .markdown code, pre {
     background-color: #F8F8F8;
     border-radius: 3px;
