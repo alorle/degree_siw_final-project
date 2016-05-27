@@ -110,11 +110,11 @@ class Article
         }
 
         // Build sql query string
-        $sql = "SELECT * FROM " . self::TABLE_NAME . " ORDER BY " . self::COLUMN_TIME . " DESC";
+        $query = "SELECT * FROM " . self::TABLE_NAME . " ORDER BY " . self::COLUMN_TIME . " DESC";
         if (isset($limit) && $limit != 0) {
-            $sql .= " LIMIT " . $limit;
+            $query .= " LIMIT " . $limit;
             if (isset($offset) && $offset != 0) {
-                $sql .= " OFFSET " . $offset;
+                $query .= " OFFSET " . $offset;
             }
         }
 
@@ -122,7 +122,7 @@ class Article
         $results_array = array();
 
         // For each query result we include a new article in the array.
-        foreach ($db_helper->query($sql) as $index => $row) {
+        foreach ($db_helper->query($query) as $index => $row) {
             $results_array[$index] = new Article($row);
         }
 
@@ -138,7 +138,7 @@ class Article
     {
         $db_helper = DbHelper::instance();
 
-        // Escape special characters from article_id
+        // Escape special characters from id
         $id = $db_helper->connection->real_escape_string($id);
 
         // Build sql query string
@@ -218,7 +218,7 @@ class Article
             "'" . $article[self::COLUMN_AUTHOR_ID] . "')";
 
         // Execute query
-        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
+        return ($db_helper->connection->query($query) === TRUE);
     }
 
     /**
@@ -245,7 +245,7 @@ class Article
             " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
 
         // Execute query
-        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
+        return ($db_helper->connection->query($query) === TRUE);
     }
 
     /**
@@ -264,7 +264,7 @@ class Article
         $query = "DELETE FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
 
         // Execute query
-        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
+        return ($db_helper->connection->query($query) === TRUE);
     }
 
     public static function existsId($id)

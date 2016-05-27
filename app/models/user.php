@@ -132,11 +132,11 @@ class User
         }
 
         // Build sql query string
-        $sql = "SELECT * FROM " . self::TABLE_NAME . " ORDER BY " . self::COLUMN_NAME . " ASC";
+        $query = "SELECT * FROM " . self::TABLE_NAME . " ORDER BY " . self::COLUMN_NAME . " ASC";
         if (isset($limit) && $limit != 0) {
-            $sql .= " LIMIT " . $limit;
+            $query .= " LIMIT " . $limit;
             if (isset($offset) && $offset != 0) {
-                $sql .= " OFFSET " . $offset;
+                $query .= " OFFSET " . $offset;
             }
         }
 
@@ -144,7 +144,7 @@ class User
         $results_array = array();
 
         // For each query result we include a new user in the array.
-        foreach ($db_helper->query($sql) as $index => $row) {
+        foreach ($db_helper->query($query) as $index => $row) {
             $results_array[$index] = new User($row);
         }
 
@@ -249,7 +249,7 @@ class User
             "'" . $user[self::COLUMN_SESSION] . "')";
 
         // Execute query
-        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
+        return ($db_helper->connection->query($query) === TRUE);
     }
 
     /**
@@ -272,7 +272,7 @@ class User
             " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
 
         // Execute query
-        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
+        return ($db_helper->connection->query($query) === TRUE);
     }
 
     /**
@@ -297,7 +297,7 @@ class User
             " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
 
         // Execute query
-        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
+        return ($db_helper->connection->query($query) === TRUE);
     }
 
     /**
@@ -320,7 +320,7 @@ class User
             " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
 
         // Execute query
-        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
+        return ($db_helper->connection->query($query) === TRUE);
     }
 
     /**
@@ -351,7 +351,7 @@ class User
         $query .= " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
 
         // Execute query
-        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
+        return ($db_helper->connection->query($query) === TRUE);
     }
 
     /**
@@ -371,7 +371,7 @@ class User
 
 
         // Execute query
-        return ($db_helper->connection->query($query) !== TRUE) ? false : true;
+        return ($db_helper->connection->query($query) === TRUE);
     }
 
     /**

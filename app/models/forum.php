@@ -104,11 +104,11 @@ class Forum
         }
 
         // Build sql query string
-        $sql = "SELECT * FROM " . self::TABLE_NAME;
+        $query = "SELECT * FROM " . self::TABLE_NAME;
         if (isset($limit) && $limit != 0) {
-            $sql .= " LIMIT " . $limit;
+            $query .= " LIMIT " . $limit;
             if (isset($offset) && $offset != 0) {
-                $sql .= " OFFSET " . $offset;
+                $query .= " OFFSET " . $offset;
             }
         }
 
@@ -116,7 +116,7 @@ class Forum
         $results_array = array();
 
         // For each query result we include a new forum in the array.
-        foreach ($db_helper->query($sql) as $index => $row) {
+        foreach ($db_helper->query($query) as $index => $row) {
             $results_array[$index] = new Forum($row);
         }
 
@@ -143,11 +143,11 @@ class Forum
         }
 
         // Build sql query string
-        $sql = "SELECT * FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_PARENT_FORUM_ID . " IS NULL";
+        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_PARENT_FORUM_ID . " IS NULL";
         if (isset($limit) && $limit != 0) {
-            $sql .= " LIMIT " . $limit;
+            $query .= " LIMIT " . $limit;
             if (isset($offset) && $offset != 0) {
-                $sql .= " OFFSET " . $offset;
+                $query .= " OFFSET " . $offset;
             }
         }
 
@@ -155,7 +155,7 @@ class Forum
         $results_array = array();
 
         // For each query result we include a new forum in the array.
-        foreach ($db_helper->query($sql) as $index => $row) {
+        foreach ($db_helper->query($query) as $index => $row) {
             $results_array[$index] = new Forum($row);
         }
 
@@ -209,12 +209,12 @@ class Forum
         }
 
         // Build sql query string
-        $sql = "SELECT * FROM " . self::TABLE_NAME .
+        $query = "SELECT * FROM " . self::TABLE_NAME .
             " WHERE " . self::COLUMN_PARENT_FORUM_ID . " = '" . $parent_id . "'";
         if (isset($limit) && $limit != 0) {
-            $sql .= " LIMIT " . $limit;
+            $query .= " LIMIT " . $limit;
             if (isset($offset) && $offset != 0) {
-                $sql .= " OFFSET " . $offset;
+                $query .= " OFFSET " . $offset;
             }
         }
 
@@ -222,7 +222,7 @@ class Forum
         $results_array = array();
 
         // For each query result we include a new forum in the array.
-        foreach ($db_helper->query($sql) as $index => $row) {
+        foreach ($db_helper->query($query) as $index => $row) {
             $results_array[$index] = new Forum($row);
         }
 
@@ -303,7 +303,7 @@ class Forum
         $query .= "')";
 
         // Execute query
-        return ($db_helper->connection->query($query) !== TRUE) ? false  : true;
+        return ($db_helper->connection->query($query) === TRUE);
     }
 
     public static function existsId($id)

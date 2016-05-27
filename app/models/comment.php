@@ -116,23 +116,23 @@ class Comment
         }
 
         // Build sql query string
-        $sql = "SELECT * FROM " . self::TABLE_NAME;
+        $query = "SELECT * FROM " . self::TABLE_NAME;
 
         if (!empty($thread_id) && !empty($author_id)) {
-            $sql .= " WHERE " . self::COLUMN_THREAD_ID . " = '" . $thread_id . "'" .
+            $query .= " WHERE " . self::COLUMN_THREAD_ID . " = '" . $thread_id . "'" .
                 " AND " . self::COLUMN_AUTHOR_ID . " = '" . $author_id . "'";
         } elseif (!empty($thread_id)) {
-            $sql .= " WHERE " . self::COLUMN_THREAD_ID . " = '" . $thread_id . "'";
+            $query .= " WHERE " . self::COLUMN_THREAD_ID . " = '" . $thread_id . "'";
         } elseif (!empty($author_id)) {
-            $sql .= " WHERE " . self::COLUMN_AUTHOR_ID . " = '" . $author_id . "'";
+            $query .= " WHERE " . self::COLUMN_AUTHOR_ID . " = '" . $author_id . "'";
         }
 
-        $sql .= " ORDER BY " . self::COLUMN_TIME . " DESC";
+        $query .= " ORDER BY " . self::COLUMN_TIME . " DESC";
 
         if (isset($limit) && $limit != 0) {
-            $sql .= " LIMIT " . $limit;
+            $query .= " LIMIT " . $limit;
             if (isset($offset) && $offset != 0) {
-                $sql .= " OFFSET " . $offset;
+                $query .= " OFFSET " . $offset;
             }
         }
 
@@ -140,7 +140,7 @@ class Comment
         $results_array = array();
 
         // For each query result we include a new comment in the array.
-        foreach ($db_helper->query($sql) as $index => $row) {
+        foreach ($db_helper->query($query) as $index => $row) {
             $results_array[$index] = new Comment($row);
         }
 
