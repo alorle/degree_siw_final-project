@@ -115,10 +115,18 @@ class CommentController extends AbstractController
                 if ($user->getId() != $comment->getAuthorId()) {
                     $this->setView(new ErrorView(403, 'Forbidden', 'No puedes editar un comentario que no hayas escrito tu.'));
                 } else {
-                    $deleted = Comment::delete($comment_id);
+                    $thread_comments = Comment::getAll($comment->getThreadId());
+
+                    if ($thread_comments[0]->getId() == $comment_id) {
+                        $deleted = Thread::delete($comment->getThreadId());
+                        $redirectUrl = PROJECT_BASE_URL . '/forum';
+                    } else {
+                        $deleted = Comment::delete($comment_id);
+                        $redirectUrl = PROJECT_BASE_URL . '/thread/' . $comment->getThreadId();
+                    }
 
                     if ($deleted) {
-                        redirect(PROJECT_BASE_URL . '/thread/' . $comment->getThreadId());
+                        redirect($redirectUrl);
                     } else {
                         throw new \Exception('Data could not be updated', 500);
                     }
