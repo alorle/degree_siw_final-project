@@ -164,4 +164,18 @@ class Comment
         // We return an article only if the result is unique
         return (count($result) == 1) ? new Comment($result[0]) : null;
     }
+
+    public static function delete($id)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Escape special characters from article_id
+        $id = $db_helper->connection->real_escape_string($id);
+
+        // Build sql query string
+        $query = "DELETE FROM " . self::TABLE_NAME . " WHERE " . self::COLUMN_ID . " = '" . $id . "'";
+
+        // Execute query
+        return ($db_helper->connection->query($query) === TRUE);
+    }
 }

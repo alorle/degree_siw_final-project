@@ -48,6 +48,9 @@ class CommentController extends AbstractController
             case 'edit':
                 $this->editComment($params[1]);
                 break;
+            case 'delete':
+                $this->deleteComment($params[1]);
+                break;
             default:
                 $this->setView(new ErrorView(404, 'Not found'));
                 break;
@@ -80,6 +83,7 @@ class CommentController extends AbstractController
         if (isset($id)) {
             $comment_id = $id;
         }
+
         if (is_null($user = Session::getCurrentUser())) {
             // User is not identified
             redirect(PROJECT_BASE_URL . '/session/login');
@@ -89,6 +93,35 @@ class CommentController extends AbstractController
                     $this->setView(new ErrorView(403, 'Forbidden', 'No puedes editar un comentario que no hayas escrito tu.'));
                 } else {
                     $this->setView(new ErrorView(501, 'Edit comment view not implemented (Comment Id: ' . $comment_id . ')'));
+                }
+            } else {
+                $this->setView(new ErrorView(404, 'Not found'));
+            }
+        }
+    }
+
+    private function deleteComment($id)
+    {
+        $comment_id = '';
+        if (isset($id)) {
+            $comment_id = $id;
+        }
+
+        if (is_null($user = Session::getCurrentUser())) {
+            // User is not identified
+            redirect(PROJECT_BASE_URL . '/session/login');
+        } else {
+            if (!is_null($comment = Comment::getById($comment_id))) {
+                if ($user->getId() != $comment->getAuthorId()) {
+                    $this->setView(new ErrorView(403, 'Forbidden', 'No puedes editar un comentario que no hayas escrito tu.'));
+                } else {
+                    $deleted = Comment::delete($comment_id);
+
+                    if ($deleted) {
+                        redirect(PROJECT_BASE_URL . '/thread/' . $comment->getThreadId());
+                    } else {
+                        throw new \Exception('Data could not be updated', 500);
+                    }
                 }
             } else {
                 $this->setView(new ErrorView(404, 'Not found'));
