@@ -20,7 +20,7 @@ function validateForm() {
 
     // Check username is alphanumeric
     if (/[^a-zA-Z0-9-]/.test(idField.value)) {
-        alert('El id el artículo debe contener únicamente letras, números o guiones');
+        alert('El id debe contener únicamente letras, números o guiones');
         return false;
     }
 

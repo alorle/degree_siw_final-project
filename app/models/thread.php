@@ -208,6 +208,26 @@ class Thread
         return $results_array;
     }
 
+    public static function insert($array)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Build sql query string
+        $query = "INSERT INTO " . self::TABLE_NAME . " (" .
+            self::COLUMN_ID . ", " .
+            self::COLUMN_NAME . ", " .
+            self::COLUMN_PARENT_FORUM_ID . ", " .
+            self::COLUMN_AUTHOR_ID .
+            ") VALUES (" .
+            "'" . $array[self::COLUMN_ID] . "', " .
+            "'" . $array[self::COLUMN_NAME] . "', " .
+            "'" . $array[self::COLUMN_PARENT_FORUM_ID] . "', " .
+            "'" . $array[self::COLUMN_AUTHOR_ID] . "')";
+
+        // Execute query
+        return ($db_helper->connection->query($query) === TRUE);
+    }
+
     /**
      * Delete an thread in the database
      * @param string $id Thread ID
@@ -225,5 +245,10 @@ class Thread
 
         // Execute query
         return ($db_helper->connection->query($query) === TRUE);
+    }
+
+    public static function existsId($id)
+    {
+        return !is_null(self::getById($id));
     }
 }

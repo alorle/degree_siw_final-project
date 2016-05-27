@@ -148,7 +148,13 @@ function onNewForumClick() {
 }
 
 function onNewThreadClick() {
-    $.redirectPost('../../thread/new', {forum: getSelectionId()});
+    var forumId = getSelectionId();
+
+    if (forumId != 'none') {
+        $.redirectPost('../../thread/new', {forum: getSelectionId()});
+    } else {
+        alert('Debes elegir un foro o subforo donde añadir el nuevo hilo');
+    }
 }
 
 function getForumId() {

@@ -24,11 +24,14 @@ use App\Models\Comment;
 use App\Models\Session;
 use App\Models\Thread;
 use App\Views\ErrorView;
+use App\Views\Thread\NewThreadView;
 use App\Views\Thread\ShowThreadView;
 
 class ThreadController extends AbstractController
 {
     const COMMENTS_PER_PAGE = 10;
+
+    const STR_INVALID_FORM = 'Formulario invalido';
 
     /**
      * ThreadController constructor.
@@ -61,10 +64,52 @@ class ThreadController extends AbstractController
             // User is not identified
             redirect(PROJECT_BASE_URL . '/session/login');
         } else {
-            if (isset($_POST['forum'])) {
-                $this->setView(new ErrorView(501, 'New thread view not implemented (' . $_POST['forum'] . ')'));
+            if (isset($_POST['new'])) {
+                $name = filter_var($_POST['title'], FILTER_SANITIZE_STRING);
+                $id = filter_var($_POST['id'], FILTER_SANITIZE_STRING);
+                $forum_id = filter_var($_POST['forum'], FILTER_SANITIZE_STRING);
+                $body = filter_var($_POST['body'], FILTER_SANITIZE_STRING);
+
+                if (empty($name) || empty($id) || empty($body)) {
+                    // Fields are empty (after sanitize),
+                    // so display same view with error message
+                    $this->setView(new NewThreadView($forum_id, self::STR_INVALID_FORM));
+                } else {
+                    // Check if id is unique
+                    if (Thread::existsId($id)) {
+                        $this->setView(new NewThreadView($forum_id, 'La URL ya existe. Prueba con otra diferente.'));
+                        return;
+                    }
+
+                    $author_id = Session::getCurrentUser()->getId();
+
+                    // Insert the new article in the database
+                    $inserted = Thread::insert(array(
+                        Thread::COLUMN_ID => $id,
+                        Thread::COLUMN_NAME => $name,
+                        Thread::COLUMN_PARENT_FORUM_ID => $forum_id,
+                        Thread::COLUMN_AUTHOR_ID => $author_id));
+
+                    $inserted &= Comment::insert(array(
+                        Comment::COLUMN_TITLE => $name,
+                        Comment::COLUMN_BODY => $body,
+                        Comment::COLUMN_THREAD_ID => $id,
+                        Comment::COLUMN_AUTHOR_ID => $author_id));
+
+                    // If the insertion was successful, redirect to created thread.
+                    // In other case, show an error.
+                    if ($inserted) {
+                        redirect(PROJECT_BASE_URL . '/thread/' . $id);
+                    } else {
+                        throw new \Exception('Data could not be stored', 500);
+                    }
+                }
             } else {
-                $this->setView(new ErrorView(404, 'Not found'));
+                if (isset($_POST['forum']) && $_POST['forum'] != 'none') {
+                    $this->setView(new NewThreadView($_POST['forum'], ''));
+                } else {
+                    $this->setView(new ErrorView(404, 'Not found'));
+                }
             }
         }
     }

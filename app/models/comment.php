@@ -165,6 +165,26 @@ class Comment
         return (count($result) == 1) ? new Comment($result[0]) : null;
     }
 
+    public static function insert($array)
+    {
+        $db_helper = DbHelper::instance();
+
+        // Build sql query string
+        $query = "INSERT INTO " . self::TABLE_NAME . " (" .
+            self::COLUMN_TITLE . ", " .
+            self::COLUMN_BODY . ", " .
+            self::COLUMN_THREAD_ID . ", " .
+            self::COLUMN_AUTHOR_ID .
+            ") VALUES (" .
+            "'" . $array[self::COLUMN_TITLE] . "', " .
+            "'" . $array[self::COLUMN_BODY] . "', " .
+            "'" . $array[self::COLUMN_THREAD_ID] . "', " .
+            "'" . $array[self::COLUMN_AUTHOR_ID] . "')";
+
+        // Execute query
+        return ($db_helper->connection->query($query) === TRUE);
+    }
+
     public static function delete($id)
     {
         $db_helper = DbHelper::instance();
