@@ -36,7 +36,8 @@
 <main id="content">
 
     <div class="actions">
-        <button type="submit" onclick="onCommentButtonClick('##BASE_URL##/comment/new', '##THREAD_ID##')">Comentar</button>
+        <button type="submit" onclick="onCommentButtonClick('##BASE_URL##/comment/new', '##THREAD_ID##')">Comentar
+        </button>
     </div>
 
     ##THREAD_COMMENTS##
@@ -51,7 +52,7 @@
         <div class="comment_actions">
             ##THREAD_COMMENT_USER_ACTIONS##
             <a href="##BASE_URL##/comment/edit/##THREAD_COMMENT_ID##">Editar</a>
-            <a href="##BASE_URL##/comment/delete/##THREAD_COMMENT_ID##">Eliminar</a>
+            <a class="left grey" href="##BASE_URL##/comment/delete/##THREAD_COMMENT_ID##">Eliminar</a>
             ##THREAD_COMMENT_USER_ACTIONS##
         </div>
     </article>
@@ -59,7 +60,8 @@
     ##THREAD_COMMENTS##
 
     <div class="actions">
-        <button type="submit" onclick="onCommentButtonClick('##BASE_URL##/comment/new', '##THREAD_ID##')">Comentar</button>
+        <button type="submit" onclick="onCommentButtonClick('##BASE_URL##/comment/new', '##THREAD_ID##')">Comentar
+        </button>
     </div>
 
     ##PAGINATION##

@@ -60,6 +60,14 @@
     text-transform: uppercase;
 }
 
+.comment_actions .left {
+    float: left;
+}
+
+.comment_actions .grey {
+    background: #727272;
+}
+
 #content .actions {
     margin: 0 auto;
     max-width: 870px;
