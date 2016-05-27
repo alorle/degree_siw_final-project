@@ -22,6 +22,7 @@ namespace App\Views\Thread;
 use App\Core\AbstractView;
 use App\Interfaces\ThreadInterface;
 use App\Models\Comment;
+use App\Models\Session;
 use App\Models\Thread;
 use App\Models\User;
 use App\Views\FooterPartial;
@@ -33,6 +34,7 @@ class ShowThreadView extends AbstractView implements ThreadInterface
     private $comments;
     private $total_pages;
     private $current_page;
+    private $logged_user;
 
     /**
      * ShowThreadView constructor.
@@ -50,12 +52,13 @@ class ShowThreadView extends AbstractView implements ThreadInterface
         $this->comments = $comments;
         $this->total_pages = $total_pages;
         $this->current_page = $current_page;
+        $this->logged_user = Session::getCurrentUser();
     }
 
     public function render()
     {
         $template = parent::render();
-        
+
         $template = str_replace(self::KEY_THREAD_ID, $this->thread->getId(), $template);
 
         $template_parts = explode(self::KEY_THREAD_COMMENTS, $template);
@@ -92,6 +95,13 @@ class ShowThreadView extends AbstractView implements ThreadInterface
             $template = str_replace(self::KEY_THREAD_COMMENT_AUTHOR_ID, $comment->getAuthorId(), $template);
             $template = str_replace(self::KEY_THREAD_COMMENT_AUTHOR_NAME, $comment->getAuthorId(), $template);
             $template = str_replace(self::KEY_THREAD_COMMENT_AUTHOR_IMAGE, User::getDefaultImageSrc(), $template);
+        }
+
+        $template_parts = explode(self::KEY_THREAD_COMMENT_USER_ACTIONS, $template);
+        if ($this->logged_user == $author) {
+            $template = $template_parts[0] . $template_parts[1] . $template_parts[2];
+        } else {
+            $template = $template_parts[0] . $template_parts[2];
         }
 
         return $template;
