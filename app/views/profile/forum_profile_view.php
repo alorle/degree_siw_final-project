@@ -40,7 +40,7 @@ class ForumProfileView extends AbstractProfileView
     public function render()
     {
         $template = parent::render();
-
+        $template = str_replace(self::KEY_BASE_URL, PROJECT_BASE_URL, $template);
         echo $template;
     }
 }

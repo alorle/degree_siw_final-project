@@ -15,31 +15,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$(document).ready(function () {
+
+function onLoad(baseUrl) {
     $.ajax({
         type: 'POST',
         dataType: 'json',
-        url: '../../api/forum/forums',
+        url: baseUrl + '/api/forum/forums',
         data: null,
         success: updateForumSelector
     });
-});
+}
 
-function onForumSelected() {
+function onForumSelected(baseUrl) {
     $.ajax({
         type: 'POST',
         dataType: 'json',
-        url: '../../api/forum/subforums',
+        url: baseUrl + '/api/forum/subforums',
         data: {"parent": $('#select-forum').val()},
         success: updateSubforumSelector
     });
 }
 
-function onSubforumSelected() {
+function onSubforumSelected(baseUrl) {
     $.ajax({
         type: 'POST',
         dataType: 'json',
-        url: '../../api/forum/threads',
+        url: baseUrl + '/api/forum/threads',
         data: {"forum": getSelectionId()},
         success: updateThreadsTable
     });

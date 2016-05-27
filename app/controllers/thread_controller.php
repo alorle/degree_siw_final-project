@@ -122,7 +122,7 @@ class ThreadController extends AbstractController
                 // User is not identified
                 redirect(PROJECT_BASE_URL . '/session/login');
             } else {
-                if ($thread->getAuthorId() == $user->getId()) {
+                if ($thread->getAuthorId() == $user->getId() || $user->isModerator()) {
                     $deleted = Thread::delete($id);
 
                     // If the update was successful, return to profile/blog.

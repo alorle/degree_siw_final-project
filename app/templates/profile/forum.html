@@ -24,6 +24,10 @@
     <link href="##BASE_URL##/public/css/profile_forum.css" rel="stylesheet" type="text/css"/>
 
     <script src="##BASE_URL##/public/js/profile_forum.js"></script>
+
+    <script>
+        $(document).ready(onLoad('##BASE_URL##'));
+    </script>
 </head>
 <body>
 
@@ -39,9 +43,10 @@
             </div>
             <div class="filters">
                 <label for="select-forum">Foro</label>
-                <select name="select-forum" id="select-forum" onchange="onForumSelected(this.value)"></select>
+                <select name="select-forum" id="select-forum" onchange="onForumSelected('##BASE_URL##')"></select>
                 <label for="select-subforum">Subforo</label>
-                <select name="select-subforum" id="select-subforum" onchange="onSubforumSelected(this.value)"></select>
+                <select name="select-subforum" id="select-subforum"
+                        onchange="onSubforumSelected('##BASE_URL##')"></select>
             </div>
         </div>
 
