@@ -22,9 +22,6 @@
 
     <!-- Forum style -->
     <link href="##BASE_URL##/public/css/forum.css" rel="stylesheet" type="text/css"/>
-
-    <!-- Forum JavaScript -->
-    <script src="##BASE_URL##/public/js/forum.js"></script>
 </head>
 <body>
 
@@ -47,7 +44,7 @@
             ##FORUM_CHILD##
             <tr class='clickable-row' data-href='##BASE_URL##/forum/##FORUM_CHILD_ID##'>
                 <td class="left nowrap">
-                    <h2>##FORUM_CHILD_NAME##</h2>
+                    <h2><a href="##BASE_URL##/forum/##FORUM_CHILD_ID##">##FORUM_CHILD_NAME##</a></h2>
                     <p>##FORUM_CHILD_DESCRIPTION##</p>
                 </td>
                 <td>##FORUM_CHILD_COUNT_CHILDREN##</td>
@@ -74,7 +71,7 @@
             ##FORUM_THREAD##
             <tr class='clickable-row' data-href='##BASE_URL##/thread/##FORUM_THREAD_ID##'>
                 <td class="left nowrap">
-                    <h2>##FORUM_THREAD_NAME##</h2>
+                    <h2><a href="##BASE_URL##/thread/##FORUM_THREAD_ID##">##FORUM_THREAD_NAME##</a></h2>
                 </td>
                 <td class="nowrap">
                     <a href="##BASE_URL##/user/##FORUM_THREAD_AUTHOR_ID##">##FORUM_THREAD_AUTHOR_NAME##</a>
@@ -98,6 +95,17 @@
 </main>
 
 ##FOOTER##
+
+<script>
+    $(".clickable-row").click(function () {
+        console.log($(this).data("href"));
+        window.document.location = $(this).data("href");
+    });
+
+    function onThreadAddButtonClick(url, forumId) {
+        $.redirectPost(url, {forum: forumId});
+    }
+</script>
 
 </body>
 </html>
