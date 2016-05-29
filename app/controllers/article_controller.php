@@ -21,6 +21,7 @@ namespace app\controllers;
 
 use App\Core\AbstractController;
 use App\Models\Article;
+use App\Models\Image;
 use App\Models\Session;
 use App\Models\User;
 use App\Views\Article\EditArticleView;
@@ -35,6 +36,7 @@ class ArticleController extends AbstractController
     const KEY_POST_NEW_TITLE = 'title';
     const KEY_POST_NEW_ID = 'id';
     const KEY_POST_NEW_BODY = 'body';
+    const KEY_POST_NEW_IMAGES = 'images';
 
     const KEY_POST_EDIT = 'edit';
     const KEY_POST_EDIT_TITLE = 'title';
@@ -87,6 +89,7 @@ class ArticleController extends AbstractController
                 $title = filter_var($_POST[self::KEY_POST_NEW_TITLE], FILTER_SANITIZE_STRING);
                 $id = filter_var($_POST[self::KEY_POST_NEW_ID], FILTER_SANITIZE_STRING);
                 $body = filter_var($_POST[self::KEY_POST_NEW_BODY], FILTER_SANITIZE_STRING);
+                $images = $_FILES[self::KEY_POST_NEW_IMAGES];
 
                 if (empty($title) || empty($id) || empty($body)) {
                     // Fields are empty (after sanitize),
@@ -106,10 +109,18 @@ class ArticleController extends AbstractController
                         Article::COLUMN_BODY => $body,
                         Article::COLUMN_AUTHOR_ID => $user->getId()));
 
-                    // If the insertion was successful, return to blog.
+                    // If the insertion was successful, manage images.
                     // In other case, show an error.
                     if ($inserted) {
-                        redirect(PROJECT_BASE_URL . '/blog');
+                        foreach ($images["tmp_name"] as $key => $file_tmp) {
+                            $inserted &= Image::resizeSaveInsert($key, $file_tmp, $images["name"][$key], $id);
+                        }
+
+                        if ($inserted) {
+                            redirect(PROJECT_BASE_URL . '/blog');
+                        } else {
+                            throw new \Exception('Images could not be stored', 500);
+                        }
                     } else {
                         throw new \Exception('Data could not be stored', 500);
                     }

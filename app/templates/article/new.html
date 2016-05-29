@@ -32,13 +32,16 @@
 <main id="content">
     <div class="article-form">
         <h1>Nuevo artículo</h1>
-        <form method="post" action="##BASE_URL##/article/new" onsubmit="return(validateForm());">
+        <form method="post" action="##BASE_URL##/article/new" enctype="multipart/form-data"
+              onsubmit="return(validateForm());">
             <label for="title">Título</label>
             <input type="text" name="title" id="title" value="" placeholder="Título" oninput="updateId();" required>
             <label for="id">URL</label>
             <input type="text" name="id" id="id" value="" placeholder="nombre-de-la-url" required>
             <label for="body">Cuerpo</label>
             <input type="hidden" class="markdown-editor" name="body" id="body" placeholder="Cuerpo" required>
+            <label for="images">Imágenes</label>
+            <input id="images" type="file" name="images[]" multiple>
             <div class="actions">
                 <button type="submit" name="new">Añadir</button>
             </div>
