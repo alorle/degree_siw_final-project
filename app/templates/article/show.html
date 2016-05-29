@@ -85,11 +85,14 @@
     function onImagesRequest(data) {
         imagesArray = data;
         var imageUri, imageLi, image;
+        var imageForPreload = [];
         for (var i = 0; i < imagesArray.length; i++) {
             if (i == 0) {
                 imageUri = imagesArray[i].medium;
                 document.getElementById("image-medium").src = imageUri;
             }
+
+            imageForPreload.push(imagesArray[i].medium, imagesArray[i].large);
 
             imageUri = imagesArray[i].small;
 
@@ -102,20 +105,22 @@
 
             document.getElementById("images-small").appendChild(imageLi);
         }
+
+        preload(imageForPreload);
+    }
+
+    function preload(images) {
+        $(images).each(function () {
+            $('<img />').attr('src', this).appendTo('body').hide();
+        });
     }
 
     function onSmallImageClickListener() {
-        var image, uri;
         for (var i = 0; i < imagesArray.length; i++) {
             if (imagesArray[i].small.split("/").pop() == this.src.split("/").pop()) {
                 selectedMediumImageIndex = i;
                 selectedLargeImageIndex = i;
-                image = $("#image-medium");
-                uri = imagesArray[i].medium;
-                image.fadeOut('fast', function () {
-                    image.attr('src', uri);
-                    image.fadeIn(500);
-                });
+                changeImgSrc($("#image-medium"), imagesArray[i].medium);
             }
         }
     }
@@ -140,25 +145,13 @@
 
     function nextImage() {
         selectedLargeImageIndex++;
-        var uri = imagesArray[selectedLargeImageIndex].large;
-        var image = $("#image-large");
-        image.fadeOut('fast', function () {
-            image.attr('src', uri);
-            image.fadeIn(500);
-        });
-
+        changeImgSrc($("#image-large"), imagesArray[selectedLargeImageIndex].large);
         showHideArrows();
     }
 
     function previousImage() {
         selectedLargeImageIndex--;
-        var uri = imagesArray[selectedLargeImageIndex].large;
-        var image = $("#image-large");
-        image.fadeOut('fast', function () {
-            image.attr('src', uri);
-            image.fadeIn(500);
-        });
-
+        changeImgSrc($("#image-large"), imagesArray[selectedLargeImageIndex].large);
         showHideArrows();
     }
 
@@ -178,6 +171,13 @@
 
     function fixLargeImageHeight() {
         $('#image-large-container').css('height', $('#image-large').outerHeight() + 'px');
+    }
+
+    function changeImgSrc(img, url) {
+        img.animate({opacity: 0}, 500, function () {
+            img.attr('src', url);
+        });
+        img.animate({opacity: 1}, 500);
     }
 </script>
 
