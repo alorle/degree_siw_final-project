@@ -22,6 +22,11 @@
 
     <!-- Article/Blog style -->
     <link href="##BASE_URL##/public/css/article.css" rel="stylesheet" type="text/css"/>
+
+    <!-- LightBox -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css" rel="stylesheet"
+          type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
 </head>
 <body>
 
@@ -37,18 +42,37 @@
             <span class="author">Publicado por <a ##ARTICLE_AUTHOR_LINK##>##ARTICLE_AUTHOR##</a></span>
         </p>
         <div class="body markdown">##ARTICLE_BODY##</div>
-        <img id="image-medium" width="100%">
+        <img id="image-medium" width="100%" onclick="onMediumImageClickListener()">
         <ul id="images-small"></ul>
         <div class="actions">
             <a href="##BASE_URL##/article/print/##ARTICLE_ID##" target="_blank">Imprimir</a>
         </div>
+
+        <div class="overlay">
+            <div id="image-large-container">
+                <i id="close" class="material-icons" onclick="closeImage()">close</i>
+                <i id="next" class="material-icons" onclick="nextImage()">navigate_next</i>
+                <i id="previous" class="material-icons" onclick="previousImage()">navigate_before</i>
+                <img id="image-large">
+            </div>
+        </div>
+
     </article>
 </main>
+
 
 ##FOOTER##
 
 <script type="application/javascript">
     var imagesArray;
+    var selectedMediumImageIndex = 0;
+    var selectedLargeImageIndex = 0;
+
+    window.onresize = function () {
+        fixLargeImageHeight();
+    };
+
+    $(".overlay").hide();
 
     $.ajax({
         type: 'POST',
@@ -81,16 +105,79 @@
     }
 
     function onSmallImageClickListener() {
+        var image, uri;
         for (var i = 0; i < imagesArray.length; i++) {
             if (imagesArray[i].small.split("/").pop() == this.src.split("/").pop()) {
-                var image = $("#image-medium");
-                var uri = imagesArray[i].medium;
+                selectedMediumImageIndex = i;
+                selectedLargeImageIndex = i;
+                image = $("#image-medium");
+                uri = imagesArray[i].medium;
                 image.fadeOut('fast', function () {
                     image.attr('src', uri);
                     image.fadeIn(500);
                 });
             }
         }
+    }
+
+    function onMediumImageClickListener() {
+        $("#image-large").attr('src', imagesArray[selectedLargeImageIndex].large);
+        $(".overlay").fadeIn('slow', function () {
+            $(".overlay").show();
+            fixLargeImageHeight();
+        });
+
+        showHideArrows();
+    }
+
+    function closeImage() {
+        $(".overlay").fadeOut('slow', function () {
+            $(".overlay").hide();
+        });
+
+        selectedLargeImageIndex = selectedMediumImageIndex;
+    }
+
+    function nextImage() {
+        selectedLargeImageIndex++;
+        var uri = imagesArray[selectedLargeImageIndex].large;
+        var image = $("#image-large");
+        image.fadeOut('fast', function () {
+            image.attr('src', uri);
+            image.fadeIn(500);
+        });
+
+        showHideArrows();
+    }
+
+    function previousImage() {
+        selectedLargeImageIndex--;
+        var uri = imagesArray[selectedLargeImageIndex].large;
+        var image = $("#image-large");
+        image.fadeOut('fast', function () {
+            image.attr('src', uri);
+            image.fadeIn(500);
+        });
+
+        showHideArrows();
+    }
+
+    function showHideArrows() {
+        if (selectedLargeImageIndex == imagesArray.length - 1) {
+            $("#next").hide();
+        } else {
+            $("#next").show();
+        }
+
+        if (selectedLargeImageIndex == 0) {
+            $("#previous").hide();
+        } else {
+            $("#previous").show();
+        }
+    }
+
+    function fixLargeImageHeight() {
+        $('#image-large-container').css('height', $('#image-large').outerHeight() + 'px');
     }
 </script>
 

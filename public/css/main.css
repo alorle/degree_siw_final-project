@@ -81,7 +81,7 @@ a:hover {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 10000000;
+    z-index: 9;
 }
 
 #page-header h1 {
@@ -274,4 +274,15 @@ button {
     background-color: inherit;
     color: #4183C4;
     text-decoration: none;
+}
+
+/* ---------- OVERLAY ---------- */
+.overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
 }
