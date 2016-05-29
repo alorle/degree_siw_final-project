@@ -25,6 +25,7 @@ define('PROJECT_PATH', dirname(__DIR__));
 define('PROJECT_NAME', 'Filosofía Joven');
 define('PROJECT_BASE_URL', $base_url);
 define('PROJECT_PROFILE_IMAGES', $base_url . "/public/images/profiles/");
+define('PROJECT_BLOG_IMAGES', $base_url . "/public/images/blog/");
 
 // Define PROJECT folders
 define('FOLDER_UTIL', PROJECT_PATH . DIRECTORY_SEPARATOR . 'utils');

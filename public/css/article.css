@@ -61,6 +61,22 @@
     text-transform: uppercase;
 }
 
+.article #image-medium {
+    text-align: center;
+}
+
+.article #images-small {
+    text-align: center;
+    margin: 14px 0;
+    overflow-x: auto;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.article #images-small li {
+    display: inline;
+}
+
 /* For mobile */
 @media only screen and (max-width: 600px) {
 

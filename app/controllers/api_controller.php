@@ -22,6 +22,7 @@ namespace app\controllers;
 use App\Core\AbstractController;
 use App\Models\Article;
 use App\Models\Forum;
+use App\Models\Image;
 use App\Models\Session;
 use App\Models\Thread;
 use App\Models\User;
@@ -51,6 +52,9 @@ class ApiController extends AbstractController
             case 'forum':
                 $this->forum($params);
                 break;
+            case 'blog':
+                $this->blog($params);
+                break;
         }
     }
 
@@ -63,6 +67,18 @@ class ApiController extends AbstractController
                 echo Forum::getAllChildrenJSON($_POST['parent']);
             } elseif ($params[1] == 'threads' && isset($_POST['forum'])) {
                 echo Thread::getAllJson($_POST['forum']);
+            }
+        }
+    }
+
+    private function blog($params)
+    {
+        if (isset($params[1])) {
+            if ($params[1] == 'images') {
+                if (isset($params[2])) {
+                    $article_id = filter_var($params[2], FILTER_SANITIZE_STRING);
+                    echo Image::getAllUrlsJSON($article_id);
+                }
             }
         }
     }

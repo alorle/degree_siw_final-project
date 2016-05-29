@@ -37,6 +37,8 @@
             <span class="author">Publicado por <a ##ARTICLE_AUTHOR_LINK##>##ARTICLE_AUTHOR##</a></span>
         </p>
         <div class="body markdown">##ARTICLE_BODY##</div>
+        <img id="image-medium" width="100%">
+        <ul id="images-small"></ul>
         <div class="actions">
             <a href="##BASE_URL##/article/print/##ARTICLE_ID##" target="_blank">Imprimir</a>
         </div>
@@ -44,6 +46,53 @@
 </main>
 
 ##FOOTER##
+
+<script type="application/javascript">
+    var imagesArray;
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '##BASE_URL##/api/blog/images/##ARTICLE_ID##',
+        data: null,
+        success: onImagesRequest
+    });
+
+    function onImagesRequest(data) {
+        imagesArray = data;
+        var imageUri, imageLi, image;
+        for (var i = 0; i < imagesArray.length; i++) {
+            if (i == 0) {
+                imageUri = imagesArray[i].medium;
+                document.getElementById("image-medium").src = imageUri;
+            }
+
+            imageUri = imagesArray[i].small;
+
+            image = document.createElement('img');
+            image.src = imageUri;
+            image.onclick = onSmallImageClickListener;
+
+            imageLi = document.createElement('li');
+            imageLi.appendChild(image);
+
+            document.getElementById("images-small").appendChild(imageLi);
+        }
+    }
+
+    function onSmallImageClickListener() {
+        for (var i = 0; i < imagesArray.length; i++) {
+            if (imagesArray[i].small.split("/").pop() == this.src.split("/").pop()) {
+                var image = $("#image-medium");
+                var uri = imagesArray[i].medium;
+                image.fadeOut('fast', function () {
+                    image.attr('src', uri);
+                    image.fadeIn(500);
+                });
+            }
+        }
+    }
+</script>
 
 </body>
 </html>
