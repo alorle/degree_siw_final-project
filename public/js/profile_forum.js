@@ -144,15 +144,15 @@ function updateThreadsTable(data) {
     }
 }
 
-function onNewForumClick() {
-    $.redirectPost('../../forum/new', {parent: getForumId()});
+function onNewForumClick(baseUrl) {
+    $.redirectPost(baseUrl + '/forum/new', {parent: getForumId()});
 }
 
-function onNewThreadClick() {
+function onNewThreadClick(baseUrl) {
     var forumId = getSelectionId();
 
     if (forumId != 'none') {
-        $.redirectPost('../../thread/new', {forum: getSelectionId()});
+        $.redirectPost(baseUrl + '/thread/new', {forum: getSelectionId()});
     } else {
         alert('Debes elegir un foro o subforo donde añadir el nuevo hilo');
     }
