@@ -24,7 +24,7 @@ use Exception;
 
 class Forum
 {
-    const TABLE_NAME = 'forums';
+    const TABLE_NAME = 'final_forums';
 
     const COLUMN_ID = 'id';
     const COLUMN_NAME = 'name';

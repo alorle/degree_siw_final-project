@@ -23,7 +23,7 @@ use App\Database\DbHelper;
 
 class Comment
 {
-    const TABLE_NAME = 'comments';
+    const TABLE_NAME = 'final_comments';
 
     const COLUMN_ID = 'id';
     const COLUMN_TITLE = 'title';

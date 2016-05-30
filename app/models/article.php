@@ -23,7 +23,7 @@ use App\Database\DbHelper;
 
 class Article
 {
-    const TABLE_NAME = 'articles';
+    const TABLE_NAME = 'final_articles';
 
     const COLUMN_ID = 'id';
     const COLUMN_TITLE = 'title';

@@ -23,7 +23,7 @@ use App\Database\DbHelper;
 
 class Image
 {
-    const TABLE_NAME = 'images';
+    const TABLE_NAME = 'final_images';
 
     const COLUMN_ID = 'id';
     const COLUMN_FILE_NAME = 'file_name';

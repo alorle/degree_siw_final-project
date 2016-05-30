@@ -22,7 +22,8 @@ use App\Database\DbHelper;
 
 class User
 {
-    const TABLE_NAME = 'users';
+    const TABLE_NAME = 'final_users';
+
     const COLUMN_ID = 'id';
     const COLUMN_NAME = 'name';
     const COLUMN_EMAIL = 'email';

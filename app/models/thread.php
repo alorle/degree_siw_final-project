@@ -23,7 +23,7 @@ use App\Database\DbHelper;
 
 class Thread
 {
-    const TABLE_NAME = 'threads';
+    const TABLE_NAME = 'final_threads';
 
     const COLUMN_ID = 'id';
     const COLUMN_NAME = 'name';
