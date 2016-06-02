@@ -34,7 +34,7 @@ class Image
     private $article_id;
 
     private static $sizes = array('small' => 250, 'medium' => 500, 'large' => 1000);
-    private static $valid_ext = array("jpeg", "jpg", "png");
+    public static $valid_ext = array("jpeg", "jpg", "png");
 
     public function __construct($row)
     {

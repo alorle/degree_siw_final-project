@@ -119,7 +119,9 @@ class ArticleController extends AbstractController
                         if ($inserted) {
                             redirect(PROJECT_BASE_URL . '/blog');
                         } else {
-                            throw new \Exception('Images could not be stored', 500);
+                            Article::delete($id);
+                            $this->setView(new NewArticleView('No se han podido subir las imagenes o alguna de ellas.<br>' .
+                                'Asegurate de que sean imágenes del tipo '.implode(', ', Image::$valid_ext).'.'));
                         }
                     } else {
                         throw new \Exception('Data could not be stored', 500);
